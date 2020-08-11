@@ -26,17 +26,6 @@ public class Editor {
     }
 
     void InitializeComponents(){
-
-        try {
-            // Set metl look and feel
-            UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-
-            // Set theme to ocean
-            MetalLookAndFeel.setCurrentTheme(new OceanTheme());
-        }
-        catch (Exception e) {
-        }
-
         main_frame = new JFrame();
         main_text_area = new JTextArea();
         menuBar = new MenuBar();
