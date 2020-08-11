@@ -1,4 +1,4 @@
 package com.TextUML.SyntaxRecognition;
 
-public class KeywordRecocnizer {
+public class UMLKeywordRecocnizer {
 }

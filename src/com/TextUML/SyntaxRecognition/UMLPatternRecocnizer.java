@@ -1,4 +1,4 @@
 package com.TextUML.SyntaxRecognition;
 
-public class PatternRecocnizer {
+public class UMLPatternRecocnizer {
 }

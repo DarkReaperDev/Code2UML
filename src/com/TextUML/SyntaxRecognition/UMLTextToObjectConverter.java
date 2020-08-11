@@ -1,6 +1,6 @@
 package com.TextUML.SyntaxRecognition;
 
-public class TextToUMLObjectConverter {
+public class UMLTextToObjectConverter {
 
     public static void ConvertTextToUMLObject(String text){
         //Split String
