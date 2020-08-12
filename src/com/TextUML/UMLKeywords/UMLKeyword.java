@@ -1,4 +1,6 @@
 package com.TextUML.UMLKeywords;
 
-public class UMLKeyword {
+
+public interface UMLKeyword{
+
 }

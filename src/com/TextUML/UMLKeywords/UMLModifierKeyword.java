@@ -1,4 +1,7 @@
 package com.TextUML.UMLKeywords;
 
-public class UMLModifierKeyword extends UMLKeyword{
+public enum UMLModifierKeyword implements UMLKeyword {
+
+    UMLPublic,
+    UMlPrivate;
 }
