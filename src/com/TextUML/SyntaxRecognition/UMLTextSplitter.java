@@ -5,23 +5,48 @@ import java.util.List;
 
 public class UMLTextSplitter {
 
-    char[] split_character = {'(', ')', '{', '}',';','\\' };
+    static char[] split_characters = {'(', ')', '{', '}',';','\\' };
 
-    public String[] SplitUMLText(String text){
+    public static String[] SplitUMLText(String text){
 
-        List<String> splitted_text = new ArrayList<String>();
+        List<String> split_text = new ArrayList<String>();
         String current_string = "";
 
+        //TODO: find cleaner way to check if current string is empty and only add it if not -> currently to much duplication
         for(int i = 0; i < text.length(); i ++){
-            char c = text.charAt(i);
-            if(c == ' '){
+            char character = text.charAt(i);
+            if(character == ' '){
                 if(current_string != ""){
-                    splitted_text.add(current_string);
+                    split_text.add(current_string);
                 }
                 current_string = "";
             }
+            else if(IsSplitCharacter(character)){
+                if(current_string != ""){
+                    split_text.add(current_string);
+                }
+                current_string = String.valueOf(character);
+            }
+            else{
+                current_string += String.valueOf(character);
+            }
         }
 
-        return null;
+        if(current_string != ""){
+            split_text.add(current_string);
+        }
+
+        String[] split_text_array = new String[split_text.size()];
+        return split_text.toArray(split_text_array);
     }
+
+    static boolean IsSplitCharacter(char character){
+        for(int i = 0; i < split_characters.length; i++){
+            if(character == split_characters[i]){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
