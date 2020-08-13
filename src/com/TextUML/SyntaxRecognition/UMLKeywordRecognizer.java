@@ -13,7 +13,7 @@ public class UMLKeywordRecognizer {
         for(String s : uml_text){
             UMLKeyword keyword = GetUMLKeyword(s);
             if(keyword == null){
-                //Append new name keyword containing s
+                keyword_list.add(new UMLNameKeyword(s));
             }
             else{
                 keyword_list.add(keyword);
@@ -24,10 +24,10 @@ public class UMLKeywordRecognizer {
     }
 
     static UMLKeyword GetUMLKeyword(String s){
-        return null;
+        return uml_string_keyword_list.get(s);
     }
 
-    public static HashMap<String, UMLKeyword> uml_keyword_strings = new HashMap<String, UMLKeyword>(){{
+    public static HashMap<String, UMLKeyword> uml_string_keyword_list = new HashMap<String, UMLKeyword>(){{
         put("public", UMLModifierKeyword.UMLPublic);
         put("private", UMLModifierKeyword.UMlPrivate);
 
@@ -36,6 +36,7 @@ public class UMLKeywordRecognizer {
         put("float", UMLValueTypeKeyword.UMLFloat);
         put("bool", UMLValueTypeKeyword.UMLBool);
         put("null", UMLValueTypeKeyword.UMLNull);
+        put("void", UMLValueTypeKeyword.UMLVoid);
 
         put("class", UMLStructureKeyword.UMLClass);
 
@@ -43,6 +44,8 @@ public class UMLKeywordRecognizer {
         put(")", UMLBracketKeyword.UMLBracketClose);
         put("{", UMLBracketKeyword.UMLCurlyBracketOpen);
         put("}", UMLBracketKeyword.UMLCurlyBracketClose);
+
+        put(";", UMLEndLineKeyword.UMLSemiColon);
     }};
 
 }
