@@ -1,13 +1,13 @@
-package com.TextUML.UMLObject;
+package com.TextUML.UMLObjects;
 
 
 import com.TextUML.UMLKeywords.UMLModifierKeyword;
 import com.TextUML.UMLKeywords.UMLValueTypeKeyword;
 
-public class UMLMethodObject {
+public class UMLMethodObject implements UMLObject{
 
     public String name;
-    public UMLModifierKeyword modiefier;
+    public UMLModifierKeyword modifier;
     public UMLValueTypeKeyword return_type;
 
     public UMLMethodObject(){
@@ -20,7 +20,7 @@ public class UMLMethodObject {
 
     public UMLMethodObject(String name, UMLModifierKeyword modifier){
         this.name = name;
-        this.modiefier = modifier;
+        this.modifier = modifier;
     }
 
     public UMLMethodObject(String name,UMLValueTypeKeyword return_type){
@@ -30,7 +30,12 @@ public class UMLMethodObject {
 
     public UMLMethodObject(String name, UMLModifierKeyword modifier, UMLValueTypeKeyword return_type){
         this.name = name;
-        this.modiefier = modifier;
+        this.modifier = modifier;
         this.return_type = return_type;
+    }
+
+    @Override
+    public void Add(UMLObject object) {
+
     }
 }

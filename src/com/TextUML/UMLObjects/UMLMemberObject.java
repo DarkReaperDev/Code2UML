@@ -1,12 +1,12 @@
-package com.TextUML.UMLObject;
+package com.TextUML.UMLObjects;
 
 import com.TextUML.UMLKeywords.UMLModifierKeyword;
 import com.TextUML.UMLKeywords.UMLValueTypeKeyword;
 
-public class UMLMemberObject {
+public class UMLMemberObject implements UMLObject{
 
     public String name;
-    public UMLModifierKeyword modiefier;
+    public UMLModifierKeyword modifier;
     public UMLValueTypeKeyword value_type;
 
     public UMLMemberObject(){
@@ -19,7 +19,7 @@ public class UMLMemberObject {
 
     public UMLMemberObject(String name, UMLModifierKeyword modifier){
         this.name = name;
-        this.modiefier = modifier;
+        this.modifier = modifier;
     }
 
     public UMLMemberObject(String name, UMLValueTypeKeyword value_type){
@@ -29,7 +29,12 @@ public class UMLMemberObject {
 
     public UMLMemberObject(String name, UMLModifierKeyword modifier, UMLValueTypeKeyword value_type){
         this.name = name;
-        this.modiefier = modifier;
+        this.modifier = modifier;
         this.value_type = value_type;
+    }
+
+    @Override
+    public void Add(UMLObject object) {
+
     }
 }

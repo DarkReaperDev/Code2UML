@@ -1,14 +1,15 @@
-package com.TextUML.UMLObject;
+package com.TextUML.UMLObjects;
 
 import java.util.List;
 
-public class UMLClassObject {
+public class UMLClassObject implements UMLObject {
 
     List<UMLMethodObject> uml_methods;
     List<UMLMemberObject> uml_members;
+    String name;
 
-    public UMLClassObject(){
-
+    public UMLClassObject(String name){
+        this.name = name;
     }
 
     public void AddUMLMethod(UMLMethodObject uml_method){
@@ -33,5 +34,10 @@ public class UMLClassObject {
 
     public UMLMemberObject GetUMLMemberByName(){
         return null;
+    }
+
+    @Override
+    public void Add(UMLObject object) {
+
     }
 }

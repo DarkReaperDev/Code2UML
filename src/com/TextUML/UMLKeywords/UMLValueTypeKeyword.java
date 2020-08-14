@@ -6,6 +6,5 @@ public enum UMLValueTypeKeyword implements UMLKeyword{
     UMLInt,
     UMLFloat,
     UMLBool,
-    UMLNull,
     UMLVoid;
 }

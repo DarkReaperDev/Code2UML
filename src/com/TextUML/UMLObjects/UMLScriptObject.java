@@ -1,14 +1,14 @@
-package com.TextUML.UMLObject;
+package com.TextUML.UMLObjects;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UMLObject {
+public class UMLScriptObject {
 
     List<UMLClassObject> uml_classes;
 
 
-    public UMLObject(){
+    public UMLScriptObject(){
         uml_classes = new ArrayList<UMLClassObject>();
     }
 
@@ -23,5 +23,10 @@ public class UMLObject {
     public UMLClassObject GetUMLClassByName(){
         return null;
     }
+
+    public void AddUMLObject(UMLObject object){
+        System.out.println(object.getClass());
+    }
+
 
 }

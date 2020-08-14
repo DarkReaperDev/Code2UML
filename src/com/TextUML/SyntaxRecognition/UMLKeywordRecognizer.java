@@ -35,7 +35,6 @@ public class UMLKeywordRecognizer {
         put("int", UMLValueTypeKeyword.UMLInt);
         put("float", UMLValueTypeKeyword.UMLFloat);
         put("bool", UMLValueTypeKeyword.UMLBool);
-        put("null", UMLValueTypeKeyword.UMLNull);
         put("void", UMLValueTypeKeyword.UMLVoid);
 
         put("class", UMLStructureKeyword.UMLClass);
