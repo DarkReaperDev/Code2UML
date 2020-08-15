@@ -2,6 +2,18 @@ package com.TextUML.UMLKeywords;
 
 public enum UMLModifierKeyword implements UMLKeyword {
 
-    UMLPublic,
-    UMlPrivate;
+    UMLPublic("public"),
+    UMlPrivate("private");
+
+
+    String string;
+
+    UMLModifierKeyword(String string){
+        this.string = string;
+    }
+
+    @Override
+    public String GetString() {
+        return string;
+    }
 }

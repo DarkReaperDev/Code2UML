@@ -5,7 +5,7 @@ import java.util.List;
 
 public class UMLScriptObject {
 
-    List<UMLClassObject> uml_classes;
+    List<UMLClassObject> uml_classes = new ArrayList<>();
 
 
     public UMLScriptObject(){
@@ -27,6 +27,4 @@ public class UMLScriptObject {
     public void AddUMLObject(UMLObject object){
         System.out.println(object.getClass());
     }
-
-
 }

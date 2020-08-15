@@ -27,6 +27,7 @@ public class UMLKeywordRecognizer {
         return uml_string_keyword_list.get(s);
     }
 
+    //TODO: use string attribute of keywords instead of this list
     public static HashMap<String, UMLKeyword> uml_string_keyword_list = new HashMap<String, UMLKeyword>(){{
         put("public", UMLModifierKeyword.UMLPublic);
         put("private", UMLModifierKeyword.UMlPrivate);

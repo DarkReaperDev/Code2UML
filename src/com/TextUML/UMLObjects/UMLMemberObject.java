@@ -6,8 +6,8 @@ import com.TextUML.UMLKeywords.UMLValueTypeKeyword;
 public class UMLMemberObject implements UMLObject{
 
     public String name;
-    public UMLModifierKeyword modifier;
-    public UMLValueTypeKeyword value_type;
+    public UMLModifierKeyword modifier = UMLModifierKeyword.UMlPrivate;
+    public UMLValueTypeKeyword value_type = UMLValueTypeKeyword.UMLString;
 
     public UMLMemberObject(){
 
@@ -31,10 +31,5 @@ public class UMLMemberObject implements UMLObject{
         this.name = name;
         this.modifier = modifier;
         this.value_type = value_type;
-    }
-
-    @Override
-    public void Add(UMLObject object) {
-
     }
 }

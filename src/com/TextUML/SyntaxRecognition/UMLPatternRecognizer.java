@@ -18,25 +18,26 @@ public class UMLPatternRecognizer {
 
         List<UMLKeyword> current_pattern = new ArrayList<UMLKeyword>();
         UMLScriptObject uml_object = new UMLScriptObject();
-        Stack<UMLObject> current_open_objects = new Stack();
+        Stack<UMLClassObject> current_open_classes = new Stack();
 
         for(UMLKeyword keyword : keywords){
             current_pattern.add(keyword);
             //TODO: Add tags to keywords for checking
-            if(keyword == UMLBracketKeyword.UMLBracketOpen || keyword == UMLBracketKeyword.UMLCurlyBracketOpen){
+            if(keyword == UMLBracketKeyword.UMLCurlyBracketOpen){
                 int matching_pattern_id = UMLPatterns.GetMatchingPatternId(current_pattern.toArray(new UMLKeyword[]{}));
                 System.out.println(matching_pattern_id);
                 UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(current_pattern.toArray(new UMLKeyword[]{}), matching_pattern_id);
-                current_open_objects.push(object);
+                current_open_classes.push((UMLClassObject) object);
                 System.out.println(object);
 
                 current_pattern.clear();
             }
             else if(keyword == UMLEndLineKeyword.UMLSemiColon){
                 int matching_pattern_id = UMLPatterns.GetMatchingPatternId(current_pattern.toArray(new UMLKeyword[]{}));
+                System.out.println(matching_pattern_id);
                 UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(current_pattern.toArray(new UMLKeyword[]{}), matching_pattern_id);
-                if(!current_open_objects.empty()){
-                    current_open_objects.peek().Add(object);
+                if(!current_open_classes.empty()){
+                    current_open_classes.peek().Add(object);
                 }
 
                 System.out.println(object);
