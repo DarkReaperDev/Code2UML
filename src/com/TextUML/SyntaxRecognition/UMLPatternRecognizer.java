@@ -43,7 +43,11 @@ public class UMLPatternRecognizer {
                 System.out.println(object);
 
                 current_pattern.clear();
+            }
 
+            else if(keyword == UMLBracketKeyword.UMLCurlyBracketClose){
+                current_open_classes.pop();
+                current_pattern.clear();
             }
         }
 
