@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuDropdown extends JMenu {
+class MenuDropdown extends JMenu {
 
     List<JMenuItem> menu_items;
 

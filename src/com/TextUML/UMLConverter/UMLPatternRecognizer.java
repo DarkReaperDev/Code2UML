@@ -9,12 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class UMLPatternRecognizer {
+class UMLPatternRecognizer {
 
-    static UMLKeyword[] pattern_ending_keywords = {UMLBracketKeyword.UMLBracketOpen, UMLBracketKeyword.UMLCurlyBracketOpen, UMLEndLineKeyword.UMLSemiColon};
-
-    //TODO: maybe change to not using class types
-    public static UMLScriptObject UMLConvertKeywordsToObject(UMLKeyword[] keywords) throws Exception {
+    static UMLScriptObject ConvertUMLKeywordsToObject(UMLKeyword[] keywords){
 
         List<UMLKeyword> current_pattern = new ArrayList<UMLKeyword>();
         UMLScriptObject uml_object = new UMLScriptObject();
@@ -24,7 +21,7 @@ public class UMLPatternRecognizer {
             current_pattern.add(keyword);
             //TODO: Add tags to keywords for checking
             if(keyword == UMLBracketKeyword.UMLCurlyBracketOpen){
-                int matching_pattern_id = UMLPatterns.GetMatchingPatternId(current_pattern.toArray(new UMLKeyword[]{}));
+                int matching_pattern_id = UMLPatterns.GetMatchingPatternsId(current_pattern.toArray(new UMLKeyword[]{}));
                 System.out.println(matching_pattern_id);
                 UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(current_pattern.toArray(new UMLKeyword[]{}), matching_pattern_id);
                 current_open_classes.push((UMLClassObject) object);
@@ -33,7 +30,7 @@ public class UMLPatternRecognizer {
                 current_pattern.clear();
             }
             else if(keyword == UMLEndLineKeyword.UMLSemiColon){
-                int matching_pattern_id = UMLPatterns.GetMatchingPatternId(current_pattern.toArray(new UMLKeyword[]{}));
+                int matching_pattern_id = UMLPatterns.GetMatchingPatternsId(current_pattern.toArray(new UMLKeyword[]{}));
                 System.out.println(matching_pattern_id);
                 UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(current_pattern.toArray(new UMLKeyword[]{}), matching_pattern_id);
                 if(!current_open_classes.empty()){
@@ -51,6 +48,6 @@ public class UMLPatternRecognizer {
             }
         }
 
-        return null;
+        return uml_object;
     }
 }
