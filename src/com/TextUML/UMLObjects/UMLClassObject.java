@@ -22,19 +22,7 @@ public class UMLClassObject implements UMLObject {
         }
     }
 
-    public UMLMethodObject GetUMLMethodByIndex(){
-        return null;
-    }
-
-    public UMLMethodObject GetUMLMethodByName(){
-        return null;
-    }
-
-    public UMLMemberObject GetUMLMemberByIndex(){
-        return null;
-    }
-
-    public UMLMemberObject GetUMLMemberByName(){
-        return null;
+    public String getName() {
+        return name;
     }
 }

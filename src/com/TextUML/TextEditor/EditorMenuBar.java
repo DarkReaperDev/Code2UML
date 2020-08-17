@@ -2,18 +2,18 @@ package com.TextUML.TextEditor;
 
 import javax.swing.*;
 
-public class MenuBar extends JMenuBar {
+ class EditorMenuBar extends JMenuBar {
 
-    MenuDropdown file_menu;
+    MenuBarDropdown fileMenuDropdown;
     MenuBarActionListener actionListener;
 
-    public MenuBar(){
+    public EditorMenuBar(){
         super();
-        file_menu = new MenuDropdown("file");
+        fileMenuDropdown = new MenuBarDropdown("file");
         actionListener = new MenuBarActionListener();
 
-        file_menu.AddMenuItem("close", actionListener);
-        add(file_menu);
+        fileMenuDropdown.AddMenuItem("close", actionListener);
+        add(fileMenuDropdown);
     }
 
     void InitializeComponents(){

@@ -1,11 +1,8 @@
 package com.TextUML;
 
-import com.TextUML.SyntaxRecognition.UMLKeywordRecognizer;
-import com.TextUML.SyntaxRecognition.UMLPatternRecognizer;
-import com.TextUML.SyntaxRecognition.UMLTextSplitter;
+import com.TextUML.UMLDiagram.UMLDiagram;
+import com.TextUML.UMLConverter.UMLConverter;
 import com.TextUML.TextEditor.Editor;
-import com.TextUML.UMLKeywords.UMLBracketKeyword;
-import com.TextUML.UMLKeywords.UMLKeyword;
 import com.TextUML.UMLObjects.UMLScriptObject;
 
 public class Main {
@@ -13,13 +10,11 @@ public class Main {
         Editor editor = new Editor("editor", 500, 500);
         editor.Launch();
 
-        String[] output = UMLTextSplitter.SplitUMLText("class helloWorld{ public int test; int test2;}");
-        UMLKeyword[] output_keywords = UMLKeywordRecognizer.GetUMLKeywords(output);
-        for(UMLKeyword keyword : output_keywords){
-            System.out.println(keyword);
-        }
+        UMLScriptObject scriptObject = UMLConverter.ConvertUMLTextToObject("class helloWorld{ public int test; int test2;}");
 
-        UMLScriptObject scriptObject = UMLPatternRecognizer.UMLConvertKeywordsToObject(output_keywords);
+        System.out.println(scriptObject.GetUMLClassObjects().length);
 
+        UMLDiagram uml_diagram = new UMLDiagram(scriptObject.GetUMLClassObjects(), "UML Diagram", 400, 400);
+        uml_diagram.Launch();
     }
 }

@@ -1,4 +1,4 @@
-package com.TextUML.SyntaxRecognition;
+package com.TextUML.UMLConverter;
 
 import com.TextUML.UMLKeywords.*;
 import com.TextUML.UMLObjects.UMLClassObject;

@@ -1,4 +1,4 @@
-package com.TextUML.SyntaxRecognition;
+package com.TextUML.UMLConverter;
 
 import java.util.ArrayList;
 import java.util.List;

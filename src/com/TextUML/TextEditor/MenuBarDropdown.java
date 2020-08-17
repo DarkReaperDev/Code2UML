@@ -5,11 +5,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-class MenuDropdown extends JMenu {
+class MenuBarDropdown extends JMenu {
 
     List<JMenuItem> menu_items;
 
-    public MenuDropdown(String menu_name){
+    public MenuBarDropdown(String menu_name){
         super(menu_name);
         menu_items = new ArrayList<JMenuItem>();
     }

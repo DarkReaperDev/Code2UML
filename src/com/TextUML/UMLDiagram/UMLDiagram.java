@@ -1,4 +1,4 @@
-package com.TextUML.DrawingSystem;
+package com.TextUML.UMLDiagram;
 
 import com.TextUML.UMLObjects.UMLClassObject;
 
@@ -34,7 +34,6 @@ public class UMLDiagram {
     }
 
     public void Launch() {
-
         mainFrame.add(diagramPanel);
         mainFrame.setVisible(true);
     }

@@ -16,7 +16,7 @@ public class UMLScriptObject {
         uml_classes.add(uml_class);
     }
 
-    public UMLClassObject GetUMLClassByIdex(){
+    public UMLClassObject GetUMLClassByIndex(){
         return null;
     }
 
@@ -26,5 +26,9 @@ public class UMLScriptObject {
 
     public void AddUMLObject(UMLObject object){
         System.out.println(object.getClass());
+    }
+
+    public UMLClassObject[] GetUMLClassObjects(){
+        return(uml_classes.toArray(new UMLClassObject[]{}));
     }
 }

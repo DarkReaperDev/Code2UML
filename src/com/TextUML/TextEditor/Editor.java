@@ -1,14 +1,11 @@
 package com.TextUML.TextEditor;
 
 import javax.swing.*;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.metal.OceanTheme;
-import java.lang.management.MemoryNotificationInfo;
 
 public class Editor {
-    JFrame main_frame;
-    JTextArea main_text_area;
-    MenuBar menuBar;
+    JFrame mainFrame;
+    JTextArea mainTextArea;
+    EditorMenuBar editorMenuBar;
 
     public Editor(){
         InitializeComponents();
@@ -26,15 +23,15 @@ public class Editor {
     }
 
     void InitializeComponents(){
-        main_frame = new JFrame();
-        main_text_area = new JTextArea();
-        menuBar = new MenuBar();
+        mainFrame = new JFrame();
+        mainTextArea = new JTextArea();
+        editorMenuBar = new EditorMenuBar();
     }
 
     public void Launch(){
-        main_frame.setJMenuBar(menuBar);
-        main_frame.add(main_text_area);
-        main_frame.show();
+        mainFrame.setJMenuBar(editorMenuBar);
+        mainFrame.add(mainTextArea);
+        mainFrame.show();
     }
 
     public void Close(){
@@ -42,10 +39,10 @@ public class Editor {
     }
 
     public void SetSize(int width, int height){
-        main_frame.setSize(width, height);
+        mainFrame.setSize(width, height);
     }
 
     public void SetTitle(String title){
-        main_frame.setTitle(title);
+        mainFrame.setTitle(title);
     }
 }
