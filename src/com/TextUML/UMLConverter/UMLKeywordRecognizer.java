@@ -7,13 +7,13 @@ class UMLKeywordRecognizer {
 
     static UMLKeyword[] GetUMLKeywords(String[] keywordStringArray){
 
-        List<UMLKeyword> keyword_list = new ArrayList<UMLKeyword>();
+        List<UMLKeyword> keywordList = new ArrayList<>();
 
         for(String keywordString : keywordStringArray){
-            keyword_list.add(ConvertToUMLKeyword(keywordString));
+            keywordList.add(ConvertToUMLKeyword(keywordString));
         }
 
-        return keyword_list.toArray(new UMLKeyword[keyword_list.size()]);
+        return keywordList.toArray(new UMLKeyword[keywordList.size()]);
     }
 
     private static UMLKeyword ConvertToUMLKeyword(String keywordString){

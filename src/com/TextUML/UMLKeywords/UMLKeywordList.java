@@ -23,7 +23,7 @@ public class UMLKeywordList {
 
     public static UMLKeyword GetKeywordForString(String keywordString){
         for(UMLKeyword keyword : keywordArray){
-            if(keyword.GetString() == keywordString){
+            if(keyword.GetString().equals(keywordString)){
                 return keyword;
             }
         }

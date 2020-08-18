@@ -16,4 +16,9 @@ public enum UMLModifierKeyword implements UMLKeyword {
     public String GetString() {
         return string;
     }
+
+    @Override
+    public boolean HasTag(UMLKeywordTags tag) {
+        return false;
+    }
 }

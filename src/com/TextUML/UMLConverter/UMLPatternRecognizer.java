@@ -13,43 +13,37 @@ class UMLPatternRecognizer {
 
     static UMLScriptObject ConvertUMLKeywordsToObject(UMLKeyword[] keywords){
 
-        List<UMLKeyword> current_pattern = new ArrayList<UMLKeyword>();
-        UMLScriptObject umlObject = new UMLScriptObject();
-        Stack<UMLClassObject> current_open_classes = new Stack();
+        List<UMLKeyword> currentPattern = new ArrayList<UMLKeyword>();
+        UMLScriptObject outputObject = new UMLScriptObject();
+        Stack<UMLClassObject> currentOpenObjects = new Stack();
 
         for(UMLKeyword keyword : keywords){
-            current_pattern.add(keyword);
-            //TODO: Add tags to keywords for checking
-            if(keyword == UMLBracketKeyword.UMLCurlyBracketOpen){
-                int matching_pattern_id = UMLPatterns.GetMatchingPatternsId(current_pattern.toArray(new UMLKeyword[]{}));
-                UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(current_pattern.toArray(new UMLKeyword[]{}), matching_pattern_id);
-                System.out.println(object.getClass());
-                current_open_classes.push((UMLClassObject) object);
+            currentPattern.add(keyword);
 
-                umlObject.AddUMLClass((UMLClassObject) object);
-                current_pattern.clear();
-            }
-            else if(keyword == UMLEndLineKeyword.UMLSemiColon){
-                int matching_pattern_id = UMLPatterns.GetMatchingPatternsId(current_pattern.toArray(new UMLKeyword[]{}));
-                System.out.println(matching_pattern_id);
-                UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(current_pattern.toArray(new UMLKeyword[]{}), matching_pattern_id);
+            if(keyword.HasTag(UMLKeywordTags.OpenInnerPattern) || keyword.HasTag(UMLKeywordTags.EndPattern)){
+                UMLObject object = GetObjectForPattern(currentPattern.toArray(new UMLKeyword[]{}));
 
-                if(!current_open_classes.empty()){
-                    current_open_classes.peek().Add(object);
+                if(object.getClass() == UMLClassObject.class){
+                    currentOpenObjects.push((UMLClassObject) object);
                 }
-
-                System.out.println(object);
-
-                current_pattern.clear();
+                else{
+                    currentOpenObjects.peek().Add(object);
+                }
+                currentPattern.clear();
             }
 
             else if(keyword == UMLBracketKeyword.UMLCurlyBracketClose){
-                System.out.println(current_open_classes.peek().getName());
-                current_open_classes.pop();
-                current_pattern.clear();
+                outputObject.AddUMLClass(currentOpenObjects.pop());
+                currentPattern.clear();
             }
         }
+        return outputObject;
+    }
 
-        return umlObject;
+    private static UMLObject GetObjectForPattern(UMLKeyword[] currentPattern){
+        int matchingPatternId = UMLPatterns.GetMatchingPatternsId(currentPattern);
+        System.out.println(matchingPatternId);
+        UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(currentPattern, matchingPatternId);
+        return object;
     }
 }

@@ -9,12 +9,11 @@ class UMLTextSplitter {
 
     static String[] GetSplitUMLText(String text){
         List<String> splitText = new ArrayList<String>();
-        text = RemoveNewLineCharsFrom(text);
         String currentString = "";
+        text = RemoveNewLineCharsFrom(text);
 
         for(int i = 0; i < text.length(); i ++){
             char character = text.charAt(i);
-
 
             if(IsSplitCharacter(character)){
                 splitText = AppendStringIfNotEmpty(splitText, currentString);
@@ -33,13 +32,6 @@ class UMLTextSplitter {
         return splitText.toArray(new String[]{});
     }
 
-    private static List<String> AppendStringIfNotEmpty(List<String> stringList, String stringToAppend){
-        if(stringToAppend != ""){
-            stringList.add(stringToAppend);
-        }
-        return stringList;
-    }
-
     private static String RemoveNewLineCharsFrom(String s){
         return s.replaceAll("[" + System.getProperty("line.separator") + "]", "");
     }
@@ -51,5 +43,12 @@ class UMLTextSplitter {
             }
         }
         return false;
+    }
+
+    private static List<String> AppendStringIfNotEmpty(List<String> stringList, String stringToAppend){
+        if(stringToAppend != ""){
+            stringList.add(stringToAppend);
+        }
+        return stringList;
     }
 }
