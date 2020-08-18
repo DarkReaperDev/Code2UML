@@ -6,9 +6,9 @@ import com.TextUML.UMLKeywords.UMLValueTypeKeyword;
 
 public class UMLMethodObject implements UMLObject{
 
-    public String name;
-    public UMLModifierKeyword modifier = UMLModifierKeyword.UMlPrivate;
-    public UMLValueTypeKeyword return_type = UMLValueTypeKeyword.UMLVoid;
+    String name;
+    UMLModifierKeyword modifier = UMLModifierKeyword.UMlPrivate;
+    UMLValueTypeKeyword returnType = UMLValueTypeKeyword.UMLVoid;
 
     public UMLMethodObject(){
 
@@ -23,14 +23,30 @@ public class UMLMethodObject implements UMLObject{
         this.modifier = modifier;
     }
 
-    public UMLMethodObject(String name,UMLValueTypeKeyword return_type){
+    public UMLMethodObject(String name,UMLValueTypeKeyword returnType){
         this.name = name;
-        this.return_type = return_type;
+        this.returnType = returnType;
     }
 
-    public UMLMethodObject(String name, UMLModifierKeyword modifier, UMLValueTypeKeyword return_type){
+    public UMLMethodObject(String name, UMLModifierKeyword modifier, UMLValueTypeKeyword returnType){
         this.name = name;
         this.modifier = modifier;
-        this.return_type = return_type;
+        this.returnType = returnType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getFullString(){
+        return modifier.GetString() + " " + returnType.GetString() + " " + name + "()";
+    }
+
+    public UMLModifierKeyword getModifier() {
+        return modifier;
+    }
+
+    public UMLValueTypeKeyword getReturnType() {
+        return returnType;
     }
 }

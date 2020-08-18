@@ -5,13 +5,9 @@ import com.TextUML.UMLKeywords.UMLValueTypeKeyword;
 
 public class UMLMemberObject implements UMLObject{
 
-    public String name;
-    public UMLModifierKeyword modifier = UMLModifierKeyword.UMlPrivate;
-    public UMLValueTypeKeyword value_type = UMLValueTypeKeyword.UMLString;
-
-    public UMLMemberObject(){
-
-    }
+    String name;
+    UMLModifierKeyword modifier = UMLModifierKeyword.UMlPrivate;
+    UMLValueTypeKeyword valueType = UMLValueTypeKeyword.UMLString;
 
     public UMLMemberObject(String name){
         this.name = name;
@@ -22,14 +18,30 @@ public class UMLMemberObject implements UMLObject{
         this.modifier = modifier;
     }
 
-    public UMLMemberObject(String name, UMLValueTypeKeyword value_type){
+    public UMLMemberObject(String name, UMLValueTypeKeyword valueType){
         this.name = name;
-        this.value_type = value_type;
+        this.valueType = valueType;
     }
 
-    public UMLMemberObject(String name, UMLModifierKeyword modifier, UMLValueTypeKeyword value_type){
+    public UMLMemberObject(String name, UMLModifierKeyword modifier, UMLValueTypeKeyword valueType){
         this.name = name;
         this.modifier = modifier;
-        this.value_type = value_type;
+        this.valueType = valueType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getFullString(){
+        return modifier.GetString() + " " + valueType.GetString() + " " + name;
+    }
+
+    public UMLModifierKeyword getModifier() {
+        return modifier;
+    }
+
+    public UMLValueTypeKeyword getValueType() {
+        return valueType;
     }
 }

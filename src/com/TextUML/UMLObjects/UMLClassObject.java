@@ -5,8 +5,9 @@ import java.util.List;
 
 public class UMLClassObject implements UMLObject {
 
-    List<UMLMethodObject> uml_methods = new ArrayList<>();
-    List<UMLMemberObject> uml_members = new ArrayList<>();
+
+    List<UMLMethodObject> umlMethods = new ArrayList<>();
+    List<UMLMemberObject> umlMembers = new ArrayList<>();
     String name;
 
     public UMLClassObject(String name){
@@ -15,14 +16,23 @@ public class UMLClassObject implements UMLObject {
 
     public void Add(UMLObject object){
         if(object.getClass() == UMLMemberObject.class){
-            uml_members.add((UMLMemberObject) object);
+            umlMembers.add((UMLMemberObject) object);
         }
         else if(object.getClass() == UMLMethodObject.class){
-            uml_methods.add((UMLMethodObject) object);
+            umlMethods.add((UMLMethodObject) object);
         }
     }
 
     public String getName() {
         return name;
     }
+
+    public UMLMethodObject[] getUmlMethods() {
+        return umlMethods.toArray(new UMLMethodObject[]{});
+    }
+
+    public UMLMemberObject[] getUmlMembers() {
+        return umlMembers.toArray(new UMLMemberObject[]{});
+    }
+
 }

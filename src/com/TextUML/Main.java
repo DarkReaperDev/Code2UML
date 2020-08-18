@@ -10,7 +10,7 @@ public class Main {
         Editor editor = new Editor("editor", 500, 500);
         editor.Launch();
 
-        UMLScriptObject scriptObject = UMLConverter.ConvertUMLTextToObject("class helloWorld{ public int test; int test2;}");
+        UMLScriptObject scriptObject = UMLConverter.ConvertUMLTextToObject("class helloWorld{ public int test; int test2; void Test();}");
 
         System.out.println(scriptObject.GetUMLClassObjects().length);
 
