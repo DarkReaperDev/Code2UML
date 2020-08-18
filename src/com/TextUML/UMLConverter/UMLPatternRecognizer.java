@@ -23,6 +23,7 @@ class UMLPatternRecognizer {
             if(keyword == UMLBracketKeyword.UMLCurlyBracketOpen){
                 int matching_pattern_id = UMLPatterns.GetMatchingPatternsId(current_pattern.toArray(new UMLKeyword[]{}));
                 UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(current_pattern.toArray(new UMLKeyword[]{}), matching_pattern_id);
+                System.out.println(object.getClass());
                 current_open_classes.push((UMLClassObject) object);
 
                 umlObject.AddUMLClass((UMLClassObject) object);
@@ -43,6 +44,7 @@ class UMLPatternRecognizer {
             }
 
             else if(keyword == UMLBracketKeyword.UMLCurlyBracketClose){
+                System.out.println(current_open_classes.peek().getName());
                 current_open_classes.pop();
                 current_pattern.clear();
             }

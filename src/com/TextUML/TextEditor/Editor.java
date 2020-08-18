@@ -1,11 +1,15 @@
 package com.TextUML.TextEditor;
 
+import com.TextUML.UMLDiagram.UMLDiagram;
+
 import javax.swing.*;
 
 public class Editor {
     JFrame mainFrame;
     JTextArea mainTextArea;
     EditorMenuBar editorMenuBar;
+    EditorActionsController actionsController;
+    UMLDiagram umlDiagram = null;
 
     public Editor(){
         InitializeComponents();
@@ -23,9 +27,10 @@ public class Editor {
     }
 
     void InitializeComponents(){
+        actionsController = new EditorActionsController(this);
         mainFrame = new JFrame();
         mainTextArea = new JTextArea();
-        editorMenuBar = new EditorMenuBar();
+        editorMenuBar = new EditorMenuBar(actionsController);
     }
 
     public void Launch(){
@@ -44,5 +49,13 @@ public class Editor {
 
     public void SetTitle(String title){
         mainFrame.setTitle(title);
+    }
+
+    public String GetScriptText(){
+        return mainTextArea.getText();
+    }
+
+    public void SetUMLDiagram(UMLDiagram diagram){
+        this.umlDiagram = diagram;
     }
 }

@@ -30,7 +30,6 @@ public class UMLDiagram {
     void InitializeComponents(){
         mainFrame = new JFrame();
         diagramPanel = new UMLDiagramPanel(classesToDraw);
-
     }
 
     public void Launch() {
