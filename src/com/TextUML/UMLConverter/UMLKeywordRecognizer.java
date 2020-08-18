@@ -5,46 +5,23 @@ import java.util.*;
 
 class UMLKeywordRecognizer {
 
-    //TODO: use string attribute of keywords instead of this list
-    private static HashMap<String, UMLKeyword> umlStringKeywordMap = new HashMap<String, UMLKeyword>(){{
-        put("public", UMLModifierKeyword.UMLPublic);
-        put("private", UMLModifierKeyword.UMlPrivate);
-
-        put("string", UMLValueTypeKeyword.UMLString);
-        put("int", UMLValueTypeKeyword.UMLInt);
-        put("float", UMLValueTypeKeyword.UMLFloat);
-        put("bool", UMLValueTypeKeyword.UMLBool);
-        put("void", UMLValueTypeKeyword.UMLVoid);
-
-        put("class", UMLStructureKeyword.UMLClass);
-
-        put("(", UMLBracketKeyword.UMLBracketOpen);
-        put(")", UMLBracketKeyword.UMLBracketClose);
-        put("{", UMLBracketKeyword.UMLCurlyBracketOpen);
-        put("}", UMLBracketKeyword.UMLCurlyBracketClose);
-
-        put(";", UMLEndLineKeyword.UMLSemiColon);
-    }};
-
-    static UMLKeyword[] GetUMLKeywords(String[] stringKeywords){
+    static UMLKeyword[] GetUMLKeywords(String[] keywordStringArray){
 
         List<UMLKeyword> keyword_list = new ArrayList<UMLKeyword>();
 
-        for(String s : stringKeywords){
-            UMLKeyword keyword = GetUMLKeyword(s);
-            if(keyword == null){
-                keyword_list.add(new UMLNameKeyword(s));
-            }
-            else{
-                keyword_list.add(keyword);
-            }
+        for(String keywordString : keywordStringArray){
+            keyword_list.add(ConvertToUMLKeyword(keywordString));
         }
 
         return keyword_list.toArray(new UMLKeyword[keyword_list.size()]);
     }
 
-    private static UMLKeyword GetUMLKeyword(String s){
-        return umlStringKeywordMap.get(s);
+    private static UMLKeyword ConvertToUMLKeyword(String keywordString){
+        UMLKeyword keyword = UMLKeywordList.GetKeywordForString(keywordString);
+        if(keyword == null){
+            keyword = new UMLNameKeyword(keywordString);
+        }
+        return keyword;
     }
 
 }
