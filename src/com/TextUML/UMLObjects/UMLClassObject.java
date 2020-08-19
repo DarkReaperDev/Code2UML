@@ -27,12 +27,32 @@ public class UMLClassObject implements UMLObject {
         return name;
     }
 
+    public UMLMemberObject[] getUmlMembers() {
+        return umlMembers.toArray(new UMLMemberObject[]{});
+    }
+
     public UMLMethodObject[] getUmlMethods() {
         return umlMethods.toArray(new UMLMethodObject[]{});
     }
 
-    public UMLMemberObject[] getUmlMembers() {
-        return umlMembers.toArray(new UMLMemberObject[]{});
+    public UMLObject[] getUMLMembersAndMethods(){
+        return MergeUMLObjectArrays(getUmlMembers(), getUmlMethods());
+    }
+
+    @Override
+    public String getFullString() {
+        return name;
+    }
+
+    private static UMLObject[] MergeUMLObjectArrays(UMLObject[] firstArray, UMLObject[] secondArray){
+        int firstArrayLength = firstArray.length;
+        int secondArrayLength = secondArray.length;
+        UMLObject[] resultArray = new UMLObject[firstArrayLength + secondArrayLength];
+
+        System.arraycopy(firstArray, 0, resultArray, 0, firstArrayLength);
+        System.arraycopy(secondArray, 0, resultArray, firstArrayLength, secondArrayLength);
+
+        return  resultArray;
     }
 
 }

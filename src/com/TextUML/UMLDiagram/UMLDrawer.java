@@ -3,6 +3,7 @@ package com.TextUML.UMLDiagram;
 import com.TextUML.UMLObjects.UMLClassObject;
 import com.TextUML.UMLObjects.UMLMemberObject;
 import com.TextUML.UMLObjects.UMLMethodObject;
+import com.TextUML.UMLObjects.UMLObject;
 
 import java.awt.*;
 
@@ -10,7 +11,8 @@ class UMLDrawer {
 
     private static Font font;
     private static int margin = 25;
-    private static int padding = 25;
+    private static int padding = 5;
+    private static int textSpacing = 12;
 
     private static int currentXPos = margin;
     private static int currentYPos = margin;
@@ -18,28 +20,24 @@ class UMLDrawer {
     public static void DrawUMLClass(UMLClassObject classToDraw, Graphics graphics){
         int[] sectionHeights = GetClassSectionHeights(classToDraw);
         int classHeight = sectionHeights[0] + sectionHeights[1] + sectionHeights[2];
-        int classWidth = GetClassWidth(classToDraw);
+        int classWidth = GetLongestFullStringLength(classToDraw);
 
         DrawUMLClassBorder(classWidth, classHeight, graphics);
         DrawUMLClassText(sectionHeights, classWidth, classToDraw, graphics);
         DrawDividerLines(sectionHeights, classWidth, graphics);
     }
 
-    private static int GetClassWidth(UMLClassObject classObject){
+    private static int GetLongestFullStringLength(UMLClassObject classObject){
         int longestStringSize = classObject.getName().length();
-        for(UMLMethodObject methodObject : classObject.getUmlMethods()){
-            if(methodObject.getFullString().length() > longestStringSize){
-                longestStringSize = methodObject.getFullString().length();
-            }
-        }
-        for(UMLMemberObject memberObject : classObject.getUmlMembers()){
-            if(memberObject.getFullString().length() > longestStringSize){
-                longestStringSize = memberObject.getFullString().length();
+        UMLObject[] objectsToDraw = classObject.getUMLMembersAndMethods();
+
+        for(UMLObject umlObject: objectsToDraw){
+            if(umlObject.getFullString().length() > longestStringSize){
+                longestStringSize = umlObject.getFullString().length();
             }
         }
         return longestStringSize * 6;
     }
-
 
     //[0]height of class header [1]height of member Section [2] height of method section
     private static int[] GetClassSectionHeights(UMLClassObject umlClassObject){
@@ -57,19 +55,18 @@ class UMLDrawer {
     private static void DrawUMLClassText(int[] sectionHeights, int classWidth, UMLClassObject umlClassObject, Graphics graphics){
         int textSpacing = 14;
         int currentSectionHeight = currentYPos;
-        UMLMemberObject[] memberObjects = umlClassObject.getUmlMembers();
-        UMLMethodObject[] methodObjects = umlClassObject.getUmlMethods();
 
         graphics.drawString(umlClassObject.getName(), currentXPos + classWidth/2 - (umlClassObject.getName().length()/2) * 6 , currentYPos + textSpacing);
         currentSectionHeight += sectionHeights[0];
 
-
-        for(int i = 0; i < memberObjects.length; i++){
-            graphics.drawString(memberObjects[i].getFullString(), currentXPos + 5, currentSectionHeight + 12*(i+1) );
-        }
+        DrawUMLObjectStrings(umlClassObject.getUmlMembers(), currentXPos + padding, currentSectionHeight + textSpacing, textSpacing, graphics);
         currentSectionHeight += sectionHeights[1];
-        for(int i = 0; i < methodObjects.length; i++){
-            graphics.drawString(methodObjects[i].getFullString(), currentXPos + 5, currentSectionHeight + 12*(i+1) );
+        DrawUMLObjectStrings(umlClassObject.getUmlMethods(), currentXPos + padding, currentSectionHeight + textSpacing, textSpacing, graphics);
+    }
+
+    private static void DrawUMLObjectStrings(UMLObject[] objectsToDraw, int startPosX, int startPosY, int spacing, Graphics graphics){
+        for(int i = 0; i < objectsToDraw.length; i ++){
+            graphics.drawString(objectsToDraw[i].getFullString(), startPosX, startPosY + spacing*i);
         }
     }
 
