@@ -7,19 +7,19 @@ import java.awt.*;
 
 class UMLClassDraw {
 
-    UMLClassObject classObject;
+    private UMLClassObject classObject;
 
-    Rectangle fullClassRectangle;
-    Rectangle classSectionRectangle;
-    Rectangle memberSectionRectangle;
-    Rectangle methodSectionRectangle;
+    private Rectangle fullClassRectangle;
+    private Rectangle classSectionRectangle;
+    private Rectangle memberSectionRectangle;
+    private Rectangle methodSectionRectangle;
 
-    int characterWidth = 6;
-    int characterHeight = 9;
-    int lineSpacing = 5;
+    private int characterWidth = 6;
+    private int characterHeight = 9;
+    private int lineSpacing = 5;
 
-    int paddingX = 5;
-    int paddingY = 5;
+    private int paddingX = 5;
+    private int paddingY = 5;
 
 
     public UMLClassDraw(UMLClassObject classObject, int posX, int posY){
@@ -92,5 +92,9 @@ class UMLClassDraw {
     private void DrawSectionDividers(Graphics graphics){
         graphics.drawLine(memberSectionRectangle.x, memberSectionRectangle.y, memberSectionRectangle.x + memberSectionRectangle.width, memberSectionRectangle.y);
         graphics.drawLine(methodSectionRectangle.x, methodSectionRectangle.y, methodSectionRectangle.x + methodSectionRectangle.width, methodSectionRectangle.y);
+    }
+
+    public Rectangle GetFullRect() {
+        return fullClassRectangle;
     }
 }
