@@ -2,6 +2,7 @@ package com.TextUML.TextEditor;
 
 import com.TextUML.UMLConverter.UMLConverter;
 import com.TextUML.UMLDiagram.UMLDiagram;
+import com.TextUML.UMLErrorHandling.UMLScriptErrorHandler;
 import com.TextUML.UMLObjects.UMLScriptObject;
 
 class EditorActionsController {
@@ -18,11 +19,15 @@ class EditorActionsController {
 
     public void CreateDiagram(){
         String script = editor.GetScriptText();
-        System.out.println(script);
-        UMLScriptObject scriptObject = UMLConverter.ConvertUMLTextToObject(script);
+        try {
+            UMLScriptObject scriptObject = UMLConverter.ConvertUMLTextToObject(script);
 
-        UMLDiagram diagram = new UMLDiagram(scriptObject.GetUMLClassObjects(), "uml diagram", 1000, 1000);
-        diagram.Launch();
-        editor.SetUMLDiagram(diagram);
+            UMLDiagram diagram = new UMLDiagram(scriptObject.GetUMLClassObjects(), "uml diagram", 1000, 1000);
+            diagram.Launch();
+            editor.SetUMLDiagram(diagram);
+        }
+        catch (Exception e){
+            UMLScriptErrorHandler.HandleUMLScriptError(e);
+        }
     }
 }

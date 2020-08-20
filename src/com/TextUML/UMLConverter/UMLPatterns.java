@@ -1,5 +1,7 @@
 package com.TextUML.UMLConverter;
 
+import com.TextUML.UMLErrorHandling.UMLScriptError;
+import com.TextUML.UMLErrorHandling.UMLScriptSyntaxError;
 import com.TextUML.UMLKeywords.*;
 import com.TextUML.UMLObjects.UMLClassObject;
 import com.TextUML.UMLObjects.UMLMemberObject;
@@ -20,17 +22,17 @@ class UMLPatterns {
             new UMLPattern(new Class<?>[]{UMLModifierKeyword.class, UMLValueTypeKeyword.class, UMLNameKeyword.class, UMLBracketKeyword.UMLBracketOpen.getClass(), UMLBracketKeyword.UMLBracketClose.getClass(), UMLEndLineKeyword.UMLSemiColon.getClass()})
     };
 
-    static int GetMatchingPatternsId(UMLKeyword[] keywords){
+    static int GetMatchingPatternsId(UMLKeyword[] keywords) throws UMLScriptSyntaxError {
 
         for(int i = 0; i < patterns.length; i++){
             if(patterns[i].Matches(keywords)){
                 return i;
             }
         }
-        return -1;
+        throw new UMLScriptSyntaxError("invalid syntax");
     }
 
-    static UMLObject ConvertKeywordsToUMLObjectUsingPattern(UMLKeyword[] keywords, int pattern_id){
+    static UMLObject ConvertKeywordsToUMLObjectUsingPattern(UMLKeyword[] keywords, int pattern_id) throws UMLScriptSyntaxError{
         switch (pattern_id){
             case 0:{
                 return ConvertClassDeclaration(keywords);
@@ -48,7 +50,7 @@ class UMLPatterns {
                 return ConvertMethodWithModifier(keywords);
             }
         }
-        return null;
+        throw new UMLScriptSyntaxError("invalid syntax");
     }
 
     //class, name
