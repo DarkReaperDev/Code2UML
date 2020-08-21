@@ -2,6 +2,7 @@ package com.TextUML.TextEditor;
 
 import com.TextUML.UMLConverter.UMLConverter;
 import com.TextUML.UMLDiagram.UMLDiagram;
+import com.TextUML.UMLErrorHandling.UMLScriptError;
 import com.TextUML.UMLErrorHandling.UMLScriptErrorHandler;
 import com.TextUML.UMLObjects.UMLScriptObject;
 
@@ -26,7 +27,7 @@ class EditorActionsController {
             diagram.Launch();
             editor.SetUMLDiagram(diagram);
         }
-        catch (Exception e){
+        catch (UMLScriptError e){
             UMLScriptErrorHandler.HandleUMLScriptError(e);
         }
     }

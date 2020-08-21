@@ -6,11 +6,6 @@ public class UMLKeyword {
     private UMLKeywordType type;
     private int lineInScript = -1;
 
-
-    public UMLKeyword(UMLKeywordType type){
-        this.type = type;
-    }
-
     public UMLKeyword(UMLKeywordType type, int lineInScript){
         this.type = type;
         this.lineInScript = lineInScript;

@@ -7,7 +7,7 @@ import com.TextUML.UMLObjects.UMLScriptObject;
 public class UMLConverter {
 
     public static UMLScriptObject ConvertUMLTextToObject(String umlText) throws UMLScriptError {
-        String[] output = UMLTextSplitter.GetSplitUMLText(umlText);
+        String[][] output = UMLTextSplitter.GetSplitUMLText(umlText);
         UMLKeyword[] outputKeywords = UMLKeywordRecognizer.GetUMLKeywords(output);
         UMLScriptObject scriptObject = UMLPatternRecognizer.ConvertUMLKeywordsToObject(outputKeywords);
         return scriptObject;

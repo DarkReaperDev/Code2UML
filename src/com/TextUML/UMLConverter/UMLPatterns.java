@@ -29,7 +29,7 @@ class UMLPatterns {
                 return i;
             }
         }
-        throw new UMLScriptSyntaxError("invalid syntax");
+        throw new UMLScriptSyntaxError("invalid syntax", keywords[keywords.length - 1].GetLineInUMLScript());
     }
 
     static UMLObject ConvertKeywordsToUMLObjectUsingPattern(UMLKeyword[] keywords, int pattern_id) throws UMLScriptSyntaxError{
@@ -50,7 +50,7 @@ class UMLPatterns {
                 return ConvertMethodWithModifier(keywords);
             }
         }
-        throw new UMLScriptSyntaxError("invalid syntax");
+        throw new UMLScriptSyntaxError("invalid syntax", keywords[keywords.length - 1].GetLineInUMLScript());
     }
 
     //class, name

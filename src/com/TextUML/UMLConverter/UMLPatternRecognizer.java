@@ -30,13 +30,13 @@ class UMLPatternRecognizer {
 
                 if(object.getClass() == UMLClassObject.class){
                     if(!currentOpenObjects.empty()){
-                        throw new UMLScriptScopeError("declaring a class inside another class is not allowed");
+                        throw new UMLScriptScopeError("declaring a class inside another class is not allowed", keyword.GetLineInUMLScript());
                     }
                     currentOpenObjects.push((UMLClassObject) object);
                 }
                 else{
                     if(currentOpenObjects.empty()){
-                        throw new UMLScriptScopeError("declaring a member or method outside of a class is not allowed");
+                        throw new UMLScriptScopeError("declaring a member or method outside of a class is not allowed", keyword.GetLineInUMLScript());
                     }
                     currentOpenObjects.peek().Add(object);
                 }
@@ -45,14 +45,14 @@ class UMLPatternRecognizer {
 
             else if(keyword.GetType() == UMLBracketKeywordType.UMLCurlyBracketClose){
                 if(currentOpenObjects.empty() || currentPattern.size() > 1){
-                    throw new UMLScriptSyntaxError("invalid Syntax");
+                    throw new UMLScriptSyntaxError("invalid Syntax", keyword.GetLineInUMLScript());
                 }
                 outputObject.AddUMLClass(currentOpenObjects.pop());
                 currentPattern.clear();
             }
         }
         if(!currentPattern.isEmpty()){
-            throw new UMLScriptSyntaxError("invalid Syntax");
+            throw new UMLScriptSyntaxError("invalid Syntax", keywords[keywords.length -1].GetLineInUMLScript());
         }
         return outputObject;
     }
