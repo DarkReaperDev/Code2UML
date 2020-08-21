@@ -1,10 +1,12 @@
-package com.TextUML.UMLKeywords;
+package com.TextUML.UMLKeywords.KeywordTypes;
 
-public class UMLNameKeyword implements UMLKeyword {
+import com.TextUML.UMLKeywords.UMLKeywordTags;
+
+public class UMLNameKeywordType implements UMLKeywordType {
 
     String string;
 
-    public UMLNameKeyword(String string){
+    public UMLNameKeywordType(String string){
         this.string = string;
     }
 

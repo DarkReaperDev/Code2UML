@@ -1,6 +1,8 @@
-package com.TextUML.UMLKeywords;
+package com.TextUML.UMLKeywords.KeywordTypes;
 
-public enum UMLBracketKeyword implements UMLKeyword {
+import com.TextUML.UMLKeywords.UMLKeywordTags;
+
+public enum UMLBracketKeywordType implements UMLKeywordType {
 
     UMLBracketOpen("(", null),
     UMLBracketClose(")", null),
@@ -10,7 +12,7 @@ public enum UMLBracketKeyword implements UMLKeyword {
     String string;
     UMLKeywordTags tag;
 
-    UMLBracketKeyword(String string, UMLKeywordTags tag){
+    UMLBracketKeywordType(String string, UMLKeywordTags tag){
         this.string = string;
         this.tag = tag;
     }

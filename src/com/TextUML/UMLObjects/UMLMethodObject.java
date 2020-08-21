@@ -1,14 +1,14 @@
 package com.TextUML.UMLObjects;
 
 
-import com.TextUML.UMLKeywords.UMLModifierKeyword;
-import com.TextUML.UMLKeywords.UMLValueTypeKeyword;
+import com.TextUML.UMLKeywords.KeywordTypes.UMLModifierKeywordType;
+import com.TextUML.UMLKeywords.KeywordTypes.UMLValueTypeKeywordType;
 
 public class UMLMethodObject implements UMLObject{
 
     String name;
-    UMLModifierKeyword modifier = UMLModifierKeyword.UMlPrivate;
-    UMLValueTypeKeyword returnType = UMLValueTypeKeyword.UMLVoid;
+    UMLModifierKeywordType modifier = UMLModifierKeywordType.UMlPrivate;
+    UMLValueTypeKeywordType returnType = UMLValueTypeKeywordType.UMLVoid;
 
     public UMLMethodObject(){
 
@@ -18,17 +18,17 @@ public class UMLMethodObject implements UMLObject{
         this.name = name;
     }
 
-    public UMLMethodObject(String name, UMLModifierKeyword modifier){
+    public UMLMethodObject(String name, UMLModifierKeywordType modifier){
         this.name = name;
         this.modifier = modifier;
     }
 
-    public UMLMethodObject(String name,UMLValueTypeKeyword returnType){
+    public UMLMethodObject(String name, UMLValueTypeKeywordType returnType){
         this.name = name;
         this.returnType = returnType;
     }
 
-    public UMLMethodObject(String name, UMLModifierKeyword modifier, UMLValueTypeKeyword returnType){
+    public UMLMethodObject(String name, UMLModifierKeywordType modifier, UMLValueTypeKeywordType returnType){
         this.name = name;
         this.modifier = modifier;
         this.returnType = returnType;
@@ -42,11 +42,11 @@ public class UMLMethodObject implements UMLObject{
         return modifier.GetString() + " " + returnType.GetString() + " " + name + "()";
     }
 
-    public UMLModifierKeyword getModifier() {
+    public UMLModifierKeywordType getModifier() {
         return modifier;
     }
 
-    public UMLValueTypeKeyword getReturnType() {
+    public UMLValueTypeKeywordType getReturnType() {
         return returnType;
     }
 }

@@ -1,6 +1,8 @@
-package com.TextUML.UMLKeywords;
+package com.TextUML.UMLKeywords.KeywordTypes;
 
-public enum UMLValueTypeKeyword implements UMLKeyword{
+import com.TextUML.UMLKeywords.UMLKeywordTags;
+
+public enum UMLValueTypeKeywordType implements UMLKeywordType {
 
     UMLString("string"),
     UMLInt("int"),
@@ -10,7 +12,7 @@ public enum UMLValueTypeKeyword implements UMLKeyword{
 
     String string;
 
-    UMLValueTypeKeyword(String string){
+    UMLValueTypeKeywordType(String string){
         this.string = string;
     }
 

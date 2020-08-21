@@ -1,8 +1,8 @@
 package com.TextUML.UMLConverter;
 
-import com.TextUML.UMLErrorHandling.UMLScriptError;
 import com.TextUML.UMLErrorHandling.UMLScriptSyntaxError;
-import com.TextUML.UMLKeywords.*;
+import com.TextUML.UMLKeywords.KeywordTypes.*;
+import com.TextUML.UMLKeywords.UMLKeyword;
 import com.TextUML.UMLObjects.UMLClassObject;
 import com.TextUML.UMLObjects.UMLMemberObject;
 import com.TextUML.UMLObjects.UMLMethodObject;
@@ -11,15 +11,15 @@ import com.TextUML.UMLObjects.UMLObject;
 class UMLPatterns {
     static UMLPattern[] patterns = {
             //class, name, {
-            new UMLPattern(new Class<?>[]{UMLStructureKeyword.UMLClass.getClass(), UMLNameKeyword.class, UMLBracketKeyword.UMLCurlyBracketOpen.getClass()}),
+            new UMLPattern(new Class<?>[]{UMLStructureKeywordType.UMLClass.getClass(), UMLNameKeywordType.class, UMLBracketKeywordType.UMLCurlyBracketOpen.getClass()}),
             //value_type, name, ;
-            new UMLPattern(new Class<?>[]{UMLValueTypeKeyword.class, UMLNameKeyword.class, UMLEndLineKeyword.UMLSemiColon.getClass()}),
+            new UMLPattern(new Class<?>[]{UMLValueTypeKeywordType.class, UMLNameKeywordType.class, UMLEndLineKeywordType.UMLSemiColon.getClass()}),
             //modifier, value_type, name, ;
-            new UMLPattern(new Class<?>[]{UMLModifierKeyword.class, UMLValueTypeKeyword.class, UMLNameKeyword.class, UMLEndLineKeyword.UMLSemiColon.getClass()}),
+            new UMLPattern(new Class<?>[]{UMLModifierKeywordType.class, UMLValueTypeKeywordType.class, UMLNameKeywordType.class, UMLEndLineKeywordType.UMLSemiColon.getClass()}),
             //value_type, name, (, ), ;
-            new UMLPattern(new Class<?>[]{UMLValueTypeKeyword.class, UMLNameKeyword.class, UMLBracketKeyword.UMLBracketOpen.getClass(), UMLBracketKeyword.UMLBracketClose.getClass(), UMLEndLineKeyword.UMLSemiColon.getClass()}),
+            new UMLPattern(new Class<?>[]{UMLValueTypeKeywordType.class, UMLNameKeywordType.class, UMLBracketKeywordType.UMLBracketOpen.getClass(), UMLBracketKeywordType.UMLBracketClose.getClass(), UMLEndLineKeywordType.UMLSemiColon.getClass()}),
             //modifier, value_type, name, (, ), ;
-            new UMLPattern(new Class<?>[]{UMLModifierKeyword.class, UMLValueTypeKeyword.class, UMLNameKeyword.class, UMLBracketKeyword.UMLBracketOpen.getClass(), UMLBracketKeyword.UMLBracketClose.getClass(), UMLEndLineKeyword.UMLSemiColon.getClass()})
+            new UMLPattern(new Class<?>[]{UMLModifierKeywordType.class, UMLValueTypeKeywordType.class, UMLNameKeywordType.class, UMLBracketKeywordType.UMLBracketOpen.getClass(), UMLBracketKeywordType.UMLBracketClose.getClass(), UMLEndLineKeywordType.UMLSemiColon.getClass()})
     };
 
     static int GetMatchingPatternsId(UMLKeyword[] keywords) throws UMLScriptSyntaxError {
@@ -55,31 +55,31 @@ class UMLPatterns {
 
     //class, name
     private static UMLObject ConvertClassDeclaration(UMLKeyword[] keywords) {
-        UMLObject object = new UMLClassObject(keywords[1].GetString());
+        UMLObject object = new UMLClassObject(keywords[1].GetKeywordString());
         return object;
     }
 
     //value_type, name, ;
     private static UMLObject ConvertMember(UMLKeyword[] keywords) {
-        UMLObject object = new UMLMemberObject(keywords[1].GetString(), (UMLValueTypeKeyword)keywords[0]);
+        UMLObject object = new UMLMemberObject(keywords[1].GetKeywordString(), (UMLValueTypeKeywordType)keywords[0].GetType());
         return object;
     }
 
     //modifier, value_type, name, ;
     private static UMLObject ConvertMemberWithModifier(UMLKeyword[] keywords) {
-        UMLObject object = new UMLMemberObject(keywords[2].GetString(), (UMLModifierKeyword) keywords[0], (UMLValueTypeKeyword)keywords[1]);
+        UMLObject object = new UMLMemberObject(keywords[2].GetKeywordString(), (UMLModifierKeywordType) keywords[0].GetType(), (UMLValueTypeKeywordType)keywords[1].GetType());
         return object;
     }
 
     //value_type, name, (
     private static UMLObject ConvertMethod(UMLKeyword[] keywords) {
-        UMLObject object = new UMLMethodObject(keywords[1].GetString(), (UMLValueTypeKeyword)keywords[0]);
+        UMLObject object = new UMLMethodObject(keywords[1].GetKeywordString(), (UMLValueTypeKeywordType)keywords[0].GetType());
         return object;
     }
 
     //modifier, value_type, name, (
     private static UMLObject ConvertMethodWithModifier(UMLKeyword[] keywords) {
-        UMLObject object = new UMLMethodObject(keywords[2].GetString(), (UMLModifierKeyword) keywords[0], (UMLValueTypeKeyword)keywords[1]);
+        UMLObject object = new UMLMethodObject(keywords[2].GetKeywordString(), (UMLModifierKeywordType) keywords[0].GetType(), (UMLValueTypeKeywordType)keywords[1].GetType());
         return object;
     }
 
@@ -95,7 +95,7 @@ class UMLPatterns {
                 return false;
             }
             for (int i = 0; i < keywords.length; i++) {
-                if (!(keywords[i].getClass() == patternKeywords[i])) {
+                if (!(keywords[i].GetType().getClass() == patternKeywords[i])) {
                     return false;
                 }
             }

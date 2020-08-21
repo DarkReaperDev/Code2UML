@@ -1,12 +1,14 @@
-package com.TextUML.UMLKeywords;
+package com.TextUML.UMLKeywords.KeywordTypes;
 
-public enum UMLEndLineKeyword implements UMLKeyword{
+import com.TextUML.UMLKeywords.UMLKeywordTags;
+
+public enum UMLEndLineKeywordType implements UMLKeywordType {
     UMLSemiColon(";", UMLKeywordTags.EndPattern);
 
     String string;
     UMLKeywordTags tag;
 
-    UMLEndLineKeyword(String string, UMLKeywordTags tag){
+    UMLEndLineKeywordType(String string, UMLKeywordTags tag){
         this.string = string;
         this.tag = tag;
     }

@@ -1,32 +1,34 @@
 package com.TextUML.UMLKeywords;
 
+import com.TextUML.UMLKeywords.KeywordTypes.*;
+
 public class UMLKeywordList {
-    private static UMLKeyword[] keywordArray = {
-            UMLModifierKeyword.UMLPublic,
-            UMLModifierKeyword.UMlPrivate,
+    private static UMLKeywordType[] keywordArray = {
+            UMLModifierKeywordType.UMLPublic,
+            UMLModifierKeywordType.UMlPrivate,
 
-            UMLValueTypeKeyword.UMLString,
-            UMLValueTypeKeyword.UMLInt,
-            UMLValueTypeKeyword.UMLFloat,
-            UMLValueTypeKeyword.UMLBool,
-            UMLValueTypeKeyword.UMLVoid,
+            UMLValueTypeKeywordType.UMLString,
+            UMLValueTypeKeywordType.UMLInt,
+            UMLValueTypeKeywordType.UMLFloat,
+            UMLValueTypeKeywordType.UMLBool,
+            UMLValueTypeKeywordType.UMLVoid,
 
-            UMLStructureKeyword.UMLClass,
+            UMLStructureKeywordType.UMLClass,
 
-            UMLBracketKeyword.UMLBracketOpen,
-            UMLBracketKeyword.UMLBracketClose,
-            UMLBracketKeyword.UMLCurlyBracketOpen,
-            UMLBracketKeyword.UMLCurlyBracketClose,
+            UMLBracketKeywordType.UMLBracketOpen,
+            UMLBracketKeywordType.UMLBracketClose,
+            UMLBracketKeywordType.UMLCurlyBracketOpen,
+            UMLBracketKeywordType.UMLCurlyBracketClose,
 
-            UMLEndLineKeyword.UMLSemiColon
+            UMLEndLineKeywordType.UMLSemiColon
     };
 
-    public static UMLKeyword GetKeywordForString(String keywordString){
-        for(UMLKeyword keyword : keywordArray){
+    public static UMLKeywordType GetKeywordTypeForString(String keywordString){
+        for(UMLKeywordType keyword : keywordArray){
             if(keyword.GetString().equals(keywordString)){
                 return keyword;
             }
         }
-        return null;
+        return new UMLNameKeywordType(keywordString);
     }
 }

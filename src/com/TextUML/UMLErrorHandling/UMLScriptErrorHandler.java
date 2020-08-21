@@ -9,5 +9,4 @@ public class UMLScriptErrorHandler {
         String errorString = exception.getClass().getSimpleName() + " at line " + line + ": " + exception.getMessage();
         JOptionPane.showMessageDialog(null, errorString, exception.getClass().getSimpleName(), JOptionPane.ERROR_MESSAGE);
     }
-
 }

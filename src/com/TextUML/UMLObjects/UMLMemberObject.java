@@ -1,29 +1,29 @@
 package com.TextUML.UMLObjects;
 
-import com.TextUML.UMLKeywords.UMLModifierKeyword;
-import com.TextUML.UMLKeywords.UMLValueTypeKeyword;
+import com.TextUML.UMLKeywords.KeywordTypes.UMLModifierKeywordType;
+import com.TextUML.UMLKeywords.KeywordTypes.UMLValueTypeKeywordType;
 
 public class UMLMemberObject implements UMLObject{
 
     String name;
-    UMLModifierKeyword modifier = UMLModifierKeyword.UMlPrivate;
-    UMLValueTypeKeyword valueType = UMLValueTypeKeyword.UMLString;
+    UMLModifierKeywordType modifier = UMLModifierKeywordType.UMlPrivate;
+    UMLValueTypeKeywordType valueType = UMLValueTypeKeywordType.UMLString;
 
     public UMLMemberObject(String name){
         this.name = name;
     }
 
-    public UMLMemberObject(String name, UMLModifierKeyword modifier){
+    public UMLMemberObject(String name, UMLModifierKeywordType modifier){
         this.name = name;
         this.modifier = modifier;
     }
 
-    public UMLMemberObject(String name, UMLValueTypeKeyword valueType){
+    public UMLMemberObject(String name, UMLValueTypeKeywordType valueType){
         this.name = name;
         this.valueType = valueType;
     }
 
-    public UMLMemberObject(String name, UMLModifierKeyword modifier, UMLValueTypeKeyword valueType){
+    public UMLMemberObject(String name, UMLModifierKeywordType modifier, UMLValueTypeKeywordType valueType){
         this.name = name;
         this.modifier = modifier;
         this.valueType = valueType;
@@ -37,11 +37,11 @@ public class UMLMemberObject implements UMLObject{
         return modifier.GetString() + " " + valueType.GetString() + " " + name;
     }
 
-    public UMLModifierKeyword getModifier() {
+    public UMLModifierKeywordType getModifier() {
         return modifier;
     }
 
-    public UMLValueTypeKeyword getValueType() {
+    public UMLValueTypeKeywordType getValueType() {
         return valueType;
     }
 }

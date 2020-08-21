@@ -4,6 +4,8 @@ import com.TextUML.UMLErrorHandling.UMLScriptError;
 import com.TextUML.UMLErrorHandling.UMLScriptScopeError;
 import com.TextUML.UMLErrorHandling.UMLScriptSyntaxError;
 import com.TextUML.UMLKeywords.*;
+import com.TextUML.UMLKeywords.KeywordTypes.UMLBracketKeywordType;
+import com.TextUML.UMLKeywords.KeywordTypes.UMLKeywordType;
 import com.TextUML.UMLObjects.UMLClassObject;
 import com.TextUML.UMLObjects.UMLObject;
 import com.TextUML.UMLObjects.UMLScriptObject;
@@ -23,7 +25,7 @@ class UMLPatternRecognizer {
         for(UMLKeyword keyword : keywords){
             currentPattern.add(keyword);
 
-            if(keyword.HasTag(UMLKeywordTags.OpenInnerPattern) || keyword.HasTag(UMLKeywordTags.EndPattern)){
+            if(keyword.GetType().HasTag(UMLKeywordTags.OpenInnerPattern) || keyword.GetType().HasTag(UMLKeywordTags.EndPattern)){
                 UMLObject object = GetObjectForPattern(currentPattern.toArray(new UMLKeyword[]{}));
 
                 if(object.getClass() == UMLClassObject.class){
@@ -41,7 +43,7 @@ class UMLPatternRecognizer {
                 currentPattern.clear();
             }
 
-            else if(keyword == UMLBracketKeyword.UMLCurlyBracketClose){
+            else if(keyword.GetType() == UMLBracketKeywordType.UMLCurlyBracketClose){
                 if(currentOpenObjects.empty() || currentPattern.size() > 1){
                     throw new UMLScriptSyntaxError("invalid Syntax");
                 }

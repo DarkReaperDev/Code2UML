@@ -1,6 +1,9 @@
 package com.TextUML.UMLConverter;
 
 import com.TextUML.UMLKeywords.*;
+import com.TextUML.UMLKeywords.KeywordTypes.UMLKeywordType;
+import com.TextUML.UMLKeywords.KeywordTypes.UMLNameKeywordType;
+
 import java.util.*;
 
 class UMLKeywordRecognizer {
@@ -17,11 +20,8 @@ class UMLKeywordRecognizer {
     }
 
     private static UMLKeyword ConvertToUMLKeyword(String keywordString){
-        UMLKeyword keyword = UMLKeywordList.GetKeywordForString(keywordString);
-        if(keyword == null){
-            keyword = new UMLNameKeyword(keywordString);
-        }
-        return keyword;
+        UMLKeywordType keywordType = UMLKeywordList.GetKeywordTypeForString(keywordString);
+        return new UMLKeyword(keywordType);
     }
 
 }
