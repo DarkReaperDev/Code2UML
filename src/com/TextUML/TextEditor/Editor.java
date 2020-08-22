@@ -11,6 +11,8 @@ public class Editor {
     EditorActionsController actionsController;
     UMLDiagram umlDiagram = null;
 
+    String currentFilePath = "";
+
     public Editor(){
         InitializeComponents();
     }
@@ -36,6 +38,7 @@ public class Editor {
     public void Launch(){
         mainFrame.setJMenuBar(editorMenuBar);
         mainFrame.add(mainTextArea);
+        SetTitle("new file");
         mainFrame.show();
     }
 
@@ -53,6 +56,10 @@ public class Editor {
 
     public String GetScriptText(){
         return mainTextArea.getText();
+    }
+
+    public void SetScriptText(String text){
+        mainTextArea.setText(text);
     }
 
     public void SetUMLDiagram(UMLDiagram diagram){

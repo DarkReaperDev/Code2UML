@@ -1,5 +1,6 @@
 package com.TextUML.TextEditor;
 
+import com.TextUML.FileManager.FileManager;
 import com.TextUML.UMLConverter.UMLConverter;
 import com.TextUML.UMLDiagram.UMLDiagram;
 import com.TextUML.UMLErrorHandling.UMLScriptError;
@@ -30,5 +31,42 @@ class EditorActionsController {
         catch (UMLScriptError e){
             UMLScriptErrorHandler.HandleUMLScriptError(e);
         }
+    }
+
+    public void Save(){
+        String path;
+        if(editor.currentFilePath == "") {
+            path = FileManager.LetUserChooseFilePath();
+        }
+        else{
+            path = editor.currentFilePath;
+            if(path == ""){
+                return;
+            }
+        }
+        FileManager.SaveTextAsFile(path, editor.GetScriptText());
+        editor.currentFilePath = path;
+        editor.SetTitle(path);
+    }
+
+    public void SaveAs(){
+        String path = FileManager.LetUserChooseFilePath();
+        if(path == ""){
+            return;
+        }
+        FileManager.SaveTextAsFile(path, editor.GetScriptText());
+        editor.currentFilePath = path;
+        editor.SetTitle(path);
+    }
+
+    public void Load(){
+        String path = FileManager.LetUserChooseFilePath();
+        if(path == ""){
+            return;
+        }
+        String fileText = FileManager.LoadTextFromFile(path);
+        editor.SetScriptText(fileText);
+        editor.currentFilePath = path;
+        editor.SetTitle(path);
     }
 }
