@@ -10,7 +10,6 @@ class UMLTextSplitter {
 
     static String[][] GetSplitUMLText(String text){
         String[] textLines = GetLines(text);
-        System.out.println(textLines.length);
         textLines = RemoveLineBrakeCharactersFromLines(textLines);
         textLines = ReplaceTabsWithSpaces(textLines);
 

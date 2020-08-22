@@ -14,7 +14,6 @@ class UMLKeywordRecognizer {
 
         for(int line = 0; line < keywordStringLinesArray.length; line ++){
             for(String keywordString : keywordStringLinesArray[line]){
-                System.out.println(keywordString);
                 keywordList.add(ConvertToUMLKeyword(keywordString, line + 1)); //line + 1 because text area lines start at 1, but the lines array starts at 0
             }
         }

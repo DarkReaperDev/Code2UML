@@ -59,7 +59,6 @@ class UMLPatternRecognizer {
 
     private static UMLObject GetObjectForPattern(UMLKeyword[] currentPattern) throws UMLScriptSyntaxError {
         int matchingPatternId = UMLPatterns.GetMatchingPatternsId(currentPattern);
-        System.out.println(matchingPatternId);
         UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(currentPattern, matchingPatternId);
         return object;
     }
