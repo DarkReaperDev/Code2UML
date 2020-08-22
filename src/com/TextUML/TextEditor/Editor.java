@@ -32,6 +32,7 @@ public class Editor {
         actionsController = new EditorActionsController(this);
         mainFrame = new JFrame();
         mainTextArea = new JTextArea();
+        mainTextArea.setTabSize(2);
         editorMenuBar = new EditorMenuBar(actionsController);
     }
 

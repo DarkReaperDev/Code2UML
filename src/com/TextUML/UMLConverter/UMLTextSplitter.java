@@ -12,6 +12,7 @@ class UMLTextSplitter {
         String[] textLines = GetLines(text);
         System.out.println(textLines.length);
         textLines = RemoveLineBrakeCharactersFromLines(textLines);
+        textLines = ReplaceTabsWithSpaces(textLines);
 
         List<String> currentLine = new ArrayList<>();
         List<String[]> splitLines = new ArrayList<String[]>();
@@ -51,6 +52,14 @@ class UMLTextSplitter {
         String[] output = new String[lines.length];
         for(int i = 0; i < lines.length; i ++){
             output[i] = lines[i].replaceAll("[" + System.getProperty("line.separator") + "]", "");
+        }
+        return output;
+    }
+
+    private static String[] ReplaceTabsWithSpaces(String[] lines){
+        String[] output = new String[lines.length];
+        for(int i = 0; i < lines.length; i ++){
+            output[i] = lines[i].replace("\t", " ");
         }
         return output;
     }
