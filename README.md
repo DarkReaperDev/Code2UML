@@ -19,8 +19,10 @@ If you want to try it out yourself, you can either just donwload and run a compi
   
   
 ## Get started
-  1. After running the programm, a blank editor window pops up, where you can write your uml code. \[Image coming soon]
-  2. Type in \[Image coming soon]: 
+  1. After running the programm, a blank editor window pops up, where you can write your uml code.
+  <img src="https://imgur.com/Mubn477.png" alt="" width="400"/>\
+  _a blank editor window_
+  2. Type in: 
 ```
 class HelloWorld{
   private string message;
@@ -29,8 +31,18 @@ class HelloWorld{
   public void DoSomething();
 }
 ```
-  3. In the upper left corner click on `file` and then `run`. \[Image coming soon]
+  
+  <img src="https://imgur.com/Rn3kwWZ.png" alt="" width="400"/>\
+  _editor window with typed in uml code_
+  
+  3. In the upper left corner click on `file` and then `run`.\
+  <img src="https://imgur.com/xHcnAtq.png" alt="" width="400"/>\
+  _editor file -> run_
+  
   4. Now a new window should pop up, containing a UML diagram of your class. Congrats, you created your first UML diagram!
+  <img src="https://imgur.com/jOazwnc.png" alt="" width="400"/>\
+  _created uml diagram_
+  
   5. (Optionally) you can now save your uml script clicking on `file` and then `save as`. A window will show up where you can specify where you want to save the file. If you succesfulle saved your file you can always open it up again using `file` and then `open`. (It doesnt really matter if you save the file as a `.txt` or something else but I recommend saving it as a `.uml` file so you always know that it is more than just a text file.)
   
 ## Features
