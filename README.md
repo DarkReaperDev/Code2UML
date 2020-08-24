@@ -19,7 +19,7 @@ If you want to try it out yourself, you can either just donwload and run a compi
   
   
 ## Get started
-  1. After running the programm, a blank editor window pops up, where you can write your uml code.
+  1. After running the programm, a blank editor window pops up, where you can write your uml code. <br>
   <img src="https://imgur.com/Mubn477.png" alt="" width="400"/>\
   _a blank editor window_
   
