@@ -32,7 +32,7 @@ If you want to try it out yourself, you can either just donwload and run a compi
       public void DoSomething();
   }
 ```  
-  3. In the upper left corner click on `file` and then `run`.\
+  3. In the upper left corner click on `file` and then `run`. <br>
   <img src="https://imgur.com/xHcnAtq.png" alt="" width="400"/>\
   _editor file -> run_
   
