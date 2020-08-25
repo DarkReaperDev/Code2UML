@@ -7,13 +7,13 @@ It lets you focus more on your projects structure instead of thinking about desi
 If you want to try it out yourself, you can either just donwload and run a compiled version or donwload the source code and compile it yourself.
 
 #### Run compiled version
-  1. If you havent already download the newest version of the Java Runtime Environment (JRE) [here](https://www.java.com/de/download/) and install it.
+  1. If you havent already download the latest Java SE version [here](https://www.oracle.com/java/technologies/javase-downloads.html) and install it.
   2. Select a released Version of the project from the [releases tab](https://github.com/DarkReaperDev/Code2UML/releases) and download the zip-folder with the versions name. 
   3. Open the folder on your computer and double click the `.jar named` Code2UML + version name, for example : `Code2UMLv.1.0.jar`.
   4. If it doesnt work, open your command prompt or shell of choice and navigate to the folder where the `.jar` file is located. Then run `java -jar filename.jar` putting the name of the `.jar` file as `filename`.
    
 #### Compile the source code yourself
-  1. If you havent already download the newest version of the Java Development Kit (JDK) [here](https://www.oracle.com/de/java/technologies/javase/javase-jdk8-downloads.html) and install it.
+  1. If you havent already download the latest Java SE version [here](https://www.oracle.com/java/technologies/javase-downloads.html) and install it.
   2. Download the [com folder](https://github.com/DarkReaperDev/TextUML/tree/master/src/com) containing the source code from the [source folder](https://github.com/DarkReaperDev/TextUML/tree/master/src).
   3. Compile it using the self compile guide \[coming soon].
   
