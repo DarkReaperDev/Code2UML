@@ -36,7 +36,7 @@ If you want to try it out yourself, you can either just donwload and run a compi
   <img src="https://imgur.com/xHcnAtq.png" alt="" width="400"/>\
   _editor file -> run_
   
-  4. Now a new window should pop up, containing a UML diagram of your class. Congrats, you created your first UML diagram!
+  4. Now a new window should pop up, containing a UML diagram of your class. Congrats, you created your first UML diagram!<br>
   <img src="https://imgur.com/jOazwnc.png" alt="" width="400"/>\
   _created uml diagram_
   
