@@ -8,7 +8,7 @@ If you want to try it out yourself, you can either just donwload and run a compi
 
 #### Run compiled version
   1. If you havent already download the newest version of the Java Runtime Environment (JRE) [here](https://www.java.com/de/download/) and install it.
-  2. Select a released Version of the project from the [releases folder](https://github.com/DarkReaperDev/TextUML/tree/master/releases) and download the folder with the realeses name, for example: [v.1.0](https://github.com/DarkReaperDev/TextUML/tree/master/releases/v.1/v.1.0). 
+  2. Select a released Version of the project from the [releases tab](https://github.com/DarkReaperDev/Code2UML/releases) and download the zip-folder with the versions name. 
   3. Open the folder on your computer and double click the `.jar named` Code2UML + version name, for example : `Code2UMLv.1.0.jar`.
   4. If it doesnt work, open your command prompt or shell of choice and navigate to the folder where the `.jar` file is located. Then run `java -jar filename.jar` putting the name of the `.jar` file as `filename`.
    
