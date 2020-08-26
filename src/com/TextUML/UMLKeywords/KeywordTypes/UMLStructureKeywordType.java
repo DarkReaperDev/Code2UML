@@ -3,7 +3,8 @@ package com.TextUML.UMLKeywords.KeywordTypes;
 import com.TextUML.UMLKeywords.UMLKeywordTags;
 
 public enum UMLStructureKeywordType implements UMLKeywordType {
-    UMLClass("class");
+    UMLClass("class"),
+    UMLInterface("interface");
 
     String string;
 

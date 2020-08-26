@@ -14,6 +14,7 @@ public class ActiveUMLKeywordTypes {
             UMLValueTypeKeywordType.UMLVoid,
 
             UMLStructureKeywordType.UMLClass,
+            UMLStructureKeywordType.UMLInterface,
 
             UMLRelationKeywordType.UMLExtends,
             UMLRelationKeywordType.UMLImplements,

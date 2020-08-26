@@ -37,7 +37,14 @@ class UMLPatterns {
 
             //7 -> modifier, value_type, name, (, ), ;
             new UMLPattern(new Class<?>[]{UMLModifierKeywordType.class, UMLValueTypeKeywordType.class, UMLNameKeywordType.class, UMLBracketKeywordType.UMLBracketOpen.getClass(),
-                    UMLBracketKeywordType.UMLBracketClose.getClass(), UMLEndLineKeywordType.UMLSemiColon.getClass()})
+                    UMLBracketKeywordType.UMLBracketClose.getClass(), UMLEndLineKeywordType.UMLSemiColon.getClass()}),
+
+            //8 -> interface, name, {
+            new UMLPattern(new Class<?>[]{UMLStructureKeywordType.UMLInterface.getClass(), UMLNameKeywordType.class, UMLBracketKeywordType.UMLCurlyBracketOpen.getClass()}),
+
+            //9 -> interface, name, extends, name, {
+            new UMLPattern(new Class<?>[]{UMLStructureKeywordType.UMLInterface.getClass(), UMLNameKeywordType.class, UMLRelationKeywordType.UMLExtends.getClass(),
+                    UMLNameKeywordType.class, UMLBracketKeywordType.UMLCurlyBracketOpen.getClass()}),
     };
 
     static int GetMatchingPatternsId(UMLKeyword[] keywords) throws UMLScriptSyntaxError {
@@ -75,6 +82,12 @@ class UMLPatterns {
             }
             case 7:{
                 return ConvertMethodWithModifier(keywords);
+            }
+            case 8:{
+                return ConvertInterface(keywords);
+            }
+            case 9:{
+                return ConvertInterfaceWithParent(keywords);
             }
         }
         throw new UMLScriptSyntaxError("invalid syntax", keywords[keywords.length - 1].GetLineInUMLScript());
@@ -129,6 +142,21 @@ class UMLPatterns {
     //modifier, value_type, name, (
     private static UMLObject ConvertMethodWithModifier(UMLKeyword[] keywords) {
         UMLObject object = new UMLMethodObject(keywords[2].GetKeywordString(), (UMLModifierKeywordType) keywords[0].GetType(), (UMLValueTypeKeywordType)keywords[1].GetType());
+        return object;
+    }
+
+    //class, interface, {
+    private static UMLObject ConvertInterface(UMLKeyword[] keywords) {
+        UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
+        object.setInterface(true);
+        return object;
+    }
+
+    //interface, name, extends, name, {
+    private static UMLObject ConvertInterfaceWithParent(UMLKeyword[] keywords) {
+        UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
+        object.setUmlParentName(keywords[3].GetKeywordString());
+        object.setInterface(true);
         return object;
     }
 

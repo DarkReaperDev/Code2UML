@@ -16,6 +16,8 @@ public class UMLClassObject implements UMLObject {
     String umlInterfaceName = "";
     String name;
 
+    boolean IsInterface = false;
+
     public UMLClassObject(String name){
         this.name = name;
     }
@@ -27,6 +29,30 @@ public class UMLClassObject implements UMLObject {
         else if(object.getClass() == UMLMethodObject.class){
             umlMethods.add((UMLMethodObject) object);
         }
+    }
+
+    @Override
+    public String getFullString() {
+        return name + " extends " + umlParentName + " implements " + umlInterfaceName;
+    }
+
+    private static UMLObject[] MergeUMLObjectArrays(UMLObject[] firstArray, UMLObject[] secondArray){
+        int firstArrayLength = firstArray.length;
+        int secondArrayLength = secondArray.length;
+        UMLObject[] resultArray = new UMLObject[firstArrayLength + secondArrayLength];
+
+        System.arraycopy(firstArray, 0, resultArray, 0, firstArrayLength);
+        System.arraycopy(secondArray, 0, resultArray, firstArrayLength, secondArrayLength);
+
+        return  resultArray;
+    }
+
+    public boolean isInterface() {
+        return IsInterface;
+    }
+
+    public void setInterface(boolean anInterface) {
+        IsInterface = anInterface;
     }
 
     public String getName() {
@@ -51,22 +77,6 @@ public class UMLClassObject implements UMLObject {
 
     public void setUmlInterfaceName(String umlInterfaceName) {
         this.umlInterfaceName = umlInterfaceName;
-    }
-
-    @Override
-    public String getFullString() {
-        return name + " extends " + umlParentName + " implements " + umlInterfaceName;
-    }
-
-    private static UMLObject[] MergeUMLObjectArrays(UMLObject[] firstArray, UMLObject[] secondArray){
-        int firstArrayLength = firstArray.length;
-        int secondArrayLength = secondArray.length;
-        UMLObject[] resultArray = new UMLObject[firstArrayLength + secondArrayLength];
-
-        System.arraycopy(firstArray, 0, resultArray, 0, firstArrayLength);
-        System.arraycopy(secondArray, 0, resultArray, firstArrayLength, secondArrayLength);
-
-        return  resultArray;
     }
 
 }
