@@ -8,6 +8,12 @@ public class UMLClassObject implements UMLObject {
 
     List<UMLMethodObject> umlMethods = new ArrayList<>();
     List<UMLMemberObject> umlMembers = new ArrayList<>();
+
+    UMLClassObject ParentClass = null;
+    UMLClassObject ImplementedInterface = null;
+
+    String umlParentName = "";
+    String umlInterfaceName = "";
     String name;
 
     public UMLClassObject(String name){
@@ -39,9 +45,17 @@ public class UMLClassObject implements UMLObject {
         return MergeUMLObjectArrays(getUmlMembers(), getUmlMethods());
     }
 
+    public void setUmlParentName(String umlParentName) {
+        this.umlParentName = umlParentName;
+    }
+
+    public void setUmlInterfaceName(String umlInterfaceName) {
+        this.umlInterfaceName = umlInterfaceName;
+    }
+
     @Override
     public String getFullString() {
-        return name;
+        return name + " extends " + umlParentName + " implements " + umlInterfaceName;
     }
 
     private static UMLObject[] MergeUMLObjectArrays(UMLObject[] firstArray, UMLObject[] secondArray){

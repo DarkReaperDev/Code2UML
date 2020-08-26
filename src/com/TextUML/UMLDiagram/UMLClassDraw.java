@@ -37,7 +37,7 @@ class UMLClassDraw {
     }
 
     private int GetWidth(){
-        int longestStringSize = classObject.getName().length();
+        int longestStringSize = classObject.getFullString().length();
         UMLObject[] objectsToDraw = classObject.getUMLMembersAndMethods();
 
         for(UMLObject umlObject: objectsToDraw){

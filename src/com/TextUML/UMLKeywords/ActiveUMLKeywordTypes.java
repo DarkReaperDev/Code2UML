@@ -2,7 +2,7 @@ package com.TextUML.UMLKeywords;
 
 import com.TextUML.UMLKeywords.KeywordTypes.*;
 
-public class UMLKeywordList {
+public class ActiveUMLKeywordTypes {
     private static UMLKeywordType[] keywordArray = {
             UMLModifierKeywordType.UMLPublic,
             UMLModifierKeywordType.UMlPrivate,
@@ -15,6 +15,9 @@ public class UMLKeywordList {
 
             UMLStructureKeywordType.UMLClass,
 
+            UMLRelationKeywordType.UMLExtends,
+            UMLRelationKeywordType.UMLImplements,
+
             UMLBracketKeywordType.UMLBracketOpen,
             UMLBracketKeywordType.UMLBracketClose,
             UMLBracketKeywordType.UMLCurlyBracketOpen,
@@ -23,7 +26,7 @@ public class UMLKeywordList {
             UMLEndLineKeywordType.UMLSemiColon
     };
 
-    public static UMLKeywordType GetKeywordTypeForString(String keywordString){
+    public static UMLKeywordType GetKeywordTypeFromString(String keywordString){
         for(UMLKeywordType keyword : keywordArray){
             if(keyword.GetString().equals(keywordString)){
                 return keyword;
