@@ -16,7 +16,7 @@ public class UMLClassObject implements UMLObject {
     String umlInterfaceName = "";
     String name;
 
-    boolean IsInterface = false;
+    boolean isInterface = false;
 
     public UMLClassObject(String name){
         this.name = name;
@@ -33,7 +33,10 @@ public class UMLClassObject implements UMLObject {
 
     @Override
     public String getFullString() {
-        return name + " extends " + umlParentName + " implements " + umlInterfaceName;
+        if(isInterface){
+            return "<<interface>> " + name;
+        }
+        return name;
     }
 
     private static UMLObject[] MergeUMLObjectArrays(UMLObject[] firstArray, UMLObject[] secondArray){
@@ -48,11 +51,11 @@ public class UMLClassObject implements UMLObject {
     }
 
     public boolean isInterface() {
-        return IsInterface;
+        return isInterface;
     }
 
     public void setInterface(boolean anInterface) {
-        IsInterface = anInterface;
+        isInterface = anInterface;
     }
 
     public String getName() {
