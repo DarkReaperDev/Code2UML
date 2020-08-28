@@ -5,30 +5,49 @@ import java.util.List;
 
 public class UMLScriptObject {
 
-    List<UMLClassObject> uml_classes = new ArrayList<>();
+    List<UMLClassObject> umlClasses = new ArrayList<>();
 
 
     public UMLScriptObject(){
-        uml_classes = new ArrayList<UMLClassObject>();
+        umlClasses = new ArrayList<UMLClassObject>();
+    }
+
+    public void LinkUMLClassesAndCreateMissing(){
+        int count = umlClasses.size(); //counter for loop needs to be declared before, cause list size changes while loop is running
+
+        for(int i = 0; i < count; i ++){
+            if(umlClasses.get(i).umlParentName != ""){
+                umlClasses.get(i).ParentClass = GetClassObjectOrCreateNew(umlClasses.get(i).umlParentName);
+            }
+            if(umlClasses.get(i).umlInterfaceName != ""){
+                umlClasses.get(i).ImplementedInterface = GetClassObjectOrCreateNew(umlClasses.get(i).umlInterfaceName);
+            }
+        }
+    }
+
+    public UMLClassObject GetClassObjectOrCreateNew(String objectName){
+        UMLClassObject object = GetClassByName(objectName);
+        if(object == null){
+            object = new UMLClassObject(objectName);
+            umlClasses.add(object);
+        }
+        return object;
+    }
+
+    public UMLClassObject GetClassByName(String name){
+        for(UMLClassObject classObject : umlClasses){
+            if(classObject.name == name){
+                return classObject;
+            }
+        }
+        return null;
     }
 
     public void AddUMLClass(UMLClassObject uml_class){
-        uml_classes.add(uml_class);
+        umlClasses.add(uml_class);
     }
-
-    public UMLClassObject GetUMLClassByIndex(){
-        return null;
-    }
-
-    public UMLClassObject GetUMLClassByName(){
-        return null;
-    }
-
-    public void AddUMLObject(UMLObject object){
-        System.out.println(object.getClass());
-    }
-
+    
     public UMLClassObject[] GetUMLClassObjects(){
-        return(uml_classes.toArray(new UMLClassObject[]{}));
+        return(umlClasses.toArray(new UMLClassObject[]{}));
     }
 }

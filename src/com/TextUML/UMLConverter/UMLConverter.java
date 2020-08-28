@@ -10,6 +10,7 @@ public class UMLConverter {
         String[][] output = UMLTextSplitter.GetSplitUMLText(umlText);
         UMLKeyword[] outputKeywords = UMLKeywordRecognizer.GetUMLKeywords(output);
         UMLScriptObject scriptObject = UMLPatternRecognizer.ConvertUMLKeywordsToObject(outputKeywords);
+        scriptObject.LinkUMLClassesAndCreateMissing();
         return scriptObject;
     }
 }
