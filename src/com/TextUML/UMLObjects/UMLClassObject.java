@@ -8,14 +8,12 @@ public class UMLClassObject implements UMLObject {
 
     List<UMLMethodObject> umlMethods = new ArrayList<>();
     List<UMLMemberObject> umlMembers = new ArrayList<>();
-
-    UMLClassObject ParentClass = null;
-    UMLClassObject ImplementedInterface = null;
+    List<UMLClassObject> umlSubclasses= new ArrayList<>();
 
     String umlParentName = "";
+
     String umlInterfaceName = "";
     String name;
-
     boolean isInterface = false;
 
     public UMLClassObject(String name){
@@ -48,6 +46,22 @@ public class UMLClassObject implements UMLObject {
         System.arraycopy(secondArray, 0, resultArray, firstArrayLength, secondArrayLength);
 
         return  resultArray;
+    }
+
+    public void AddSubClass(UMLClassObject subclassObject){
+        umlSubclasses.add(subclassObject);
+    }
+
+    public List<UMLClassObject> getUmlSubclasses() {
+        return umlSubclasses;
+    }
+
+    public String getUmlParentName() {
+        return umlParentName;
+    }
+
+    public String getUmlInterfaceName() {
+        return umlInterfaceName;
     }
 
     public boolean isInterface() {

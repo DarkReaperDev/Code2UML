@@ -16,11 +16,13 @@ public class UMLScriptObject {
         int count = umlClasses.size(); //counter for loop needs to be declared before, cause list size changes while loop is running
 
         for(int i = 0; i < count; i ++){
+
             if(umlClasses.get(i).umlParentName != ""){
-                umlClasses.get(i).ParentClass = GetClassObjectOrCreateNew(umlClasses.get(i).umlParentName);
+
+                GetClassObjectOrCreateNew(umlClasses.get(i).umlParentName).AddSubClass(umlClasses.get(i));
             }
             if(umlClasses.get(i).umlInterfaceName != ""){
-                umlClasses.get(i).ImplementedInterface = GetClassObjectOrCreateNew(umlClasses.get(i).umlInterfaceName);
+                GetClassObjectOrCreateNew(umlClasses.get(i).umlInterfaceName).AddSubClass(umlClasses.get(i));
             }
         }
     }
@@ -36,7 +38,8 @@ public class UMLScriptObject {
 
     public UMLClassObject GetClassByName(String name){
         for(UMLClassObject classObject : umlClasses){
-            if(classObject.name == name){
+            if(classObject.name.equals(name)){
+                System.out.println(name);
                 return classObject;
             }
         }

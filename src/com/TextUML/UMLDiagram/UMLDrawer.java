@@ -8,46 +8,44 @@ import java.util.List;
 
 class UMLDrawer {
 
-    private static Font font;
-    private static int margin = 25;
-    private static List<UMLClassDraw> drawnClasses = new ArrayList<>();
+    static int currentXPos = 20;
+    static int currentYPos = 20;
 
-    public static void DrawUMLClass(UMLClassObject classToDraw, Graphics graphics){
-        UMLClassDraw classDraw = new UMLClassDraw(classToDraw, GetCurrentXPos(), GetCurrentYPos());
-        classDraw.Draw(graphics);
-        drawnClasses.add(classDraw);
-    }
+    public static void DrawUMLClass(UMLClassObject[] classesToDraw, Graphics graphics) {
+        UMLClassObject[] rootClasses = GetRootClasses(classesToDraw);
+        List<UMLClassDraw> rootClassDraws = new ArrayList<>();
 
-    public static void Reset(){
-        drawnClasses = new ArrayList<>();
-    }
+        for (UMLClassObject rootClass : rootClasses) {
+            UMLClassDraw rootClassDraw = new UMLClassDraw(rootClass, currentXPos, currentYPos);
+            rootClassDraws.add(rootClassDraw);
+            currentXPos += rootClassDraw.GetFullRect().width;
 
-    private static int GetCurrentXPos(){
-        if(drawnClasses.isEmpty()){
-            return margin;
-        }
-        else{
-            Rectangle lastDrawnClassRect = drawnClasses.get(drawnClasses.size()-1).GetFullRect();
-            return lastDrawnClassRect.x + lastDrawnClassRect.width + margin;
+            rootClassDraw.Draw(graphics);
         }
     }
 
-    private static int GetCurrentYPos(){
-        if(drawnClasses.isEmpty()){
-            return margin;
+    private static UMLClassObject[] GetRootClasses(UMLClassObject[] classesToGetFrom) {
+        List<UMLClassObject> rootClasses = new ArrayList<>();
+        for (UMLClassObject classObject : classesToGetFrom) {
+            if (classObject.getUmlParentName() == "") {
+                rootClasses.add(classObject);
+            }
         }
-        else{
-            Rectangle lastDrawnClassRect = drawnClasses.get(drawnClasses.size()-1).GetFullRect();
-            return lastDrawnClassRect.y;
-        }
+        return rootClasses.toArray(new UMLClassObject[]{});
     }
 
-
-    public static void SetFont(Font font) {
-        UMLDrawer.font = font;
+    private static UMLClassDraw GetClassDrawByClassObject(UMLClassObject objectToGetWith, UMLClassDraw[] ArrayToGetFrom) {
+        for (UMLClassDraw classDraw : ArrayToGetFrom) {
+            if (classDraw.GetClassObject().getName() == objectToGetWith.getName()) {
+                System.out.println("ok");
+                return classDraw;
+            }
+        }
+        return null;
     }
 
-    public static void SetMargin(int margin) {
-        UMLDrawer.margin = margin;
+    public static void Reset() {
+        currentXPos = 20;
+        currentYPos = 20;
     }
 }
