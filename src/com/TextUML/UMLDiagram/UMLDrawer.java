@@ -16,7 +16,8 @@ class UMLDrawer {
         List<UMLClassDraw> rootClassDraws = new ArrayList<>();
 
         for (UMLClassObject rootClass : rootClasses) {
-            UMLClassDraw rootClassDraw = new UMLClassDraw(rootClass, currentXPos, currentYPos);
+            UMLClassDraw rootClassDraw = new UMLClassDraw(rootClass);
+            rootClassDraw.CreateAt(currentXPos, currentYPos);
             rootClassDraws.add(rootClassDraw);
             currentXPos += rootClassDraw.GetFullRect().width;
 
