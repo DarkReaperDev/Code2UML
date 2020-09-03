@@ -22,10 +22,7 @@ class UMLClassDraw {
     private int characterHeight = 9;
     private int lineSpacing = 5;
 
-    private int margin = 20;
-
-    private int paddingX = 5;
-    private int paddingY = 5;
+    private int insideClassPadding = 5;
 
     private List<UMLClassDraw> subclassDraws = new ArrayList<UMLClassDraw>();
 
@@ -39,7 +36,7 @@ class UMLClassDraw {
         fullRectangle.y = y;
 
         classRectangle.x = fullRectangle.x + fullRectangle.width/2 - classRectangle.width/2;
-        classRectangle.y = fullRectangle.y + margin;
+        classRectangle.y = fullRectangle.y;
 
         classSectionRectangle.x = classRectangle.x;
         classSectionRectangle.y = classRectangle.y;
@@ -48,7 +45,7 @@ class UMLClassDraw {
         methodSectionRectangle.x = classRectangle.x;
         methodSectionRectangle.y = memberSectionRectangle.y + memberSectionRectangle.height;
 
-        subclassesRectangle.y = classRectangle.y + classSectionRectangle.height + margin;
+        subclassesRectangle.y = classRectangle.y + classRectangle.height;
         subclassesRectangle.x = fullRectangle.x + fullRectangle.width/2 - subclassesRectangle.width/2;
 
         SetSubclassDrawsPos();
@@ -61,22 +58,23 @@ class UMLClassDraw {
         for(UMLClassDraw subClassDraw : subclassDraws){
             subClassDraw.CreateAt(currentXPos, currentYPos);
 
-            currentXPos += subClassDraw.GetFullRect().width + margin;
+            currentXPos += subClassDraw.GetFullRect().width;
         }
     }
 
     private void Initialize(){
         int[] sectionHeights = GetSectionHeights();
-        classRectangle = new Rectangle(0, 0, GetClassWidth(), sectionHeights[3]);
+        int mainClassWidth = GetClassWidth();
+        classRectangle = new Rectangle(0, 0, mainClassWidth, sectionHeights[3]);
 
         InitializeSubclasses();
 
         subclassesRectangle = new Rectangle(0, 0, GetSubclassesWidth(), GetSubclassesHeight());
         fullRectangle = new Rectangle(0, 0, GetFullRectWidth(), GetFullRectHeight());
 
-        classSectionRectangle = new Rectangle(0, 0, classRectangle.width, sectionHeights[0]);
-        memberSectionRectangle = new Rectangle(0, 0, classRectangle.width, sectionHeights[1]);
-        methodSectionRectangle = new Rectangle(0, 0, classRectangle.width, sectionHeights[2]);
+        classSectionRectangle = new Rectangle(0, 0, mainClassWidth, sectionHeights[0]);
+        memberSectionRectangle = new Rectangle(0, 0, mainClassWidth, sectionHeights[1]);
+        methodSectionRectangle = new Rectangle(0, 0, mainClassWidth, sectionHeights[2]);
     }
 
     private void InitializeSubclasses(){
@@ -90,9 +88,9 @@ class UMLClassDraw {
     private int[] GetSectionHeights(){
         //[0]height of class header, [1]height of member Section, [2] height of method section, [3] height of everything together
         int[] heights = new int[4];
-        heights[0] = characterHeight + 2*paddingY;
-        heights[1] = 2*paddingY + classObject.getUmlMembers().length * (characterHeight+ lineSpacing) - lineSpacing;
-        heights[2] = 2*paddingY + classObject.getUmlMethods().length * (characterHeight+ lineSpacing) - lineSpacing;
+        heights[0] = characterHeight + 2* insideClassPadding;
+        heights[1] = 2*insideClassPadding + classObject.getUmlMembers().length * (characterHeight+ lineSpacing) - lineSpacing;
+        heights[2] = 2*insideClassPadding + classObject.getUmlMethods().length * (characterHeight+ lineSpacing) - lineSpacing;
         heights[3] = heights[0] + heights[1] + heights[2];
         return heights;
     }
@@ -106,14 +104,13 @@ class UMLClassDraw {
                 longestStringSize = umlObject.getFullString().length();
             }
         }
-        return longestStringSize * characterWidth + 2*paddingX;
+        return longestStringSize * characterWidth + 2* insideClassPadding;
     }
 
     private int GetSubclassesWidth(){
-        int width = margin;
+        int width = 0;
         for(UMLClassDraw subclassDraw: subclassDraws){
             width += subclassDraw.GetFullRect().width;
-            width += margin;
         }
         return width;
     }
@@ -125,7 +122,7 @@ class UMLClassDraw {
                 height = subclassDraw.fullRectangle.height;
             }
         }
-        return height + 2* margin;
+        return height;
     }
 
     private int GetFullRectX(){
@@ -149,14 +146,6 @@ class UMLClassDraw {
     private int GetFullRectHeight(){
         return classRectangle.height + subclassesRectangle.height;
     }
-
-
-
-
-
-
-
-
 
     public void Draw(Graphics graphics){
         DrawSubclasses(graphics);
@@ -192,7 +181,7 @@ class UMLClassDraw {
 
     private void DrawUMLObjectStrings(UMLObject[] objectsToDraw, Rectangle rect, Graphics graphics){
         for(int i = 0; i < objectsToDraw.length; i ++){
-            graphics.drawString(objectsToDraw[i].getFullString(), rect.x + paddingX, rect.y + paddingY + characterHeight + (characterHeight + lineSpacing) * i);
+            graphics.drawString(objectsToDraw[i].getFullString(), rect.x + insideClassPadding, rect.y + insideClassPadding + characterHeight + (characterHeight + lineSpacing) * i);
         }
     }
 
