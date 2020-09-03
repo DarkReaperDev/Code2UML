@@ -13,10 +13,10 @@ class UMLDrawer {
 
     public static void DrawUMLClass(UMLClassObject[] classesToDraw, Graphics graphics) {
         UMLClassObject[] rootClasses = GetRootClasses(classesToDraw);
-        List<UMLClassDraw> rootClassDraws = new ArrayList<>();
+        List<UMLRootClassDraw> rootClassDraws = new ArrayList<>();
 
         for (UMLClassObject rootClass : rootClasses) {
-            UMLClassDraw rootClassDraw = new UMLClassDraw(rootClass);
+            UMLRootClassDraw rootClassDraw = new UMLRootClassDraw(rootClass);
             rootClassDraw.CreateAt(currentXPos, currentYPos);
             rootClassDraws.add(rootClassDraw);
             currentXPos += rootClassDraw.GetFullRect().width;
@@ -35,8 +35,8 @@ class UMLDrawer {
         return rootClasses.toArray(new UMLClassObject[]{});
     }
 
-    private static UMLClassDraw GetClassDrawByClassObject(UMLClassObject objectToGetWith, UMLClassDraw[] ArrayToGetFrom) {
-        for (UMLClassDraw classDraw : ArrayToGetFrom) {
+    private static UMLRootClassDraw GetClassDrawByClassObject(UMLClassObject objectToGetWith, UMLRootClassDraw[] ArrayToGetFrom) {
+        for (UMLRootClassDraw classDraw : ArrayToGetFrom) {
             if (classDraw.GetClassObject().getName() == objectToGetWith.getName()) {
                 System.out.println("ok");
                 return classDraw;
