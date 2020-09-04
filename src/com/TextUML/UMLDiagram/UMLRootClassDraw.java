@@ -10,22 +10,17 @@ import java.util.List;
 class UMLRootClassDraw {
 
     private UMLClassObject classObject;
+    private Graphics graphics;
 
     private Rectangle fullRectangle;
     private Rectangle subclassesRectangle;
 
     private UMLClassDraw mainClassDraw;
 
-
-    private int characterWidth = 6;
-    private int characterHeight = 9;
-    private int lineSpacing = 5;
-
-    private int insideClassPadding = 5;
-
     private List<UMLRootClassDraw> subclassDraws = new ArrayList<UMLRootClassDraw>();
 
-    public UMLRootClassDraw(UMLClassObject classObject){
+    public UMLRootClassDraw(UMLClassObject classObject, Graphics graphics){
+        this.graphics = graphics;
         this.classObject = classObject;
         Initialize();
     }
@@ -60,7 +55,7 @@ class UMLRootClassDraw {
     private void Initialize(){
         InitializeSubclasses();
 
-        mainClassDraw = new UMLClassDraw(classObject);
+        mainClassDraw = new UMLClassDraw(classObject, graphics.getFontMetrics());
 
         subclassesRectangle = new Rectangle(0, 0, GetSubclassesWidth(), GetSubclassesHeight());
         fullRectangle = new Rectangle(0, 0, GetFullRectWidth(), GetFullRectHeight());
@@ -69,7 +64,7 @@ class UMLRootClassDraw {
 
     private void InitializeSubclasses(){
         for(UMLClassObject subclassObject : classObject.getUmlSubclasses()){
-            UMLRootClassDraw subclassDraw = new UMLRootClassDraw(subclassObject);
+            UMLRootClassDraw subclassDraw = new UMLRootClassDraw(subclassObject, graphics);
             subclassDraws.add(subclassDraw);
         }
     }
@@ -114,14 +109,14 @@ class UMLRootClassDraw {
         return mainClassDraw.GetFullRect().height + subclassesRectangle.height;
     }
 
-    public void Draw(Graphics graphics){
+    public void Draw(){
         mainClassDraw.Draw(graphics);
         DrawSubclasses(graphics);
     }
 
     private void DrawSubclasses(Graphics graphics){
         for(UMLRootClassDraw subclassDraw : subclassDraws){
-            subclassDraw.Draw(graphics);
+            subclassDraw.Draw();
         }
     }
 

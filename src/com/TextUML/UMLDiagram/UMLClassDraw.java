@@ -8,21 +8,20 @@ import java.awt.*;
 public class UMLClassDraw {
 
     private UMLClassObject classObject;
+    private FontMetrics fontMetrics;
 
     private Rectangle fullRectangle;
     private Rectangle classSectionRectangle;
     private Rectangle memberSectionRectangle;
     private Rectangle methodSectionRectangle;
 
-
-    private int characterWidth = 6;
-    private int characterHeight = 9;
     private int lineSpacing = 5;
 
     private int insideClassPadding = 5;
 
-    public UMLClassDraw(UMLClassObject classObject){
+    public UMLClassDraw(UMLClassObject classObject, FontMetrics fontMetrics){
         this.classObject = classObject;
+        this.fontMetrics = fontMetrics;
         Initialize();
     }
 
@@ -50,6 +49,7 @@ public class UMLClassDraw {
 
     private int[] GetSectionHeights(){
         //[0]height of class header, [1]height of member Section, [2] height of method section, [3] height of everything together
+        int characterHeight = fontMetrics.getHeight();
         int[] heights = new int[4];
         heights[0] = characterHeight + 2* insideClassPadding;
         heights[1] = 2*insideClassPadding + classObject.getUmlMembers().length * (characterHeight+ lineSpacing) - lineSpacing;
@@ -59,15 +59,15 @@ public class UMLClassDraw {
     }
 
     private int GetClassWidth(){
-        int longestStringSize = classObject.getFullString().length();
+        String longestString = classObject.getFullString();
         UMLObject[] objectsToDraw = classObject.getUMLMembersAndMethods();
 
         for(UMLObject umlObject: objectsToDraw){
-            if(umlObject.getFullString().length() > longestStringSize){
-                longestStringSize = umlObject.getFullString().length();
+            if(umlObject.getFullString().length() > longestString.length()){
+                longestString = umlObject.getFullString();
             }
         }
-        return longestStringSize * characterWidth + 2* insideClassPadding;
+        return fontMetrics.stringWidth(longestString) + 2* insideClassPadding;
     }
 
     public void Draw(Graphics graphics){
@@ -89,12 +89,13 @@ public class UMLClassDraw {
     }
 
     private void DrawStringCentered(String string, Rectangle rect, Graphics graphics){
-        int xPos = (int)rect.getCenterX() - string.length() / 2 * characterWidth;
-        int yPos = (int)rect.getCenterY() + characterHeight / 2;
+        int xPos = (int)rect.getCenterX() - fontMetrics.stringWidth(string)/2;
+        int yPos = (int)rect.getCenterY() + fontMetrics.getHeight() / 2;
         graphics.drawString(string, xPos, yPos);
     }
 
     private void DrawUMLObjectStrings(UMLObject[] objectsToDraw, Rectangle rect, Graphics graphics){
+        int characterHeight = fontMetrics.getHeight();
         for(int i = 0; i < objectsToDraw.length; i ++){
             graphics.drawString(objectsToDraw[i].getFullString(), rect.x + insideClassPadding, rect.y + insideClassPadding + characterHeight + (characterHeight + lineSpacing) * i);
         }

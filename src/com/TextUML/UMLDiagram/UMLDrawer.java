@@ -16,12 +16,12 @@ class UMLDrawer {
         List<UMLRootClassDraw> rootClassDraws = new ArrayList<>();
 
         for (UMLClassObject rootClass : rootClasses) {
-            UMLRootClassDraw rootClassDraw = new UMLRootClassDraw(rootClass);
+            UMLRootClassDraw rootClassDraw = new UMLRootClassDraw(rootClass, graphics);
             rootClassDraw.CreateAt(currentXPos, currentYPos);
             rootClassDraws.add(rootClassDraw);
             currentXPos += rootClassDraw.GetFullRect().width;
 
-            rootClassDraw.Draw(graphics);
+            rootClassDraw.Draw();
         }
     }
 
