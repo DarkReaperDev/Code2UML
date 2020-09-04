@@ -31,6 +31,7 @@ public class Editor {
     void InitializeComponents(){
         actionsController = new EditorActionsController(this);
         mainFrame = new JFrame();
+        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         mainTextArea = new JTextArea();
         mainTextArea.setTabSize(2);
         editorMenuBar = new EditorMenuBar(actionsController);
