@@ -11,13 +11,15 @@ public class UMLClassDraw {
     private FontMetrics fontMetrics;
 
     private Rectangle fullRectangle;
-    private Rectangle classSectionRectangle;
+    private Rectangle classRectangle;
+    private Rectangle classHeaderRectangle;
     private Rectangle memberSectionRectangle;
     private Rectangle methodSectionRectangle;
 
     private int lineSpacing = 5;
 
     private int insideClassPadding = 5;
+    private int margin = 10;
 
     public UMLClassDraw(UMLClassObject classObject, FontMetrics fontMetrics){
         this.classObject = classObject;
@@ -28,22 +30,26 @@ public class UMLClassDraw {
     private void Initialize(){
         int[] sectionHeights = GetSectionHeights();
         int classWidth = GetClassWidth();
-        fullRectangle = new Rectangle(0, 0, classWidth, sectionHeights[3]);
-
-        classSectionRectangle = new Rectangle(0, 0, classWidth, sectionHeights[0]);
+        classHeaderRectangle = new Rectangle(0, 0, classWidth, sectionHeights[0]);
         memberSectionRectangle = new Rectangle(0, 0, classWidth, sectionHeights[1]);
         methodSectionRectangle = new Rectangle(0, 0, classWidth, sectionHeights[2]);
+        classRectangle = new Rectangle(0, 0, classWidth, classHeaderRectangle.height + memberSectionRectangle.height + methodSectionRectangle.height);
+
+        fullRectangle = new Rectangle(0, 0, classRectangle.width + 2*margin, classRectangle.height + 2*margin);
     }
 
     public void CreateAt(int x, int y){
         fullRectangle.x = x;
         fullRectangle.y = y;
 
-        classSectionRectangle.x = fullRectangle.x;
-        classSectionRectangle.y = fullRectangle.y;
-        memberSectionRectangle.x = fullRectangle.x;
-        memberSectionRectangle.y = fullRectangle.y + classSectionRectangle.height;
-        methodSectionRectangle.x = fullRectangle.x;
+        classRectangle.x = fullRectangle.x + margin;
+        classRectangle.y = fullRectangle.y + margin;
+
+        classHeaderRectangle.x = classRectangle.x;
+        classHeaderRectangle.y = classRectangle.y;
+        memberSectionRectangle.x = classRectangle.x;
+        memberSectionRectangle.y = classRectangle.y + classHeaderRectangle.height;
+        methodSectionRectangle.x = classRectangle.x;
         methodSectionRectangle.y = memberSectionRectangle.y + memberSectionRectangle.height;
     }
 
@@ -77,12 +83,12 @@ public class UMLClassDraw {
     }
 
     private void DrawUMLClassBorder(Graphics graphics){
-        graphics.drawRect(fullRectangle.x, fullRectangle.y, fullRectangle.width, fullRectangle.height);
+        graphics.drawRect(classRectangle.x, classRectangle.y, classRectangle.width, classRectangle.height);
     }
 
     private void DrawUMLClassText(Graphics graphics){
 
-        DrawStringCentered(classObject.getFullString(), classSectionRectangle, graphics);
+        DrawStringCentered(classObject.getFullString(), classHeaderRectangle, graphics);
 
         DrawUMLObjectStrings(classObject.getUmlMembers(), memberSectionRectangle, graphics);
         DrawUMLObjectStrings(classObject.getUmlMethods(), methodSectionRectangle, graphics);

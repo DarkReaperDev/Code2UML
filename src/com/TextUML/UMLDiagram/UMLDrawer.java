@@ -38,7 +38,6 @@ class UMLDrawer {
     private static UMLRootClassDraw GetClassDrawByClassObject(UMLClassObject objectToGetWith, UMLRootClassDraw[] ArrayToGetFrom) {
         for (UMLRootClassDraw classDraw : ArrayToGetFrom) {
             if (classDraw.GetClassObject().getName() == objectToGetWith.getName()) {
-                System.out.println("ok");
                 return classDraw;
             }
         }
