@@ -11,6 +11,8 @@ class UMLDrawer {
     static int currentXPos = 20;
     static int currentYPos = 20;
 
+    static UMLRootClassDraw[] rootClassDrawsArray;
+
     public static void DrawUMLClass(UMLClassObject[] classesToDraw, Graphics graphics) {
         UMLClassObject[] rootClasses = GetRootClasses(classesToDraw);
         List<UMLRootClassDraw> rootClassDraws = new ArrayList<>();
@@ -23,6 +25,8 @@ class UMLDrawer {
 
             rootClassDraw.Draw();
         }
+
+        rootClassDrawsArray = rootClassDraws.toArray(new UMLRootClassDraw[]{});
     }
 
     private static UMLClassObject[] GetRootClasses(UMLClassObject[] classesToGetFrom) {
@@ -35,13 +39,10 @@ class UMLDrawer {
         return rootClasses.toArray(new UMLClassObject[]{});
     }
 
-    private static UMLRootClassDraw GetClassDrawByClassObject(UMLClassObject objectToGetWith, UMLRootClassDraw[] ArrayToGetFrom) {
-        for (UMLRootClassDraw classDraw : ArrayToGetFrom) {
-            if (classDraw.GetClassObject().getName() == objectToGetWith.getName()) {
-                return classDraw;
-            }
+    public static void DrawUMLRelations(){
+        for(UMLRootClassDraw rootClass : rootClassDrawsArray){
+            rootClass.DrawRelations();
         }
-        return null;
     }
 
     public static void Reset() {

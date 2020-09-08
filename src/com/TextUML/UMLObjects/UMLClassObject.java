@@ -1,5 +1,7 @@
 package com.TextUML.UMLObjects;
 
+import com.TextUML.UMLDiagram.UMLClassDraw;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,8 @@ public class UMLClassObject implements UMLObject {
     String umlInterfaceName = "";
     String name;
     boolean isInterface = false;
+
+    public UMLClassDraw classDraw = null;
 
     public UMLClassObject(String name){
         this.name = name;

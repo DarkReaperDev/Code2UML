@@ -23,6 +23,7 @@ public class UMLClassDraw {
 
     public UMLClassDraw(UMLClassObject classObject, FontMetrics fontMetrics){
         this.classObject = classObject;
+        classObject.classDraw = this;
         this.fontMetrics = fontMetrics;
         Initialize();
     }
@@ -38,19 +39,16 @@ public class UMLClassDraw {
         fullRectangle = new Rectangle(0, 0, classRectangle.width + 2*margin, classRectangle.height + 2*margin);
     }
 
-    public void CreateAt(int x, int y){
-        fullRectangle.x = x;
-        fullRectangle.y = y;
+    private int GetClassWidth(){
+        String longestString = classObject.getFullString();
+        UMLObject[] objectsToDraw = classObject.getUMLMembersAndMethods();
 
-        classRectangle.x = fullRectangle.x + margin;
-        classRectangle.y = fullRectangle.y + margin;
-
-        classHeaderRectangle.x = classRectangle.x;
-        classHeaderRectangle.y = classRectangle.y;
-        memberSectionRectangle.x = classRectangle.x;
-        memberSectionRectangle.y = classRectangle.y + classHeaderRectangle.height;
-        methodSectionRectangle.x = classRectangle.x;
-        methodSectionRectangle.y = memberSectionRectangle.y + memberSectionRectangle.height;
+        for(UMLObject umlObject: objectsToDraw){
+            if(umlObject.getFullString().length() > longestString.length()){
+                longestString = umlObject.getFullString();
+            }
+        }
+        return fontMetrics.stringWidth(longestString) + 2* insideClassPadding;
     }
 
     private int[] GetSectionHeights(){
@@ -64,16 +62,19 @@ public class UMLClassDraw {
         return heights;
     }
 
-    private int GetClassWidth(){
-        String longestString = classObject.getFullString();
-        UMLObject[] objectsToDraw = classObject.getUMLMembersAndMethods();
+    public void CreateAt(int x, int y){
+        fullRectangle.x = x;
+        fullRectangle.y = y;
 
-        for(UMLObject umlObject: objectsToDraw){
-            if(umlObject.getFullString().length() > longestString.length()){
-                longestString = umlObject.getFullString();
-            }
-        }
-        return fontMetrics.stringWidth(longestString) + 2* insideClassPadding;
+        classRectangle.x = fullRectangle.x + margin;
+        classRectangle.y = fullRectangle.y + margin;
+
+        classHeaderRectangle.x = classRectangle.x;
+        classHeaderRectangle.y = classRectangle.y;
+        memberSectionRectangle.x = classRectangle.x;
+        memberSectionRectangle.y = classRectangle.y + classHeaderRectangle.height;
+        methodSectionRectangle.x = classRectangle.x;
+        methodSectionRectangle.y = memberSectionRectangle.y + memberSectionRectangle.height;
     }
 
     public void Draw(Graphics graphics){
@@ -110,6 +111,10 @@ public class UMLClassDraw {
     private void DrawSectionDividers(Graphics graphics){
         graphics.drawLine(memberSectionRectangle.x, memberSectionRectangle.y, memberSectionRectangle.x + memberSectionRectangle.width, memberSectionRectangle.y);
         graphics.drawLine(methodSectionRectangle.x, methodSectionRectangle.y, methodSectionRectangle.x + methodSectionRectangle.width, methodSectionRectangle.y);
+    }
+
+    public void DrawRelations(){
+
     }
 
     public Rectangle GetFullRect(){return fullRectangle;}

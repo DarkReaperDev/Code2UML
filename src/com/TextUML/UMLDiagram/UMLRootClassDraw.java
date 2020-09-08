@@ -1,7 +1,6 @@
 package com.TextUML.UMLDiagram;
 
 import com.TextUML.UMLObjects.UMLClassObject;
-import com.TextUML.UMLObjects.UMLObject;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,33 +22,6 @@ class UMLRootClassDraw {
         this.graphics = graphics;
         this.classObject = classObject;
         Initialize();
-    }
-
-    public void CreateAt(int x, int y){
-
-        fullRectangle.x = x;
-        fullRectangle.y = y;
-
-        int classDrawPosX = fullRectangle.x + fullRectangle.width/2 - mainClassDraw.GetFullRect().width/2;
-        int classDrawPosY = fullRectangle.y;
-
-        mainClassDraw.CreateAt(classDrawPosX, classDrawPosY);
-
-        subclassesRectangle.y = mainClassDraw.GetFullRect().y + mainClassDraw.GetFullRect().height;
-        subclassesRectangle.x = fullRectangle.x + fullRectangle.width/2 - subclassesRectangle.width/2;
-        
-        SetSubclassDrawsPos();
-    }
-
-    private void SetSubclassDrawsPos(){
-        int currentXPos = subclassesRectangle.x;
-        int currentYPos = subclassesRectangle.y;
-
-        for(UMLRootClassDraw subClassDraw : subclassDraws){
-            subClassDraw.CreateAt(currentXPos, currentYPos);
-
-            currentXPos += subClassDraw.GetFullRect().width;
-        }
     }
 
     private void Initialize(){
@@ -87,15 +59,6 @@ class UMLRootClassDraw {
         return height;
     }
 
-    private int GetFullRectX(){
-        if(subclassesRectangle.width >= mainClassDraw.GetFullRect().width){
-            return subclassesRectangle.x;
-        }
-        else{
-            return mainClassDraw.GetFullRect().x;
-        }
-    }
-
     private int GetFullRectWidth(){
         if(subclassesRectangle.width >= mainClassDraw.GetFullRect().width){
             return subclassesRectangle.width;
@@ -109,6 +72,33 @@ class UMLRootClassDraw {
         return mainClassDraw.GetFullRect().height + subclassesRectangle.height;
     }
 
+    public void CreateAt(int x, int y){
+
+        fullRectangle.x = x;
+        fullRectangle.y = y;
+
+        int classDrawPosX = fullRectangle.x + fullRectangle.width/2 - mainClassDraw.GetFullRect().width/2;
+        int classDrawPosY = fullRectangle.y;
+
+        mainClassDraw.CreateAt(classDrawPosX, classDrawPosY);
+
+        subclassesRectangle.y = mainClassDraw.GetFullRect().y + mainClassDraw.GetFullRect().height;
+        subclassesRectangle.x = fullRectangle.x + fullRectangle.width/2 - subclassesRectangle.width/2;
+
+        SetSubclassDrawsPos();
+    }
+
+    private void SetSubclassDrawsPos(){
+        int currentXPos = subclassesRectangle.x;
+        int currentYPos = subclassesRectangle.y;
+
+        for(UMLRootClassDraw subClassDraw : subclassDraws){
+            subClassDraw.CreateAt(currentXPos, currentYPos);
+
+            currentXPos += subClassDraw.GetFullRect().width;
+        }
+    }
+
     public void Draw(){
         mainClassDraw.Draw(graphics);
         DrawSubclasses(graphics);
@@ -117,6 +107,13 @@ class UMLRootClassDraw {
     private void DrawSubclasses(Graphics graphics){
         for(UMLRootClassDraw subclassDraw : subclassDraws){
             subclassDraw.Draw();
+        }
+    }
+
+    public void DrawRelations(){
+        mainClassDraw.DrawRelations();
+        for(UMLRootClassDraw subclassDraw : subclassDraws){
+            subclassDraw.DrawRelations();
         }
     }
 
