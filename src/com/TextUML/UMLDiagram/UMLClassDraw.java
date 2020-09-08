@@ -113,8 +113,20 @@ public class UMLClassDraw {
         graphics.drawLine(methodSectionRectangle.x, methodSectionRectangle.y, methodSectionRectangle.x + methodSectionRectangle.width, methodSectionRectangle.y);
     }
 
-    public void DrawRelations(){
+    public void DrawRelations(Graphics graphics){
 
+        for(UMLClassObject umlSubclass : classObject.getUmlSubclasses()){
+            int fromX = umlSubclass.classDraw.classRectangle.x + umlSubclass.classDraw.classRectangle.width/2;
+            int fromY = umlSubclass.classDraw.classRectangle.y;
+            int toX = this.classRectangle.x + this.classRectangle.width/2;
+            int toY = this.classRectangle.y + this.classRectangle.height;
+
+            DrawRelationLine(fromX, fromY, toX, toY, graphics);
+        }
+    }
+
+    private void DrawRelationLine(int fromX, int fromY, int toX, int toY, Graphics graphics){
+        graphics.drawLine(fromX, fromY, toX, toY);
     }
 
     public Rectangle GetFullRect(){return fullRectangle;}

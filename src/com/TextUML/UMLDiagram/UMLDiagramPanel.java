@@ -18,7 +18,8 @@ class UMLDiagramPanel extends JPanel {
         super.paintComponents(g);
 
         UMLDrawer.Reset();
-        UMLDrawer.DrawUMLClass(classesToDraw, g);
+        UMLDrawer.DrawUMLClasses(classesToDraw, g);
+        UMLDrawer.DrawUMLRelations();
     }
 
     public void Update(){

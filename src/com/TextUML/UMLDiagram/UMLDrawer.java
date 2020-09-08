@@ -13,7 +13,7 @@ class UMLDrawer {
 
     static UMLRootClassDraw[] rootClassDrawsArray;
 
-    public static void DrawUMLClass(UMLClassObject[] classesToDraw, Graphics graphics) {
+    public static void DrawUMLClasses(UMLClassObject[] classesToDraw, Graphics graphics) {
         UMLClassObject[] rootClasses = GetRootClasses(classesToDraw);
         List<UMLRootClassDraw> rootClassDraws = new ArrayList<>();
 

@@ -25,7 +25,9 @@ class UMLRootClassDraw {
     }
 
     private void Initialize(){
-        InitializeSubclasses();
+        if(!classObject.isInterface()) {
+            InitializeSubclasses();
+        }
 
         mainClassDraw = new UMLClassDraw(classObject, graphics.getFontMetrics());
 
@@ -85,7 +87,9 @@ class UMLRootClassDraw {
         subclassesRectangle.y = mainClassDraw.GetFullRect().y + mainClassDraw.GetFullRect().height;
         subclassesRectangle.x = fullRectangle.x + fullRectangle.width/2 - subclassesRectangle.width/2;
 
-        SetSubclassDrawsPos();
+        if(!classObject.isInterface()) {
+            SetSubclassDrawsPos();
+        }
     }
 
     private void SetSubclassDrawsPos(){
@@ -111,7 +115,7 @@ class UMLRootClassDraw {
     }
 
     public void DrawRelations(){
-        mainClassDraw.DrawRelations();
+        mainClassDraw.DrawRelations(graphics);
         for(UMLRootClassDraw subclassDraw : subclassDraws){
             subclassDraw.DrawRelations();
         }

@@ -19,18 +19,19 @@ public class UMLScriptObject {
 
             if(umlClasses.get(i).umlParentName != ""){
 
-                GetClassObjectOrCreateNew(umlClasses.get(i).umlParentName).AddSubClass(umlClasses.get(i));
+                GetClassObjectOrCreateNew(umlClasses.get(i).umlParentName, false).AddSubClass(umlClasses.get(i));
             }
             if(umlClasses.get(i).umlInterfaceName != ""){
-                GetClassObjectOrCreateNew(umlClasses.get(i).umlInterfaceName).AddSubClass(umlClasses.get(i));
+                GetClassObjectOrCreateNew(umlClasses.get(i).umlInterfaceName, true).AddSubClass(umlClasses.get(i));
             }
         }
     }
 
-    public UMLClassObject GetClassObjectOrCreateNew(String objectName){
+    public UMLClassObject GetClassObjectOrCreateNew(String objectName, boolean isInterface){
         UMLClassObject object = GetClassByName(objectName);
         if(object == null){
             object = new UMLClassObject(objectName);
+            object.setInterface(isInterface);
             umlClasses.add(object);
         }
         return object;
