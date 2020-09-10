@@ -1,5 +1,6 @@
 package com.TextUML.UMLDiagram;
 
+import com.TextUML.UMLDiagram.UMLDrawing.UMLDrawer;
 import com.TextUML.UMLObjects.UMLClassObject;
 
 import javax.swing.*;
@@ -7,7 +8,7 @@ import java.awt.*;
 
 class UMLDiagramPanel extends JPanel {
 
-    UMLClassObject[] classesToDraw;
+    private UMLClassObject[] classesToDraw;
 
     public UMLDiagramPanel(UMLClassObject[] classesToDraw){
         this.classesToDraw = classesToDraw;

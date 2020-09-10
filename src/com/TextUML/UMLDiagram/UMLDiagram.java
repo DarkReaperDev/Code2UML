@@ -1,24 +1,12 @@
 package com.TextUML.UMLDiagram;
 
 import com.TextUML.UMLObjects.UMLClassObject;
-
 import javax.swing.*;
 
 public class UMLDiagram {
-    JFrame mainFrame;
-    UMLDiagramPanel diagramPanel;
-    UMLClassObject[] classesToDraw;
-
-    public UMLDiagram(UMLClassObject[] classesToDraw){
-        this.classesToDraw = classesToDraw;
-        InitializeComponents();
-    }
-
-    public UMLDiagram(UMLClassObject[] classesToDraw, String title){
-        this.classesToDraw = classesToDraw;
-        InitializeComponents();
-        SetTitle(title);
-    }
+    private JFrame mainFrame;
+    private UMLDiagramPanel diagramPanel;
+    private UMLClassObject[] classesToDraw;
 
     public UMLDiagram(UMLClassObject[] classesToDraw, String title, int width, int height){
         this.classesToDraw = classesToDraw;
@@ -35,10 +23,6 @@ public class UMLDiagram {
     public void Launch() {
         mainFrame.add(diagramPanel);
         mainFrame.setVisible(true);
-    }
-
-    public void Close(){
-
     }
 
     public void SetSize(int width, int height){

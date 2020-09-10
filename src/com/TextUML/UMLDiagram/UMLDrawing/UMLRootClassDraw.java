@@ -1,4 +1,4 @@
-package com.TextUML.UMLDiagram;
+package com.TextUML.UMLDiagram.UMLDrawing;
 
 import com.TextUML.UMLObjects.UMLClassObject;
 
@@ -25,18 +25,16 @@ class UMLRootClassDraw {
     }
 
     private void Initialize(){
-        if(!classObject.isInterface()) {
-            InitializeSubclasses();
-        }
+        InitializeSubclasses();
 
         mainClassDraw = new UMLClassDraw(classObject, graphics.getFontMetrics());
-
         subclassesRectangle = new Rectangle(0, 0, GetSubclassesWidth(), GetSubclassesHeight());
         fullRectangle = new Rectangle(0, 0, GetFullRectWidth(), GetFullRectHeight());
-
     }
 
     private void InitializeSubclasses(){
+        if(classObject.isInterface()){return;}
+
         for(UMLClassObject subclassObject : classObject.getUmlSubclasses()){
             UMLRootClassDraw subclassDraw = new UMLRootClassDraw(subclassObject, graphics);
             subclassDraws.add(subclassDraw);
@@ -75,24 +73,22 @@ class UMLRootClassDraw {
     }
 
     public void CreateAt(int x, int y){
-
         fullRectangle.x = x;
         fullRectangle.y = y;
 
         int classDrawPosX = fullRectangle.x + fullRectangle.width/2 - mainClassDraw.GetFullRect().width/2;
         int classDrawPosY = fullRectangle.y;
-
         mainClassDraw.CreateAt(classDrawPosX, classDrawPosY);
 
         subclassesRectangle.y = mainClassDraw.GetFullRect().y + mainClassDraw.GetFullRect().height;
         subclassesRectangle.x = fullRectangle.x + fullRectangle.width/2 - subclassesRectangle.width/2;
 
-        if(!classObject.isInterface()) {
-            SetSubclassDrawsPos();
-        }
+        SetSubclassDrawsPos();
     }
 
     private void SetSubclassDrawsPos(){
+        if(classObject.isInterface()){return;}
+
         int currentXPos = subclassesRectangle.x;
         int currentYPos = subclassesRectangle.y;
 
@@ -109,6 +105,8 @@ class UMLRootClassDraw {
     }
 
     private void DrawSubclasses(Graphics graphics){
+        if(classObject.isInterface()){return;}
+
         for(UMLRootClassDraw subclassDraw : subclassDraws){
             subclassDraw.Draw();
         }

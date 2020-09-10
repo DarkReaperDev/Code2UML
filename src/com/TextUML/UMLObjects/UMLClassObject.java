@@ -1,6 +1,6 @@
 package com.TextUML.UMLObjects;
 
-import com.TextUML.UMLDiagram.UMLClassDraw;
+import com.TextUML.UMLDiagram.UMLDrawing.UMLClassDraw;
 
 import java.util.ArrayList;
 import java.util.List;

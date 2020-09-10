@@ -1,4 +1,4 @@
-package com.TextUML.UMLDiagram;
+package com.TextUML.UMLDiagram.UMLDrawing;
 
 import com.TextUML.UMLObjects.UMLClassObject;
 
@@ -6,10 +6,11 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class UMLDrawer {
+public class UMLDrawer {
 
-    static int currentXPos = 20;
-    static int currentYPos = 20;
+    private static final int MARGIN = 20;
+    private static int currentXPos = MARGIN;
+    private static int currentYPos = MARGIN;
 
     static UMLRootClassDraw[] rootClassDrawsArray;
 
@@ -19,13 +20,13 @@ class UMLDrawer {
 
         for (UMLClassObject rootClass : rootClasses) {
             UMLRootClassDraw rootClassDraw = new UMLRootClassDraw(rootClass, graphics);
+
             rootClassDraw.CreateAt(currentXPos, currentYPos);
             rootClassDraws.add(rootClassDraw);
-            currentXPos += rootClassDraw.GetFullRect().width;
-
             rootClassDraw.Draw();
-        }
 
+            currentXPos += rootClassDraw.GetFullRect().width;
+        }
         rootClassDrawsArray = rootClassDraws.toArray(new UMLRootClassDraw[]{});
     }
 
@@ -46,7 +47,7 @@ class UMLDrawer {
     }
 
     public static void Reset() {
-        currentXPos = 20;
-        currentYPos = 20;
+        currentXPos = MARGIN;
+        currentYPos = MARGIN;
     }
 }
