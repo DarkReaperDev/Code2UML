@@ -126,7 +126,19 @@ public class UMLClassDraw {
     }
 
     private void DrawRelationLine(int fromX, int fromY, int toX, int toY, Graphics graphics){
-        graphics.drawLine(fromX, fromY, toX, toY);
+        if(this.classObject.isInterface()){
+            System.out.println("works");
+            Graphics2D g2d = (Graphics2D) graphics.create();
+
+            Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+            g2d.setStroke(dashed);
+            g2d.drawLine(fromX, fromY, toX, toY);
+
+            g2d.dispose();
+        }
+        else {
+            graphics.drawLine(fromX, fromY, toX, toY);
+        }
     }
 
     public Rectangle GetFullRect(){return fullRectangle;}
