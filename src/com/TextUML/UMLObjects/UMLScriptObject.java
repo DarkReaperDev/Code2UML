@@ -40,7 +40,6 @@ public class UMLScriptObject {
     public UMLClassObject GetClassByName(String name){
         for(UMLClassObject classObject : umlClasses){
             if(classObject.name.equals(name)){
-                System.out.println(name);
                 return classObject;
             }
         }

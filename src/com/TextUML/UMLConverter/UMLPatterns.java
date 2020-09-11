@@ -51,8 +51,6 @@ class UMLPatterns {
     };
 
     static UMLObject ConvertToUMLObject(UMLKeyword[] keywords) throws UMLScriptSyntaxError {
-        System.out.println(UMLRelationKeywordType.UMLImplements.getClass());
-        System.out.println(UMLRelationKeywordType.UMLExtends.getClass());
         for(int i = 0; i < patterns.length; i++){
             if(patterns[i].Matches(keywords)){
                 return patterns[i].ConvertToUMLObject(keywords);
@@ -132,7 +130,6 @@ class UMLPatterns {
                 return false;
             }
             for (int i = 0; i < keywords.length; i++) {
-                System.out.println(keywords[i].GetType());
                 if (!(keywords[i].GetType().getClass() == patternKeywords[i])) {
                     return false;
                 }
