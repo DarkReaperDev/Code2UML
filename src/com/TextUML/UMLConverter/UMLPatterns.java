@@ -19,12 +19,12 @@ class UMLPatterns {
             //structure, name, extends, name, {
             new UMLPattern(new Class<?>[]{UMLStructureKeywordType.UMLClass.getClass(), UMLNameKeywordType.class, UMLRelationKeywordType.UMLExtends.getClass(),
                     UMLNameKeywordType.class, UMLBracketKeywordType.UMLCurlyBracketOpen.getClass()},
-                    UMLPatterns::ConvertClassWithParent),
+                    UMLPatterns::ConvertClassWithParentOrInterface),
 
             //structure, name, implements, name, {
             new UMLPattern(new Class<?>[]{UMLStructureKeywordType.UMLClass.getClass(), UMLNameKeywordType.class, UMLRelationKeywordType.UMLImplements.getClass(),
                     UMLNameKeywordType.class, UMLBracketKeywordType.UMLCurlyBracketOpen.getClass()},
-                    UMLPatterns::ConvertClassWithInterface),
+                    UMLPatterns::ConvertClassWithParentOrInterface),
 
             //structure, name, extends, name, implements, name, {
             new UMLPattern(new Class<?>[]{UMLStructureKeywordType.UMLClass.getClass(), UMLNameKeywordType.class, UMLRelationKeywordType.UMLExtends.getClass(),
@@ -51,6 +51,8 @@ class UMLPatterns {
     };
 
     static UMLObject ConvertToUMLObject(UMLKeyword[] keywords) throws UMLScriptSyntaxError {
+        System.out.println(UMLRelationKeywordType.UMLImplements.getClass());
+        System.out.println(UMLRelationKeywordType.UMLExtends.getClass());
         for(int i = 0; i < patterns.length; i++){
             if(patterns[i].Matches(keywords)){
                 return patterns[i].ConvertToUMLObject(keywords);
@@ -68,20 +70,16 @@ class UMLPatterns {
         return object;
     }
 
-    //structure, name, extends, name, {
-    private static UMLObject ConvertClassWithParent(UMLKeyword[] keywords) {
+    //structure, name, relation, name, {
+    private static UMLObject ConvertClassWithParentOrInterface(UMLKeyword[] keywords){
         UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
 
-        object.setUmlParentName(keywords[3].GetKeywordString());
-        object.setInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
-        return object;
-    }
-
-    //structure, name, implements, name, {
-    private static UMLObject ConvertClassWithInterface(UMLKeyword[] keywords) {
-        UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
-
-        object.setUmlInterfaceName(keywords[3].GetKeywordString());
+        if(keywords[2].GetType() == UMLRelationKeywordType.UMLExtends) {
+            object.setUmlParentName(keywords[3].GetKeywordString());
+        }
+        else{
+            object.setUmlInterfaceName(keywords[3].GetKeywordString());
+        }
         object.setInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
         return object;
     }
