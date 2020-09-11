@@ -2,6 +2,9 @@
 Code2UML is a open-source tool for creating UML diagrams from pseudo-code (syntax is pretty similar to java).
 It lets you focus more on your projects structure instead of thinking about designing diagrams and UML Standards. 
 
++++ Version 1.1 is now out, adding support for implementing interfaces and extending classes!
+    For more information see [here](https://github.com/DarkReaperDev/Code2UML/releases).
+
 
 ## Get it running
 If you want to try it out yourself, you can either just donwload and run a compiled version or donwload the source code and compile it yourself.
