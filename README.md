@@ -36,7 +36,7 @@ If you want to try it out yourself, you can either just donwload and run a compi
   
   5. (Optionally) you can now save your uml script clicking on `file` and then `save as`. A window will show up where you can specify where you want to save the file. If you succesfulle saved your file you can always open it up again using `file` and then `open`. (It doesnt really matter if you save the file as a `.txt` or something else but I recommend saving it as a `.uml` file so you always know that it is more than just a text file.)
   
-  6. For more information see [documentation](https://github.com/DarkReaperDev/Code2UML/edit/feature/README.md){coming soon}
+  6. For more information see [documentation](https://github.com/DarkReaperDev/Code2UML/README.md){coming soon}
   
 ## Features
 
