@@ -5,7 +5,6 @@ import com.TextUML.UMLErrorHandling.UMLScriptScopeError;
 import com.TextUML.UMLErrorHandling.UMLScriptSyntaxError;
 import com.TextUML.UMLKeywords.*;
 import com.TextUML.UMLKeywords.KeywordTypes.UMLBracketKeywordType;
-import com.TextUML.UMLKeywords.KeywordTypes.UMLKeywordType;
 import com.TextUML.UMLObjects.UMLClassObject;
 import com.TextUML.UMLObjects.UMLObject;
 import com.TextUML.UMLObjects.UMLScriptObject;
@@ -58,8 +57,6 @@ class UMLPatternRecognizer {
     }
 
     private static UMLObject GetObjectForPattern(UMLKeyword[] currentPattern) throws UMLScriptSyntaxError {
-        int matchingPatternId = UMLPatterns.GetMatchingPatternsId(currentPattern);
-        UMLObject object = UMLPatterns.ConvertKeywordsToUMLObjectUsingPattern(currentPattern, matchingPatternId);
-        return object;
+        return UMLPatterns.ConvertToUMLObject(currentPattern);
     }
 }
