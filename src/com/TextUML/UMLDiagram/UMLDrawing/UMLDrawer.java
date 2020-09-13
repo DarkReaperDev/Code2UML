@@ -12,37 +12,61 @@ public class UMLDrawer {
     private static int currentXPos = MARGIN;
     private static int currentYPos = MARGIN;
 
-    static UMLRootClassDraw[] rootClassDrawsArray;
+    static UMLRootClassDraw[][] rootClassDrawsArray;
 
     public static void DrawUMLClasses(UMLClassObject[] classesToDraw, Graphics graphics) {
-        UMLClassObject[] rootClasses = GetRootClasses(classesToDraw);
-        List<UMLRootClassDraw> rootClassDraws = new ArrayList<>();
+        UMLClassObject[][] rootClassesAndInterfaces = GetRootInterfacesAndClasses(classesToDraw);
+        List<UMLRootClassDraw[]> rootClassDraws = new ArrayList<>();
 
-        for (UMLClassObject rootClass : rootClasses) {
-            UMLRootClassDraw rootClassDraw = new UMLRootClassDraw(rootClass, graphics);
+        for(UMLClassObject[] rootObjects : rootClassesAndInterfaces){
+            List<UMLRootClassDraw> objectDraws = new ArrayList<>();
+            int height = 0;
 
-            rootClassDraw.CreateAt(currentXPos, currentYPos);
-            rootClassDraws.add(rootClassDraw);
-            rootClassDraw.Draw();
+            for(UMLClassObject rootObject : rootObjects){
+                UMLRootClassDraw rootObjectDraw = new UMLRootClassDraw(rootObject, graphics);
 
-            currentXPos += rootClassDraw.GetFullRect().width;
+                rootObjectDraw.CreateAt(currentXPos, currentYPos);
+                objectDraws.add(rootObjectDraw);
+                rootObjectDraw.Draw();
+
+                currentXPos += rootObjectDraw.GetFullRect().width;
+                if(rootObjectDraw.GetFullRect().height > height){
+                    height = rootObjectDraw.GetFullRect().height;
+                }
+            }
+            rootClassDraws.add(objectDraws.toArray(new UMLRootClassDraw[]{}));
+            currentYPos += height + MARGIN;
+            currentXPos = MARGIN;
         }
-        rootClassDrawsArray = rootClassDraws.toArray(new UMLRootClassDraw[]{});
+        rootClassDrawsArray = rootClassDraws.toArray(new UMLRootClassDraw[][]{});
     }
 
-    private static UMLClassObject[] GetRootClasses(UMLClassObject[] classesToGetFrom) {
+    //interfaces at index 0, classes at index 1
+    private static UMLClassObject[][] GetRootInterfacesAndClasses(UMLClassObject[] classesToGetFrom) {
         List<UMLClassObject> rootClasses = new ArrayList<>();
+        List<UMLClassObject> rootInterfaces = new ArrayList<>();
+
         for (UMLClassObject classObject : classesToGetFrom) {
             if (classObject.getUmlParentName() == "") {
-                rootClasses.add(classObject);
+                if(classObject.isInterface()){
+                    rootInterfaces.add(classObject);
+                }
+                else {
+                    rootClasses.add(classObject);
+                }
             }
         }
-        return rootClasses.toArray(new UMLClassObject[]{});
+        return new UMLClassObject[][]{
+                rootInterfaces.toArray(new UMLClassObject[]{}),
+                rootClasses.toArray(new UMLClassObject[]{})
+        };
     }
 
     public static void DrawUMLRelations(){
-        for(UMLRootClassDraw rootClass : rootClassDrawsArray){
-            rootClass.DrawRelations();
+        for(UMLRootClassDraw[] rootObjectDraws : rootClassDrawsArray) {
+            for (UMLRootClassDraw rootObject : rootObjectDraws) {
+                rootObject.DrawRelations();
+            }
         }
     }
 
