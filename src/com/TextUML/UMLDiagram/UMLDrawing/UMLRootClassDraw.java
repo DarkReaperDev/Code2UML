@@ -9,6 +9,7 @@ import java.util.List;
 class UMLRootClassDraw {
 
     private UMLClassObject classObject;
+    private UMLRootClassDraw parentClassDraw;
     private Graphics graphics;
 
     private Rectangle fullRectangle;
@@ -18,16 +19,17 @@ class UMLRootClassDraw {
 
     private List<UMLRootClassDraw> subclassDraws = new ArrayList<UMLRootClassDraw>();
 
-    public UMLRootClassDraw(UMLClassObject classObject, Graphics graphics){
-        this.graphics = graphics;
+    public UMLRootClassDraw(UMLClassObject classObject, UMLRootClassDraw parentClassDraw, Graphics graphics){
         this.classObject = classObject;
+        this.parentClassDraw = parentClassDraw;
+        this.graphics = graphics;
         Initialize();
     }
 
     private void Initialize(){
         InitializeSubclasses();
 
-        mainClassDraw = new UMLClassDraw(classObject, graphics.getFontMetrics());
+        mainClassDraw = new UMLClassDraw(classObject,this,  graphics.getFontMetrics());
         subclassesRectangle = new Rectangle(0, 0, GetSubclassesWidth(), GetSubclassesHeight());
         fullRectangle = new Rectangle(0, 0, GetFullRectWidth(), GetFullRectHeight());
     }
@@ -36,7 +38,7 @@ class UMLRootClassDraw {
         if(classObject.isInterface()){return;}
 
         for(UMLClassObject subclassObject : classObject.getUmlSubclasses()){
-            UMLRootClassDraw subclassDraw = new UMLRootClassDraw(subclassObject, graphics);
+            UMLRootClassDraw subclassDraw = new UMLRootClassDraw(subclassObject, this, graphics);
             subclassDraws.add(subclassDraw);
         }
     }
@@ -124,6 +126,10 @@ class UMLRootClassDraw {
     }
 
     public Rectangle GetFullRect(){return fullRectangle;}
+
+    public UMLRootClassDraw GetParentDraw(){
+        return parentClassDraw;
+    }
 
     public UMLClassObject GetClassObject(){
         return classObject;

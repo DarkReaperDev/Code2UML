@@ -23,7 +23,7 @@ public class UMLDrawer {
             int height = 0;
 
             for(UMLClassObject rootObject : rootObjects){
-                UMLRootClassDraw rootObjectDraw = new UMLRootClassDraw(rootObject, graphics);
+                UMLRootClassDraw rootObjectDraw = new UMLRootClassDraw(rootObject,null, graphics);
 
                 rootObjectDraw.CreateAt(currentXPos, currentYPos);
                 objectDraws.add(rootObjectDraw);

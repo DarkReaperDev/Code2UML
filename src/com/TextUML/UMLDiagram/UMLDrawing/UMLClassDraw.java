@@ -4,10 +4,13 @@ import com.TextUML.UMLObjects.UMLClassObject;
 import com.TextUML.UMLObjects.UMLObject;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UMLClassDraw {
 
     private UMLClassObject classObject;
+    private UMLRootClassDraw rootClassDraw;
     private FontMetrics fontMetrics;
 
     private Rectangle fullRectangle;
@@ -20,11 +23,12 @@ public class UMLClassDraw {
     private final int TEXT_MARGIN = 5;
     private final int CLASS_RECT_MARGIN = 10;
 
-    public UMLClassDraw(UMLClassObject classObject, FontMetrics fontMetrics){
+    public UMLClassDraw(UMLClassObject classObject, UMLRootClassDraw rootClassDraw, FontMetrics fontMetrics){
         this.classObject = classObject;
-        classObject.classDraw = this;
+        this.rootClassDraw = rootClassDraw;
         this.fontMetrics = fontMetrics;
 
+        classObject.classDraw = this;
         Initialize();
     }
 
@@ -138,6 +142,15 @@ public class UMLClassDraw {
         else {
             graphics.drawLine(fromX, fromY, toX, toY);
         }
+    }
+
+    public UMLRootClassDraw[] GetRootClassesPath(){
+        List<UMLRootClassDraw> path = new ArrayList<>();
+        path.add(rootClassDraw);
+        while(path.get(path.size() - 1).GetParentDraw() != null){
+            path.add(path.get(path.size() - 1).GetParentDraw());
+        }
+        return path.toArray(new UMLRootClassDraw[]{});
     }
 
     public Rectangle GetFullRect(){return fullRectangle;}
