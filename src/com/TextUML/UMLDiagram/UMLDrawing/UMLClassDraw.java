@@ -4,6 +4,7 @@ import com.TextUML.UMLObjects.UMLClassObject;
 import com.TextUML.UMLObjects.UMLObject;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -120,28 +121,60 @@ public class UMLClassDraw {
     public void DrawRelations(Graphics graphics){
 
         for(UMLClassObject umlSubclass : classObject.getUmlSubclasses()){
-            int fromX = umlSubclass.classDraw.classRectangle.x + umlSubclass.classDraw.classRectangle.width/2;
-            int fromY = umlSubclass.classDraw.classRectangle.y;
-            int toX = this.classRectangle.x + this.classRectangle.width/2;
-            int toY = this.classRectangle.y + this.classRectangle.height;
-
-            DrawRelationLine(fromX, fromY, toX, toY, graphics);
+            DrawRelationLine(GetRelationLinePath(umlSubclass.classDraw), graphics);
         }
     }
 
-    private void DrawRelationLine(int fromX, int fromY, int toX, int toY, Graphics graphics){
+    private Point[] GetRelationLinePath(UMLClassDraw to){
+        if(classObject.isInterface()) {
+            UMLRootClassDraw[] rootClassPath = to.GetRootClassesPath();
+            return ConvertRootClassPathToPath(rootClassPath);
+        }
+        else{
+            Point[] path = new Point[]{
+                    new Point(to.classRectangle.x + to.classRectangle.width / 2, to.classRectangle.y),
+                    new Point(this.classRectangle.x + this.classRectangle.width / 2, this.classRectangle.y + this.classRectangle.height)};
+            return path;
+        }
+    }
+
+    private Point[] ConvertRootClassPathToPath(UMLRootClassDraw[] rootClassPath){
+        List<Point> path = new ArrayList<>();
+
+        path.add(new Point(rootClassPath[0].GetClassRect().x + rootClassPath[0].GetClassRect().width / 2, rootClassPath[0].GetClassRect().y + TEXT_MARGIN));
+        path.add(new Point(rootClassPath[0].GetClassRect().x + rootClassPath[0].GetClassRect().width / 2, rootClassPath[0].GetFullRect().y));
+
+        for(int i = 1; i < rootClassPath.length; i ++){
+            if(this.fullRectangle.x + this.fullRectangle.width / 2 <= path.get(path.size() - 1).x){
+                path.add(new Point(rootClassPath[i].GetFullRect().x, path.get(path.size() - 1).y));
+                path.add(new Point(rootClassPath[i].GetFullRect().x, rootClassPath[i].GetFullRect().y));
+            }
+            else{
+                path.add(new Point(rootClassPath[i].GetFullRect().x + rootClassPath[i].GetFullRect().width, path.get(path.size() - 1).y));
+                path.add(new Point(rootClassPath[i].GetFullRect().x + rootClassPath[i].GetFullRect().width, rootClassPath[i].GetFullRect().y));
+            }
+        }
+
+
+        return path.toArray(new Point[]{});
+    }
+
+    private void DrawRelationLine(Point[] path, Graphics graphics){
+        Graphics2D g2D = (Graphics2D) graphics.create();
+        int[] XCords = new int[path.length];
+        int[] YCords = new int[path.length];
         if(this.classObject.isInterface()){
-            Graphics2D g2d = (Graphics2D) graphics.create();
-
             Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
-            g2d.setStroke(dashed);
-            g2d.drawLine(fromX, fromY, toX, toY);
+            g2D.setStroke(dashed);
+        }
 
-            g2d.dispose();
+        for(int i = 0; i < path.length; i ++){
+            XCords[i] = path[i].x;
+            YCords[i] = path[i].y;
         }
-        else {
-            graphics.drawLine(fromX, fromY, toX, toY);
-        }
+
+        g2D.drawPolyline(XCords, YCords, XCords.length);
+        g2D.dispose();
     }
 
     public UMLRootClassDraw[] GetRootClassesPath(){
