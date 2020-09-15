@@ -141,22 +141,42 @@ public class UMLClassDraw {
     private Point[] ConvertRootClassPathToPath(UMLRootClassDraw[] rootClassPath){
         List<Point> path = new ArrayList<>();
 
-        path.add(new Point(rootClassPath[0].GetClassRect().x + rootClassPath[0].GetClassRect().width / 2, rootClassPath[0].GetClassRect().y + TEXT_MARGIN));
+
+        path.add(new Point(rootClassPath[0].GetClassRect().x + rootClassPath[0].GetClassRect().width / 2, rootClassPath[0].GetClassRect().y + CLASS_RECT_MARGIN));
         path.add(new Point(rootClassPath[0].GetClassRect().x + rootClassPath[0].GetClassRect().width / 2, rootClassPath[0].GetFullRect().y));
 
         for(int i = 1; i < rootClassPath.length; i ++){
-            if(this.fullRectangle.x + this.fullRectangle.width / 2 <= path.get(path.size() - 1).x){
-                path.add(new Point(rootClassPath[i].GetFullRect().x, path.get(path.size() - 1).y));
-                path.add(new Point(rootClassPath[i].GetFullRect().x, rootClassPath[i].GetFullRect().y));
-            }
-            else{
-                path.add(new Point(rootClassPath[i].GetFullRect().x + rootClassPath[i].GetFullRect().width, path.get(path.size() - 1).y));
-                path.add(new Point(rootClassPath[i].GetFullRect().x + rootClassPath[i].GetFullRect().width, rootClassPath[i].GetFullRect().y));
-            }
+            int[] possibleXCords = new int[]{
+                    rootClassPath[i].GetFullRect().x,
+                    rootClassPath[i].GetFullRect().x + rootClassPath[i].GetFullRect().width,
+                    rootClassPath[i].GetClassRect().x,
+                    rootClassPath[i].GetClassRect().x + rootClassPath[i].GetClassRect().width
+            };
+            int x = GetClosestTo(possibleXCords, this.classRectangle.x + this.classRectangle.width / 2);
+            path.add(new Point(x, path.get(path.size() - 1).y));
+            path.add(new Point(x, rootClassPath[i].GetFullRect().y));
         }
 
+        path.add(new Point(this.classRectangle.x + this.classRectangle.width / 2, path.get(path.size() - 1).y));
+        path.add(new Point(this.classRectangle.x + this.classRectangle.width / 2, this.classRectangle.y + this.classRectangle.height));
 
         return path.toArray(new Point[]{});
+    }
+
+    private int GetClosestTo(int[] from, int to){
+        int closest = from[0];
+        int closestDist = Math.abs(from[0] - to);
+
+
+        for(int i = 1; i < from.length; i++){
+            System.out.println(Math.abs(from[i] -to));
+            if(Math.abs(from[i] - to) < closestDist){
+                closestDist = Math.abs(from[i] - to);
+                closest = from[i];
+            }
+            System.out.println(closest);
+        }
+        return closest;
     }
 
     private void DrawRelationLine(Point[] path, Graphics graphics){
@@ -164,7 +184,7 @@ public class UMLClassDraw {
         int[] XCords = new int[path.length];
         int[] YCords = new int[path.length];
         if(this.classObject.isInterface()){
-            Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+            Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{3}, 0);
             g2D.setStroke(dashed);
         }
 
