@@ -74,13 +74,13 @@ class UMLRootClassDraw {
         return mainClassDraw.GetFullRect().height + subclassesRectangle.height;
     }
 
-    public void CreateAt(int x, int y){
+    public void SetPos(int x, int y){
         fullRectangle.x = x;
         fullRectangle.y = y;
 
         int classDrawPosX = fullRectangle.x + fullRectangle.width/2 - mainClassDraw.GetFullRect().width/2;
         int classDrawPosY = fullRectangle.y;
-        mainClassDraw.CreateAt(classDrawPosX, classDrawPosY);
+        mainClassDraw.SetPos(classDrawPosX, classDrawPosY);
 
         subclassesRectangle.y = mainClassDraw.GetFullRect().y + mainClassDraw.GetFullRect().height;
         subclassesRectangle.x = fullRectangle.x + fullRectangle.width/2 - subclassesRectangle.width/2;
@@ -95,7 +95,7 @@ class UMLRootClassDraw {
         int currentYPos = subclassesRectangle.y;
 
         for(UMLRootClassDraw subClassDraw : subclassDraws){
-            subClassDraw.CreateAt(currentXPos, currentYPos);
+            subClassDraw.SetPos(currentXPos, currentYPos);
 
             currentXPos += subClassDraw.GetFullRect().width;
         }
@@ -133,5 +133,9 @@ class UMLRootClassDraw {
 
     public UMLClassObject GetClassObject(){
         return classObject;
+    }
+
+    public UMLRootClassDraw[] GetSubclassDraws(){
+        return subclassDraws.toArray(new UMLRootClassDraw[0]);
     }
 }

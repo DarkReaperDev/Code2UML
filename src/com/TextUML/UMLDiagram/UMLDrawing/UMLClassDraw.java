@@ -4,7 +4,6 @@ import com.TextUML.UMLObjects.UMLClassObject;
 import com.TextUML.UMLObjects.UMLObject;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +67,7 @@ public class UMLClassDraw {
         return heights;
     }
 
-    public void CreateAt(int x, int y){
+    public void SetPos(int x, int y){
         fullRectangle.x = x;
         fullRectangle.y = y;
 
@@ -169,12 +168,10 @@ public class UMLClassDraw {
 
 
         for(int i = 1; i < from.length; i++){
-            System.out.println(Math.abs(from[i] -to));
             if(Math.abs(from[i] - to) < closestDist){
                 closestDist = Math.abs(from[i] - to);
                 closest = from[i];
             }
-            System.out.println(closest);
         }
         return closest;
     }
