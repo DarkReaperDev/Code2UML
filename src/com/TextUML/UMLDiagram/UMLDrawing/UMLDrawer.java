@@ -13,13 +13,13 @@ public class UMLDrawer {
     private static int currentXPos = MARGIN;
     private static int currentYPos = MARGIN;
 
-    static UMLRootClassDraw[][] rootInterfaceAndClassDraws;
+    static UMLRootClassDrawOld[][] rootInterfaceAndClassDraws;
 
     public static void DrawUMLDiagram(UMLClassObject[] classesToDraw, Graphics graphics) {
         System.out.println("start drawing");
         UMLClassObject[][] rootInterfacesAndClasses;
-        UMLRootClassDraw[] rootInterfaceDraws;
-        UMLRootClassDraw[] rootClassDraws;
+        UMLRootClassDrawOld[] rootInterfaceDraws;
+        UMLRootClassDrawOld[] rootClassDraws;
 
         rootInterfacesAndClasses = GetRootInterfacesAndClasses(classesToDraw);
 
@@ -30,22 +30,22 @@ public class UMLDrawer {
 
 
 
-        for(UMLRootClassDraw rootClassDraw : rootClassDraws){
+        for(UMLRootClassDrawOld rootClassDraw : rootClassDraws){
             rootClassDraw.Draw();
         }
-        for(UMLRootClassDraw rootInterfaceDraw : rootInterfaceDraws){
+        for(UMLRootClassDrawOld rootInterfaceDraw : rootInterfaceDraws){
             rootInterfaceDraw.Draw();
         }
-        rootInterfaceAndClassDraws = new UMLRootClassDraw[][]{rootInterfaceDraws, rootClassDraws};
+        rootInterfaceAndClassDraws = new UMLRootClassDrawOld[][]{rootInterfaceDraws, rootClassDraws};
     }
     
 
-    private static UMLRootClassDraw[] CreateRootInterfaces(UMLClassObject[] rootClassObjects, Graphics graphics){
-        List<UMLRootClassDraw> objectDraws = new ArrayList<>();
+    private static UMLRootClassDrawOld[] CreateRootInterfaces(UMLClassObject[] rootClassObjects, Graphics graphics){
+        List<UMLRootClassDrawOld> objectDraws = new ArrayList<>();
         int height = 0;
 
         for(UMLClassObject rootObject : rootClassObjects) {
-            UMLRootClassDraw rootObjectDraw = new UMLRootClassDraw(rootObject, null, graphics);
+            UMLRootClassDrawOld rootObjectDraw = new UMLRootClassDrawOld(rootObject, null, graphics);
 
             rootObjectDraw.SetPos(currentXPos, currentYPos);
             objectDraws.add(rootObjectDraw);
@@ -57,14 +57,14 @@ public class UMLDrawer {
         }
         currentYPos = height + MARGIN;
         currentXPos = MARGIN;
-        return objectDraws.toArray(new UMLRootClassDraw[]{});
+        return objectDraws.toArray(new UMLRootClassDrawOld[]{});
     }
 
-    private static void LayoutRootInterfacesByImplementers(UMLRootClassDraw[] rootInterfaceDraws){
+    private static void LayoutRootInterfacesByImplementers(UMLRootClassDrawOld[] rootInterfaceDraws){
         SetInterfaceXPosToAverageOfImplementersXPos(rootInterfaceDraws);
         rootInterfaceDraws = SortRootObjectsByFullRectX(rootInterfaceDraws);
 
-        ArrayList<UMLRootClassDraw>[] drawsGroups = WrapRootObjectsInLists(rootInterfaceDraws);
+        ArrayList<UMLRootClassDrawOld>[] drawsGroups = WrapRootObjectsInLists(rootInterfaceDraws);
 
         int lastStepDrawsGroupsLength;
         do{
@@ -76,27 +76,27 @@ public class UMLDrawer {
         AdjustDrawsToScreenBorder(rootInterfaceDraws);
     }
 
-    private static void SetInterfaceXPosToAverageOfImplementersXPos(UMLRootClassDraw[] rootInterfaceDraws){
+    private static void SetInterfaceXPosToAverageOfImplementersXPos(UMLRootClassDrawOld[] rootInterfaceDraws){
 
-        for(UMLRootClassDraw rootInterfaceDraw : rootInterfaceDraws){
-            if(rootInterfaceDraw.GetClassObject().getUmlSubclasses().size() == 0){
+        for(UMLRootClassDrawOld rootInterfaceDraw : rootInterfaceDraws){
+            if(rootInterfaceDraw.GetClassObject().GetUmlSubclasses().size() == 0){
                 break;
             }
             int xPos = 0;
-            for(UMLClassObject subclass : rootInterfaceDraw.GetClassObject().getUmlSubclasses()){
+            for(UMLClassObject subclass : rootInterfaceDraw.GetClassObject().GetUmlSubclasses()){
                 xPos = xPos + subclass.classDraw.GetFullRect().x + subclass.classDraw.GetFullRect().width / 2;
             }
-            xPos = xPos / rootInterfaceDraw.GetClassObject().getUmlSubclasses().size();
+            xPos = xPos / rootInterfaceDraw.GetClassObject().GetUmlSubclasses().size();
             SetObjectDrawCenterXPos(rootInterfaceDraw, xPos);
         }
     }
 
-    private static void SetObjectDrawCenterXPos(UMLRootClassDraw classDraw, int xPos){
+    private static void SetObjectDrawCenterXPos(UMLRootClassDrawOld classDraw, int xPos){
         classDraw.SetPos(xPos - classDraw.GetFullRect().width / 2, classDraw.GetFullRect().y);
     }
 
-    private static UMLRootClassDraw[] SortRootObjectsByFullRectX(UMLRootClassDraw[] classesToSort){
-        List<UMLRootClassDraw> sortedClasses = new ArrayList<>();
+    private static UMLRootClassDrawOld[] SortRootObjectsByFullRectX(UMLRootClassDrawOld[] classesToSort){
+        List<UMLRootClassDrawOld> sortedClasses = new ArrayList<>();
         sortedClasses.add(classesToSort[0]);
         for(int i = 0; i < classesToSort.length; i++){
             for(int x = 0; x < sortedClasses.size(); x++){
@@ -109,20 +109,20 @@ public class UMLDrawer {
                 sortedClasses.add(classesToSort[i]);
             }
         }
-        return sortedClasses.toArray(new UMLRootClassDraw[0]);
+        return sortedClasses.toArray(new UMLRootClassDrawOld[0]);
     }
 
-    private static ArrayList<UMLRootClassDraw>[] WrapRootObjectsInLists(UMLRootClassDraw[] rootObjects){
-        ArrayList<ArrayList<UMLRootClassDraw>> wrappedObjects = new ArrayList<>();
+    private static ArrayList<UMLRootClassDrawOld>[] WrapRootObjectsInLists(UMLRootClassDrawOld[] rootObjects){
+        ArrayList<ArrayList<UMLRootClassDrawOld>> wrappedObjects = new ArrayList<>();
 
-        for(UMLRootClassDraw rootObject : rootObjects){
-            wrappedObjects.add(new ArrayList<>(Arrays.asList(new UMLRootClassDraw[]{rootObject})));
+        for(UMLRootClassDrawOld rootObject : rootObjects){
+            wrappedObjects.add(new ArrayList<>(Arrays.asList(new UMLRootClassDrawOld[]{rootObject})));
         }
         return wrappedObjects.toArray(new ArrayList[0]);
     }
 
-    private static ArrayList<UMLRootClassDraw>[] AdjustRootDrawPos(ArrayList<UMLRootClassDraw>[] drawsGroups){
-        ArrayList<ArrayList<UMLRootClassDraw>> adjustedObjects = new ArrayList<>();
+    private static ArrayList<UMLRootClassDrawOld>[] AdjustRootDrawPos(ArrayList<UMLRootClassDrawOld>[] drawsGroups){
+        ArrayList<ArrayList<UMLRootClassDrawOld>> adjustedObjects = new ArrayList<>();
 
         for(int i = 0; i < drawsGroups.length; i++){
             adjustedObjects.add(drawsGroups[i]);
@@ -142,20 +142,20 @@ public class UMLDrawer {
         return adjustedObjects.toArray(new ArrayList[0]);
     }
 
-    private static void MoveDrawsGroupsAway(ArrayList<UMLRootClassDraw> leftGroup, ArrayList<UMLRootClassDraw> rightGroup){
+    private static void MoveDrawsGroupsAway(ArrayList<UMLRootClassDrawOld> leftGroup, ArrayList<UMLRootClassDrawOld> rightGroup){
         int dist = leftGroup.get(leftGroup.size() - 1).GetFullRect().x + leftGroup.get(leftGroup.size() - 1).GetFullRect().width - rightGroup.get(0).GetFullRect().x;
 
         MoveDrawsGroup(leftGroup, -dist / 2);
         MoveDrawsGroup(rightGroup, dist / 2);
     }
 
-    private static void MoveDrawsGroup(ArrayList<UMLRootClassDraw> group, int dist){
-        for(UMLRootClassDraw draw : group){
+    private static void MoveDrawsGroup(ArrayList<UMLRootClassDrawOld> group, int dist){
+        for(UMLRootClassDrawOld draw : group){
             draw.SetPos(draw.GetFullRect().x + dist, draw.GetFullRect().y);
         }
     }
 
-    private static void AdjustDrawsToScreenBorder(UMLRootClassDraw[] rootDraws){
+    private static void AdjustDrawsToScreenBorder(UMLRootClassDrawOld[] rootDraws){
         if(rootDraws[0].GetFullRect().x < MARGIN){
             rootDraws[0].SetPos(MARGIN, rootDraws[0].GetFullRect().y);
 
@@ -170,12 +170,12 @@ public class UMLDrawer {
         }
     }
 
-    private static UMLRootClassDraw[] CreateRootClasses(UMLClassObject[] rootClasses, Graphics graphics){
-        List<UMLRootClassDraw> objectDraws = new ArrayList<>();
+    private static UMLRootClassDrawOld[] CreateRootClasses(UMLClassObject[] rootClasses, Graphics graphics){
+        List<UMLRootClassDrawOld> objectDraws = new ArrayList<>();
         int height = 0;
 
         for(UMLClassObject rootObject : rootClasses) {
-            UMLRootClassDraw rootObjectDraw = new UMLRootClassDraw(rootObject, null, graphics);
+            UMLRootClassDrawOld rootObjectDraw = new UMLRootClassDrawOld(rootObject, null, graphics);
 
             rootObjectDraw.SetPos(currentXPos, currentYPos);
             objectDraws.add(rootObjectDraw);
@@ -185,7 +185,7 @@ public class UMLDrawer {
                 height = rootObjectDraw.GetFullRect().height;
             }
         }
-        return objectDraws.toArray(new UMLRootClassDraw[0]);
+        return objectDraws.toArray(new UMLRootClassDrawOld[0]);
     }
 
     //interfaces at index 0, classes at index 1
@@ -194,8 +194,8 @@ public class UMLDrawer {
         List<UMLClassObject> rootInterfaces = new ArrayList<>();
 
         for (UMLClassObject classObject : classesToGetFrom) {
-            if (classObject.getUmlParentName() == "") {
-                if(classObject.isInterface()){
+            if (classObject.GetUmlParentName() == "") {
+                if(classObject.IsInterface()){
                     rootInterfaces.add(classObject);
                 }
                 else {
@@ -210,8 +210,8 @@ public class UMLDrawer {
     }
 
     public static void DrawUMLRelations(){
-        for(UMLRootClassDraw[] rootObjectDraws : rootInterfaceAndClassDraws) {
-            for (UMLRootClassDraw rootObject : rootObjectDraws) {
+        for(UMLRootClassDrawOld[] rootObjectDraws : rootInterfaceAndClassDraws) {
+            for (UMLRootClassDrawOld rootObject : rootObjectDraws) {
                 rootObject.DrawRelations();
             }
         }

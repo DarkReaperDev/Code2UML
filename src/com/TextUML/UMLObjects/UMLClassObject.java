@@ -1,27 +1,26 @@
 package com.TextUML.UMLObjects;
 
-import com.TextUML.UMLDiagram.UMLDrawing.UMLClassDraw;
+import com.TextUML.Utilities.Strings.MultilineString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UMLClassObject implements UMLObject {
+    private String name;
+    private int ID;
 
+    private List<UMLMethodObject> umlMethods = new ArrayList<>();
+    private List<UMLMemberObject> umlMembers = new ArrayList<>();
+    private List<Integer> umlSubclassesIDs = new ArrayList<>();
 
-    List<UMLMethodObject> umlMethods = new ArrayList<>();
-    List<UMLMemberObject> umlMembers = new ArrayList<>();
-    List<UMLClassObject> umlSubclasses= new ArrayList<>();
+    public String umlParentName = "";
+    public String umlInterfaceName = "";
 
-    String umlParentName = "";
-
-    String umlInterfaceName = "";
-    String name;
     boolean isInterface = false;
 
-    public UMLClassDraw classDraw = null;
-
-    public UMLClassObject(String name){
+    public UMLClassObject(String name, int ID){
         this.name = name;
+        this.ID = ID;
     }
 
     public void Add(UMLObject object){
@@ -34,11 +33,11 @@ public class UMLClassObject implements UMLObject {
     }
 
     @Override
-    public String getFullString() {
+    public MultilineString getFullString() {
         if(isInterface){
-            return "<<interface>> " + name;
+            return new MultilineString(new String[]{"<<interface>>", name});
         }
-        return name;
+        return new MultilineString(new String[]{name});
     }
 
     private static UMLObject[] MergeUMLObjectArrays(UMLObject[] firstArray, UMLObject[] secondArray){
@@ -52,52 +51,39 @@ public class UMLClassObject implements UMLObject {
         return  resultArray;
     }
 
-    public void AddSubClass(UMLClassObject subclassObject){
-        umlSubclasses.add(subclassObject);
+    public void AddSubClass(int ID){
+        umlSubclassesIDs.add(ID);
     }
 
-    public List<UMLClassObject> getUmlSubclasses() {
-        return umlSubclasses;
+    public int[] GetUmlSubclassesIDs() {
+        int[] ret = new int[umlSubclassesIDs.size()];
+        for(int i = 0; i < umlSubclassesIDs.size(); i++){
+            ret[i] = umlSubclassesIDs.get(i);
+        }
+        return ret;
     }
 
-    public String getUmlParentName() {
-        return umlParentName;
-    }
-
-    public String getUmlInterfaceName() {
-        return umlInterfaceName;
-    }
-
-    public boolean isInterface() {
+    public boolean IsInterface() {
         return isInterface;
     }
 
-    public void setInterface(boolean anInterface) {
+    public void SetInterface(boolean anInterface) {
         isInterface = anInterface;
     }
 
-    public String getName() {
+    public String GetName() {
         return name;
     }
 
-    public UMLMemberObject[] getUmlMembers() {
+    public UMLMemberObject[] GetUmlMembers() {
         return umlMembers.toArray(new UMLMemberObject[]{});
     }
 
-    public UMLMethodObject[] getUmlMethods() {
+    public UMLMethodObject[] GetUmlMethods() {
         return umlMethods.toArray(new UMLMethodObject[]{});
     }
 
-    public UMLObject[] getUMLMembersAndMethods(){
-        return MergeUMLObjectArrays(getUmlMembers(), getUmlMethods());
+    public UMLObject[] GetUMLMembersAndMethods(){
+        return MergeUMLObjectArrays(GetUmlMembers(), GetUmlMethods());
     }
-
-    public void setUmlParentName(String umlParentName) {
-        this.umlParentName = umlParentName;
-    }
-
-    public void setUmlInterfaceName(String umlInterfaceName) {
-        this.umlInterfaceName = umlInterfaceName;
-    }
-
 }

@@ -1,7 +1,10 @@
 package com.TextUML.UMLDiagram.UMLDrawing;
 
 import com.TextUML.UMLObjects.UMLClassObject;
+import com.TextUML.UMLObjects.UMLMemberObject;
+import com.TextUML.UMLObjects.UMLMethodObject;
 import com.TextUML.UMLObjects.UMLObject;
+import com.TextUML.Utilities.Strings.MultilineString;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,8 +12,13 @@ import java.util.List;
 
 public class UMLClassDraw {
 
-    private UMLClassObject classObject;
-    private UMLRootClassDraw rootClassDraw;
+    MultilineString classNameString;
+    MultilineString classMembersStrings;
+    MultilineString classMethodsStrings;
+    boolean isInterfaceDraw;
+
+    int[] subclassesIDs;
+
     private FontMetrics fontMetrics;
 
     private Rectangle fullRectangle;
@@ -23,16 +31,27 @@ public class UMLClassDraw {
     private final int TEXT_MARGIN = 5;
     private final int CLASS_RECT_MARGIN = 10;
 
-    public UMLClassDraw(UMLClassObject classObject, UMLRootClassDraw rootClassDraw, FontMetrics fontMetrics){
-        this.classObject = classObject;
-        this.rootClassDraw = rootClassDraw;
-        this.fontMetrics = fontMetrics;
+    UMLClassDraw(UMLClassObject classObject, FontMetrics metrics){
+        this.fontMetrics = metrics;
+        this.classNameString = classObject.getFullString();
+        this.isInterfaceDraw = classObject.IsInterface();
+        this.subclassesIDs = classObject.GetUmlSubclassesIDs();
 
-        classObject.classDraw = this;
-        Initialize();
+        List<String> memberStrings = new ArrayList<>();
+        for(UMLMemberObject member : classObject.GetUmlMembers()){
+            memberStrings.add(member.getFullString());
+        }
+        classMembersStrings = new MultilineString(memberStrings.toArray(new String[0]));
+
+        List<String> methodStrings = new ArrayList<>();
+        for(UMLMethodObject method : classObject.GetUmlMethods()){
+            methodStrings.add(method.getFullString());
+        }
+        classMethodsStrings = new MultilineString(methodStrings.toArray(new String[0]));
+
     }
 
-    private void Initialize(){
+    private void InitializeRectangles(){
         int[] sectionHeights = GetSectionHeights();
         int classWidth = GetClassWidth();
 
@@ -44,168 +63,26 @@ public class UMLClassDraw {
         fullRectangle = new Rectangle(0, 0, classRectangle.width + 2* CLASS_RECT_MARGIN, classRectangle.height + 2* CLASS_RECT_MARGIN);
     }
 
-    private int GetClassWidth(){
-        String longestString = classObject.getFullString();
-        UMLObject[] objectsToDraw = classObject.getUMLMembersAndMethods();
-
-        for(UMLObject umlObject: objectsToDraw){
-            if(umlObject.getFullString().length() > longestString.length()){
-                longestString = umlObject.getFullString();
-            }
-        }
-        return fontMetrics.stringWidth(longestString) + 2* TEXT_MARGIN;
-    }
-
     private int[] GetSectionHeights(){
         //[0]height of class header, [1]height of member Section, [2] height of method section, [3] height of everything together
         int characterHeight = fontMetrics.getHeight();
         int[] heights = new int[4];
-        heights[0] = characterHeight + 2* TEXT_MARGIN;
-        heights[1] = 2* TEXT_MARGIN + classObject.getUmlMembers().length * (characterHeight+ LINE_SPACING) - LINE_SPACING;
-        heights[2] = 2* TEXT_MARGIN + classObject.getUmlMethods().length * (characterHeight+ LINE_SPACING) - LINE_SPACING;
+        heights[0] = 2* TEXT_MARGIN + classNameString.GetSize() * (characterHeight+ LINE_SPACING) - LINE_SPACING;
+        heights[1] = 2* TEXT_MARGIN + classMembersStrings.GetSize() * (characterHeight+ LINE_SPACING) - LINE_SPACING;
+        heights[2] = 2* TEXT_MARGIN + classMethodsStrings.GetSize() * (characterHeight+ LINE_SPACING) - LINE_SPACING;
         heights[3] = heights[0] + heights[1] + heights[2];
         return heights;
     }
 
-    public void SetPos(int x, int y){
-        fullRectangle.x = x;
-        fullRectangle.y = y;
+    private int GetClassWidth(){
+        int longestStringSize = 0;
 
-        classRectangle.x = fullRectangle.x + CLASS_RECT_MARGIN;
-        classRectangle.y = fullRectangle.y + CLASS_RECT_MARGIN;
-
-        classHeaderRectangle.x = classRectangle.x;
-        classHeaderRectangle.y = classRectangle.y;
-        memberSectionRectangle.x = classRectangle.x;
-        memberSectionRectangle.y = classRectangle.y + classHeaderRectangle.height;
-        methodSectionRectangle.x = classRectangle.x;
-        methodSectionRectangle.y = memberSectionRectangle.y + memberSectionRectangle.height;
-    }
-
-    public void Draw(Graphics graphics){
-        DrawUMLClassBorder(graphics);
-        DrawUMLClassText(graphics);
-        DrawSectionDividers(graphics);
-    }
-
-    private void DrawUMLClassBorder(Graphics graphics){
-        graphics.drawRect(classRectangle.x, classRectangle.y, classRectangle.width, classRectangle.height);
-    }
-
-    private void DrawUMLClassText(Graphics graphics){
-        DrawStringCenteredInRect(classObject.getFullString(), classHeaderRectangle, graphics);
-
-        DrawUMLObjectStrings(classObject.getUmlMembers(), memberSectionRectangle, graphics);
-        DrawUMLObjectStrings(classObject.getUmlMethods(), methodSectionRectangle, graphics);
-    }
-
-    private void DrawStringCenteredInRect(String string, Rectangle rect, Graphics graphics){
-        int xPos = (int)rect.getCenterX() - fontMetrics.stringWidth(string)/2;
-        int yPos = (int)rect.getCenterY() + fontMetrics.getHeight() / 2;
-        graphics.drawString(string, xPos, yPos);
-    }
-
-    private void DrawUMLObjectStrings(UMLObject[] objectsToDraw, Rectangle rect, Graphics graphics){
-        int characterHeight = fontMetrics.getHeight();
-        for(int i = 0; i < objectsToDraw.length; i ++){
-            graphics.drawString(objectsToDraw[i].getFullString(), rect.x + TEXT_MARGIN, rect.y + TEXT_MARGIN + characterHeight + (characterHeight + LINE_SPACING) * i);
-        }
-    }
-
-    private void DrawSectionDividers(Graphics graphics){
-        graphics.drawLine(memberSectionRectangle.x, memberSectionRectangle.y, memberSectionRectangle.x + memberSectionRectangle.width, memberSectionRectangle.y);
-        graphics.drawLine(methodSectionRectangle.x, methodSectionRectangle.y, methodSectionRectangle.x + methodSectionRectangle.width, methodSectionRectangle.y);
-    }
-
-    public void DrawRelations(Graphics graphics){
-
-        for(UMLClassObject umlSubclass : classObject.getUmlSubclasses()){
-            DrawRelationLine(GetRelationLinePath(umlSubclass.classDraw), graphics);
-        }
-    }
-
-    private Point[] GetRelationLinePath(UMLClassDraw to){
-        if(classObject.isInterface()) {
-            UMLRootClassDraw[] rootClassPath = to.GetRootClassesPath();
-            return ConvertRootClassPathToPath(rootClassPath);
-        }
-        else{
-            Point[] path = new Point[]{
-                    new Point(to.classRectangle.x + to.classRectangle.width / 2, to.classRectangle.y),
-                    new Point(this.classRectangle.x + this.classRectangle.width / 2, this.classRectangle.y + this.classRectangle.height)};
-            return path;
-        }
-    }
-
-    private Point[] ConvertRootClassPathToPath(UMLRootClassDraw[] rootClassPath){
-        List<Point> path = new ArrayList<>();
-
-
-        path.add(new Point(rootClassPath[0].GetClassRect().x + rootClassPath[0].GetClassRect().width / 2, rootClassPath[0].GetClassRect().y + CLASS_RECT_MARGIN));
-        path.add(new Point(rootClassPath[0].GetClassRect().x + rootClassPath[0].GetClassRect().width / 2, rootClassPath[0].GetFullRect().y));
-
-        for(int i = 1; i < rootClassPath.length; i ++){
-            int[] possibleXCords = new int[]{
-                    rootClassPath[i].GetFullRect().x,
-                    rootClassPath[i].GetFullRect().x + rootClassPath[i].GetFullRect().width,
-                    rootClassPath[i].GetClassRect().x,
-                    rootClassPath[i].GetClassRect().x + rootClassPath[i].GetClassRect().width
-            };
-            int x = GetClosestTo(possibleXCords, this.classRectangle.x + this.classRectangle.width / 2);
-            path.add(new Point(x, path.get(path.size() - 1).y));
-            path.add(new Point(x, rootClassPath[i].GetFullRect().y));
-        }
-
-        path.add(new Point(this.classRectangle.x + this.classRectangle.width / 2, path.get(path.size() - 1).y));
-        path.add(new Point(this.classRectangle.x + this.classRectangle.width / 2, this.classRectangle.y + this.classRectangle.height));
-
-        return path.toArray(new Point[]{});
-    }
-
-    private int GetClosestTo(int[] from, int to){
-        int closest = from[0];
-        int closestDist = Math.abs(from[0] - to);
-
-
-        for(int i = 1; i < from.length; i++){
-            if(Math.abs(from[i] - to) < closestDist){
-                closestDist = Math.abs(from[i] - to);
-                closest = from[i];
+        for(MultilineString s : new MultilineString[]{classNameString, classMembersStrings, classMethodsStrings}){
+            int longestSizeOfS = s.GetLongestStringSize(fontMetrics);
+            if(longestSizeOfS > longestStringSize){
+                longestStringSize = longestSizeOfS;
             }
         }
-        return closest;
-    }
-
-    private void DrawRelationLine(Point[] path, Graphics graphics){
-        Graphics2D g2D = (Graphics2D) graphics.create();
-        int[] XCords = new int[path.length];
-        int[] YCords = new int[path.length];
-        if(this.classObject.isInterface()){
-            Stroke dashed = new BasicStroke(1, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{3}, 0);
-            g2D.setStroke(dashed);
-        }
-
-        for(int i = 0; i < path.length; i ++){
-            XCords[i] = path[i].x;
-            YCords[i] = path[i].y;
-        }
-
-        g2D.drawPolyline(XCords, YCords, XCords.length);
-        g2D.dispose();
-    }
-
-    public UMLRootClassDraw[] GetRootClassesPath(){
-        List<UMLRootClassDraw> path = new ArrayList<>();
-        path.add(rootClassDraw);
-        while(path.get(path.size() - 1).GetParentDraw() != null){
-            path.add(path.get(path.size() - 1).GetParentDraw());
-        }
-        return path.toArray(new UMLRootClassDraw[]{});
-    }
-
-    public Rectangle GetFullRect(){return fullRectangle;}
-
-    public UMLClassObject GetClassObject(){
-        return classObject;
+        return longestStringSize + 2* TEXT_MARGIN;
     }
 }

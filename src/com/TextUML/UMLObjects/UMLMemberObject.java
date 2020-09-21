@@ -29,7 +29,7 @@ public class UMLMemberObject implements UMLObject{
         this.valueType = valueType;
     }
 
-    public String getName() {
+    public String GetName() {
         return name;
     }
 

@@ -64,7 +64,7 @@ class UMLPatterns {
     private static UMLObject ConvertClass(UMLKeyword[] keywords) {
         UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
 
-        object.setInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
+        object.SetInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
         return object;
     }
 
@@ -73,12 +73,12 @@ class UMLPatterns {
         UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
 
         if(keywords[2].GetType() == UMLRelationKeywordType.UMLExtends) {
-            object.setUmlParentName(keywords[3].GetKeywordString());
+            object.SetUmlParentName(keywords[3].GetKeywordString());
         }
         else{
             object.setUmlInterfaceName(keywords[3].GetKeywordString());
         }
-        object.setInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
+        object.SetInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
         return object;
     }
 
@@ -86,9 +86,9 @@ class UMLPatterns {
     private static UMLObject ConvertClassWithParentAndInterface(UMLKeyword[] keywords) {
         UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
 
-        object.setUmlParentName(keywords[3].GetKeywordString());
+        object.SetUmlParentName(keywords[3].GetKeywordString());
         object.setUmlInterfaceName((keywords[5].GetKeywordString()));
-        object.setInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
+        object.SetInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
         return object;
     }
 

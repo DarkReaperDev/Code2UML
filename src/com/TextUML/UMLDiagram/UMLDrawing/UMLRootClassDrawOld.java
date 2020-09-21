@@ -6,10 +6,10 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class UMLRootClassDraw {
+class UMLRootClassDrawOld {
 
     private UMLClassObject classObject;
-    private UMLRootClassDraw parentClassDraw;
+    private UMLRootClassDrawOld parentClassDraw;
     private Graphics graphics;
 
     private Rectangle fullRectangle;
@@ -17,9 +17,9 @@ class UMLRootClassDraw {
 
     private UMLClassDraw mainClassDraw;
 
-    private List<UMLRootClassDraw> subclassDraws = new ArrayList<UMLRootClassDraw>();
+    private List<UMLRootClassDrawOld> subclassDraws = new ArrayList<UMLRootClassDrawOld>();
 
-    public UMLRootClassDraw(UMLClassObject classObject, UMLRootClassDraw parentClassDraw, Graphics graphics){
+    public UMLRootClassDrawOld(UMLClassObject classObject, UMLRootClassDrawOld parentClassDraw, Graphics graphics){
         this.classObject = classObject;
         this.parentClassDraw = parentClassDraw;
         this.graphics = graphics;
@@ -35,17 +35,17 @@ class UMLRootClassDraw {
     }
 
     private void InitializeSubclasses(){
-        if(classObject.isInterface()){return;}
+        if(classObject.IsInterface()){return;}
 
-        for(UMLClassObject subclassObject : classObject.getUmlSubclasses()){
-            UMLRootClassDraw subclassDraw = new UMLRootClassDraw(subclassObject, this, graphics);
+        for(UMLClassObject subclassObject : classObject.GetUmlSubclasses()){
+            UMLRootClassDrawOld subclassDraw = new UMLRootClassDrawOld(subclassObject, this, graphics);
             subclassDraws.add(subclassDraw);
         }
     }
 
     private int GetSubclassesWidth(){
         int width = 0;
-        for(UMLRootClassDraw subclassDraw: subclassDraws){
+        for(UMLRootClassDrawOld subclassDraw: subclassDraws){
             width += subclassDraw.GetFullRect().width;
         }
         return width;
@@ -53,7 +53,7 @@ class UMLRootClassDraw {
 
     private int GetSubclassesHeight(){
         int height = 0;
-        for(UMLRootClassDraw subclassDraw: subclassDraws){
+        for(UMLRootClassDrawOld subclassDraw: subclassDraws){
             if(subclassDraw.fullRectangle.height > height){
                 height = subclassDraw.fullRectangle.height;
             }
@@ -89,12 +89,12 @@ class UMLRootClassDraw {
     }
 
     private void SetSubclassDrawsPos(){
-        if(classObject.isInterface()){return;}
+        if(classObject.IsInterface()){return;}
 
         int currentXPos = subclassesRectangle.x;
         int currentYPos = subclassesRectangle.y;
 
-        for(UMLRootClassDraw subClassDraw : subclassDraws){
+        for(UMLRootClassDrawOld subClassDraw : subclassDraws){
             subClassDraw.SetPos(currentXPos, currentYPos);
 
             currentXPos += subClassDraw.GetFullRect().width;
@@ -107,16 +107,16 @@ class UMLRootClassDraw {
     }
 
     private void DrawSubclasses(Graphics graphics){
-        if(classObject.isInterface()){return;}
+        if(classObject.IsInterface()){return;}
 
-        for(UMLRootClassDraw subclassDraw : subclassDraws){
+        for(UMLRootClassDrawOld subclassDraw : subclassDraws){
             subclassDraw.Draw();
         }
     }
 
     public void DrawRelations(){
         mainClassDraw.DrawRelations(graphics);
-        for(UMLRootClassDraw subclassDraw : subclassDraws){
+        for(UMLRootClassDrawOld subclassDraw : subclassDraws){
             subclassDraw.DrawRelations();
         }
     }
@@ -127,7 +127,7 @@ class UMLRootClassDraw {
 
     public Rectangle GetFullRect(){return fullRectangle;}
 
-    public UMLRootClassDraw GetParentDraw(){
+    public UMLRootClassDrawOld GetParentDraw(){
         return parentClassDraw;
     }
 
@@ -135,7 +135,7 @@ class UMLRootClassDraw {
         return classObject;
     }
 
-    public UMLRootClassDraw[] GetSubclassDraws(){
-        return subclassDraws.toArray(new UMLRootClassDraw[0]);
+    public UMLRootClassDrawOld[] GetSubclassDraws(){
+        return subclassDraws.toArray(new UMLRootClassDrawOld[0]);
     }
 }

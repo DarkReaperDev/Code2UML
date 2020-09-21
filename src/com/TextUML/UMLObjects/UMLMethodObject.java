@@ -34,7 +34,7 @@ public class UMLMethodObject implements UMLObject{
         this.returnType = returnType;
     }
 
-    public String getName() {
+    public String GetName() {
         return name;
     }
 

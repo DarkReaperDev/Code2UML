@@ -31,7 +31,7 @@ public class UMLScriptObject {
         UMLClassObject object = GetClassByName(objectName);
         if(object == null){
             object = new UMLClassObject(objectName);
-            object.setInterface(isInterface);
+            object.SetInterface(isInterface);
             umlClasses.add(object);
         }
         return object;
