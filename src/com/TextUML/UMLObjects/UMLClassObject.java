@@ -75,6 +75,10 @@ public class UMLClassObject implements UMLObject {
         return name;
     }
 
+    public int GetID(){
+        return ID;
+    }
+
     public UMLMemberObject[] GetUmlMembers() {
         return umlMembers.toArray(new UMLMemberObject[]{});
     }

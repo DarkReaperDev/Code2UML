@@ -3,6 +3,7 @@ package com.TextUML.UMLObjects;
 
 import com.TextUML.UMLKeywords.KeywordTypes.UMLModifierKeywordType;
 import com.TextUML.UMLKeywords.KeywordTypes.UMLValueTypeKeywordType;
+import com.TextUML.Utilities.Strings.MultilineString;
 
 public class UMLMethodObject implements UMLObject{
 
@@ -38,8 +39,8 @@ public class UMLMethodObject implements UMLObject{
         return name;
     }
 
-    public String getFullString(){
-        return modifier.GetString() + " " + returnType.GetString() + " " + name + "()";
+    public MultilineString getFullString(){
+        return new MultilineString(modifier.GetString() + " " + returnType.GetString() + " " + name + "()");
     }
 
     public UMLModifierKeywordType getModifier() {

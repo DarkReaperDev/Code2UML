@@ -3,7 +3,6 @@ package com.TextUML.UMLDiagram.UMLDrawing;
 import com.TextUML.UMLObjects.UMLClassObject;
 import com.TextUML.UMLObjects.UMLMemberObject;
 import com.TextUML.UMLObjects.UMLMethodObject;
-import com.TextUML.UMLObjects.UMLObject;
 import com.TextUML.Utilities.Strings.MultilineString;
 
 import java.awt.*;
@@ -84,5 +83,62 @@ public class UMLClassDraw {
             }
         }
         return longestStringSize + 2* TEXT_MARGIN;
+    }
+
+    public void SetPos(Point pos){
+        fullRectangle.x = pos.x;
+        fullRectangle.y = pos.y;
+
+        classRectangle.x = fullRectangle.x + CLASS_RECT_MARGIN;
+        classRectangle.y = fullRectangle.y + CLASS_RECT_MARGIN;
+
+        classHeaderRectangle.x = classRectangle.x;
+        classHeaderRectangle.y = classRectangle.y;
+        memberSectionRectangle.x = classRectangle.x;
+        memberSectionRectangle.y = classRectangle.y + classHeaderRectangle.height;
+        methodSectionRectangle.x = classRectangle.x;
+        methodSectionRectangle.y = memberSectionRectangle.y + memberSectionRectangle.height;
+    }
+
+    public void Draw(Graphics graphics){
+        DrawUMLClass(graphics);
+        DrawUMLClassText(graphics);
+    }
+
+    private void DrawUMLClass(Graphics graphics){
+        graphics.drawRect(classRectangle.x, classRectangle.y, classRectangle.width, classRectangle.height);
+        graphics.drawLine(memberSectionRectangle.x, memberSectionRectangle.y, memberSectionRectangle.x + memberSectionRectangle.width, memberSectionRectangle.y);
+        graphics.drawLine(methodSectionRectangle.x, methodSectionRectangle.y, methodSectionRectangle.x + methodSectionRectangle.width, methodSectionRectangle.y);
+    }
+
+    private void DrawUMLClassText(Graphics graphics){
+        DrawStringCenteredInRect(classNameString, classHeaderRectangle, graphics);
+
+        DrawStringCenteredInRect(classMembersStrings, memberSectionRectangle, graphics);
+        DrawStringCenteredInRect(classMethodsStrings, methodSectionRectangle, graphics);
+    }
+
+    private void DrawStringCenteredInRect(String string, Rectangle rect, Graphics graphics){
+        int xPos = (int)rect.getCenterX() - fontMetrics.stringWidth(string)/2;
+        int yPos = (int)rect.getCenterY() + fontMetrics.getHeight() / 2;
+        graphics.drawString(string, xPos, yPos);
+    }
+
+    private void DrawStringCenteredInRect(MultilineString string, Rectangle rect, Graphics graphics){
+        int xPos = (int)rect.getCenterX() - string.GetLongestStringSize(fontMetrics)/2;
+        int yPos = (int)rect.getCenterY() + ((fontMetrics.getHeight() + LINE_SPACING) * string.GetSize() - LINE_SPACING) / 2;
+        DrawMultilineString(string, new Point(xPos, yPos), graphics);
+    }
+
+    private void DrawMultilineString(MultilineString string, Point pos, Graphics graphics){
+        Point currentPos = pos;
+        for(String s : string.GetAsArray()){
+            graphics.drawString(s, currentPos.x, currentPos.y);
+            currentPos.y += fontMetrics.getHeight() + LINE_SPACING;
+        }
+    }
+
+    public void DrawRelations(){
+
     }
 }

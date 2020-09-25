@@ -3,10 +3,7 @@ package com.TextUML.UMLConverter;
 import com.TextUML.UMLErrorHandling.UMLScriptSyntaxError;
 import com.TextUML.UMLKeywords.KeywordTypes.*;
 import com.TextUML.UMLKeywords.UMLKeyword;
-import com.TextUML.UMLObjects.UMLClassObject;
-import com.TextUML.UMLObjects.UMLMemberObject;
-import com.TextUML.UMLObjects.UMLMethodObject;
-import com.TextUML.UMLObjects.UMLObject;
+import com.TextUML.UMLObjects.*;
 
 import java.util.function.Function;
 
@@ -62,7 +59,7 @@ class UMLPatterns {
 
     //structure, name, {
     private static UMLObject ConvertClass(UMLKeyword[] keywords) {
-        UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
+        UMLClassObject object = UMLClassObjectFactory.CreateNewClassObject(keywords[1].GetKeywordString());
 
         object.SetInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
         return object;
@@ -70,13 +67,13 @@ class UMLPatterns {
 
     //structure, name, relation, name, {
     private static UMLObject ConvertClassWithParentOrInterface(UMLKeyword[] keywords){
-        UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
+        UMLClassObject object = UMLClassObjectFactory.CreateNewClassObject(keywords[1].GetKeywordString());
 
         if(keywords[2].GetType() == UMLRelationKeywordType.UMLExtends) {
-            object.SetUmlParentName(keywords[3].GetKeywordString());
+            object.umlParentName = keywords[3].GetKeywordString();
         }
         else{
-            object.setUmlInterfaceName(keywords[3].GetKeywordString());
+            object.umlInterfaceName = keywords[3].GetKeywordString();
         }
         object.SetInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
         return object;
@@ -84,10 +81,10 @@ class UMLPatterns {
 
     //structure, name, extends, name, implements, name, {
     private static UMLObject ConvertClassWithParentAndInterface(UMLKeyword[] keywords) {
-        UMLClassObject object = new UMLClassObject(keywords[1].GetKeywordString());
+        UMLClassObject object = UMLClassObjectFactory.CreateNewClassObject(keywords[1].GetKeywordString());
 
-        object.SetUmlParentName(keywords[3].GetKeywordString());
-        object.setUmlInterfaceName((keywords[5].GetKeywordString()));
+        object.umlParentName = keywords[3].GetKeywordString();
+        object.umlInterfaceName = (keywords[5].GetKeywordString());
         object.SetInterface(keywords[0].GetType() == UMLStructureKeywordType.UMLInterface);
         return object;
     }

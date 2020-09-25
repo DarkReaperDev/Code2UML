@@ -19,10 +19,10 @@ public class UMLScriptObject {
 
             if(umlClasses.get(i).umlParentName != ""){
 
-                GetClassObjectOrCreateNew(umlClasses.get(i).umlParentName, false).AddSubClass(umlClasses.get(i));
+                GetClassObjectOrCreateNew(umlClasses.get(i).umlParentName, false).AddSubClass(umlClasses.get(i).GetID());
             }
             if(umlClasses.get(i).umlInterfaceName != ""){
-                GetClassObjectOrCreateNew(umlClasses.get(i).umlInterfaceName, true).AddSubClass(umlClasses.get(i));
+                GetClassObjectOrCreateNew(umlClasses.get(i).umlInterfaceName, true).AddSubClass(umlClasses.get(i).GetID());
             }
         }
     }
@@ -30,7 +30,7 @@ public class UMLScriptObject {
     public UMLClassObject GetClassObjectOrCreateNew(String objectName, boolean isInterface){
         UMLClassObject object = GetClassByName(objectName);
         if(object == null){
-            object = new UMLClassObject(objectName);
+            object = UMLClassObjectFactory.CreateNewClassObject(objectName);
             object.SetInterface(isInterface);
             umlClasses.add(object);
         }
@@ -39,7 +39,7 @@ public class UMLScriptObject {
 
     public UMLClassObject GetClassByName(String name){
         for(UMLClassObject classObject : umlClasses){
-            if(classObject.name.equals(name)){
+            if(classObject.GetName().equals(name)){
                 return classObject;
             }
         }

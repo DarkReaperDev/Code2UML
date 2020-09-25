@@ -6,6 +6,10 @@ public class MultilineString {
     private String[] strings;
     private int current = 0;
 
+    public MultilineString(String string){
+        this.strings = new String[]{string};
+    }
+
     public MultilineString(String[] strings){
         this.strings = strings;
     }
